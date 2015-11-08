@@ -1,0 +1,18 @@
+COMMENT ON TABLE    FA_TDTRE                               IS     'Tabla encargada de almacenar el detalle de las recetas de las facturas';
+COMMENT ON COLUMN   FA_TDTRE.DTRE_DTRE                     IS     'Identificador primario de la tabla';
+COMMENT ON COLUMN   FA_TDTRE.DTRE_RECE                     IS     'Llave foranea con el producto la tabla in_trece';
+COMMENT ON COLUMN   FA_TDTRE.DTRE_FACT                     IS     'Factura asociada a al detalle del producto';
+COMMENT ON COLUMN   FA_TDTRE.DTRE_FECHA                    IS     'Fecha en la cual se registro la venta';
+COMMENT ON COLUMN   FA_TDTRE.DTRE_CANT                     IS     'Numero de recetas o platos vendidos en la factura';
+COMMENT ON COLUMN   FA_TDTRE.DTRE_VLR_RE_TOT               IS     'Valor de todas las recetas en el momento de la venta (costo de produccion de la receta en el momento de la venta)';
+COMMENT ON COLUMN   FA_TDTRE.DTRE_VLR_UNI_RECE             IS     'Valor de un receta en el momento de la venta (costo de produccion una receta en el momento de la venta)';
+COMMENT ON COLUMN   FA_TDTRE.DTRE_VLR_IVA_TOT              IS     'Valor total del iva de todas las recetas facturadas';
+COMMENT ON COLUMN   FA_TDTRE.DTRE_VLR_IVA_UNI              IS     'Valor del iva de una sola receta';
+COMMENT ON COLUMN   FA_TDTRE.DTRE_VLR_VENTA_TOT            IS     'Valor total de la venta de las recetas Iva + precio ';
+COMMENT ON COLUMN   FA_TDTRE.DTRE_VLR_VENTA_UNI            IS     'Valor de la unidad del iva + precio';
+COMMENT ON COLUMN   FA_TDTRE.DTRE_VLR_TOTAL                IS     'Valor total de la receta';
+COMMENT ON COLUMN   FA_TDTRE.DTRE_DESC                     IS     'valor del descuento a la receta';
+COMMENT ON COLUMN   FA_TDTRE.DTRE_CON_DESC                 IS     'identifica si el producto tiene algun descuento';
+COMMENT ON COLUMN   FA_TDTRE.DTRE_VALOR_DESC               IS     'valor que le aplico a todos los descuentos';
+COMMENT ON COLUMN   FA_TDTRE.DTRE_ESTADO                   IS     'Estado del detalle de facturacion';
+COMMENT ON COLUMN   FA_TDTRE.DTRE_UTILIDAD                 IS     'Utilidad que deja todo el detalle de la venta de la receta o plato';

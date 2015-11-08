@@ -1,0 +1,4 @@
+ALTER TABLE fa_tdtsv
+ADD FOREIGN KEY (DTSV_FACT)
+REFERENCES fa_tfact(fact_fact)
+;

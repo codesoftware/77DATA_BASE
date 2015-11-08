@@ -1,0 +1,14 @@
+COMMENT ON TABLE  IN_TKAPR                      IS          'Tabla encargada de tener la descripcion de los productos con los cuales se llevara un registro Kardex';
+COMMENT ON COLUMN IN_TKAPR.KAPR_KAPR            IS          'Nuemro serial el cual es utilizado para identificar el ingreso de registros por cada producto, sera unico para cada producto';
+COMMENT ON COLUMN IN_TKAPR.KAPR_CONS_PRO        IS          'Columna la cual proporciona una secuencia para cada producto sirve para saber cual fuel el orden de ingreso de cada producto';
+COMMENT ON COLUMN IN_TKAPR.KAPR_DSKA            IS          'Llave foranea con la tabla in_tdska(descripcion de kardex)';
+COMMENT ON COLUMN IN_TKAPR.KAPR_FECHA           IS          'Fecha en la cual se registran el movimiento del producto';
+COMMENT ON COLUMN IN_TKAPR.KAPR_MVIN            IS          'Llave foranea con la tabla(in_tmvin) la cual indicara cual es el movimiento del inventario';
+COMMENT ON COLUMN IN_TKAPR.KAPR_CANT_MVTO       IS          'Cantidad de productos que implican el movimiento';
+COMMENT ON COLUMN IN_TKAPR.KAPR_COST_MVTO_UNI   IS          'Costo del movimiento por producto por cada unidad adquirida.';
+COMMENT ON COLUMN IN_TKAPR.KAPR_COST_MVTO_TOT   IS          'Costo del movimiento por producto por todas los productos adquiridos';
+COMMENT ON COLUMN IN_TKAPR.KAPR_CANT_SALDO      IS          'Cantidad de productos existentes a la fecha en bodega';
+COMMENT ON COLUMN IN_TKAPR.KAPR_COST_SALDO_TOT  IS          'Saldo en costos de los productos existentes a la fecha por todos los productos en bodega';
+COMMENT ON COLUMN IN_TKAPR.KAPR_COST_SALDO_UNI  IS          'Saldo en costos de cada producto en bodega(Promedio ponderado de cada producto)';
+COMMENT ON COLUMN IN_TKAPR.KAPR_PROV            IS          'Identificador del Proveedor del producto que ingresa';
+COMMENT ON COLUMN IN_TKAPR.KAPR_TIUS            IS          'Llave foranea con el usuario del sistema que realizo el ingreso del producto'; 

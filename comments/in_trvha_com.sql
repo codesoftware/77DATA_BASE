@@ -1,0 +1,12 @@
+COMMENT ON TABLE  IN_TRVHA                          IS          'Tabla encargada de tener los datos de las reservas de las habitaciones';
+COMMENT ON COLUMN IN_TRVHA.RVHA_RVHA                IS          'Identificador primario de la tabla';
+COMMENT ON COLUMN IN_TRVHA.RVHA_DSHA                IS          'Llave foranea con la tabla de habitaciones';
+COMMENT ON COLUMN IN_TRVHA.RVHA_CLIEN               IS          'Llave la cual indica el cliente que hace la reservación';
+COMMENT ON COLUMN IN_TRVHA.RVHA_FECHA               IS          'Fecha en la cual se realiza la reserva';
+COMMENT ON COLUMN IN_TRVHA.RVHA_FECHA_INI           IS          'Fecha inicial en la cual regira la reserva';
+COMMENT ON COLUMN IN_TRVHA.RVHA_FECHA_FIN           IS          'Fecha en la cual se terminara la reserva';
+COMMENT ON COLUMN IN_TRVHA.RVHA_NUM_DIAS            IS          'Numero de dias por el cual se hara la reservación';
+COMMENT ON COLUMN IN_TRVHA.RVHA_FECHA_VENCI         IS          'Fecha en la cual se vencera la reserva si no se confirma';
+COMMENT ON COLUMN IN_TRVHA.RVHA_CONFIRMADA          IS          'Indica si la reservacion ya fue confirmada por el cliente (pagada)';
+COMMENT ON COLUMN IN_TRVHA.RVHA_ESTADO              IS          'Estado de la reservación (R) Reservada (V) vencida (C) confirmada (U) en uso (D) disponible (X) cancelada';
+COMMENT ON COLUMN IN_TRVHA.RVHA_TIUS                IS          'Llave foranea con la tabla de usuarios de la aplicacion (us_ttius)';

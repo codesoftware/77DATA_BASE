@@ -1,0 +1,1 @@
+\i C:/77DATA_BASE/instalador/instalador.sql;

@@ -1,0 +1,13 @@
+-- CREAMOS LA TABLA DOMICILIOS
+-- Tabla en la cual se almacena la informacion de las facturas en las cuales se ha hecho domicilio asi como con sus respectivos clientes.
+-- 
+
+--DROP TABLE IF EXISTS fa_tdomi;
+
+CREATE TABLE fa_tdomi(
+   domi_domi                SERIAL                       ,  
+   domi_fact                integer not null             , 
+   domi_clien               integer not null             , 
+   domi_estado              varchar(20)                  
+   PRIMARY KEY (domi_domi)	
+); 

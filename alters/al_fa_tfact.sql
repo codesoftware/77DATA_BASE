@@ -1,0 +1,1 @@
+ALTER TABLE fa_tfact ADD fact_cierre int;
