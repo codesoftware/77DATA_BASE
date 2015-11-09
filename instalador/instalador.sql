@@ -112,21 +112,32 @@
 \i C:/77DATA_BASE/comments/in_tprha_com.sql;
 \i C:/77DATA_BASE/comments/in_trmce_com.sql;
 \i C:/77DATA_BASE/comments/in_trefe_com.sql;
+\i C:/77DATA_BASE/comments/in_tcate_com.sql;
+\i C:/77DATA_BASE/comments/in_tprpr_com.sql;
+\i C:/77DATA_BASE/comments/in_tprre_com.sql;
+\i C:/77DATA_BASE/comments/co_tclas_com.sql;
+\i C:/77DATA_BASE/comments/co_tgrup_com.sql;
+\i C:/77DATA_BASE/comments/co_tcuen_com.sql;
+\i C:/77DATA_BASE/comments/co_tsbcu_com.sql;
 \i C:/77DATA_BASE/comments/co_tmvco_com.sql;
 \i C:/77DATA_BASE/comments/co_ttido_com.sql;
 \i C:/77DATA_BASE/comments/co_tsbft_com.sql;
 \i C:/77DATA_BASE/comments/co_ttem_mvco_com.sql;
+\i C:/77DATA_BASE/comments/co_tcier_com.sql;
+\i C:/77DATA_BASE/comments/co_tsimc_com.sql;
 \i C:/77DATA_BASE/comments/in_tcopr_com.sql;
 \i C:/77DATA_BASE/comments/in_tecop_com.sql;
-\i C:/77DATA_BASE/comments/co_tcier_com.sql;
 \i C:/77DATA_BASE/comments/in_tmarca_com.sql;
-\i C:/77DATA_BASE/comments/co_tsimc_com.sql;
+\i C:/77DATA_BASE/comments/in_trepr_com.sql;
 \i C:/77DATA_BASE/comments/ad_tpara_com.sql;
 \i C:/77DATA_BASE/comments/in_trece_com.sql;
 \i C:/77DATA_BASE/comments/in_ppfa_com.sql;
 \i C:/77DATA_BASE/comments/in_tcepr_com.sql;
 \i C:/77DATA_BASE/comments/fa_tdtre_com.sql;
 \i C:/77DATA_BASE/comments/fa_trrka_com.sql;
+\i C:/77DATA_BASE/comments/fa_trrka_com.sql;
+\i C:/77DATA_BASE/comments/em_tpara_com.sql;
+\i C:/77DATA_BASE/comments/em_tsede_com.sql;
 --
 -- Llaves foraneas
 --
@@ -238,6 +249,7 @@
 --  Inserts
 --
 --Usuario maestro de la aplicacion
+--
 \i C:/77DATA_BASE/usuario_maestro.sql;
 \i C:/77DATA_BASE/inserts/ins_ad_tpara.sql
 

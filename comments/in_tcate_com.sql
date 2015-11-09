@@ -1,6 +1,7 @@
-COMMENT ON TABLE  IN_TCATE              IS          'Tabla encargada de registrar las categorias de los productos';
-COMMENT ON COLUMN IN_TCATE.cate_cate    IS          'Identificador primario de la tabla';
-COMMENT ON COLUMN IN_TCATE.cate_desc    IS          'Descripcion de la categoria';
-COMMENT ON COLUMN IN_TCATE.cate_estado  IS          'Estado en el cual se encontrara la categoria ';
-COMMENT ON COLUMN IN_TCATE.cate_runic   IS          'Indica si los productos de esta categoria se registrar en el sistema uno por uno osea con un registro unico';
-COMMENT ON COLUMN IN_TCATE.cate_feven   IS          'Indica si los productos de esta categoria registran fecha de vencimiento para las alertas del sistema';
+COMMENT ON TABLE  IN_TCATE                 IS         'Tabla encargada de almacenar las categorias que estan asociadas a los prductos, y con estas se creara una subcuenta en la 1435 para su movimiento de inventario respectivo';
+COMMENT ON COLUMN IN_TCATE.CATE_CATE      IS          'Identificador primario de la tabla';
+COMMENT ON COLUMN IN_TCATE.CATE_DESC      IS          'Descripcion de la categoria';
+COMMENT ON COLUMN IN_TCATE.CATE_ESTADO    IS          'Estado de la categoria ';
+COMMENT ON COLUMN IN_TCATE.CATE_RUNIC     IS          'parametro el cual no se usa en el momento';
+COMMENT ON COLUMN IN_TCATE.CATE_FEVEN     IS          'parametro el cual no se usa en el momento';
+COMMENT ON COLUMN IN_TCATE.CATE_SBCU	  IS          'Subcuenta la cual se usa para el ingreso de inventario';

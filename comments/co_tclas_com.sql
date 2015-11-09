@@ -1,4 +1,4 @@
-COMMENT ON TABLE   	CO_TCLAS                    IS     'Tabla encargada de almacenar las clases de PUC';
+COMMENT ON TABLE   	CO_TCLAS                    IS     'Tabla encargada de almacenar las clases de PUC es el primer nivel del puc comercial';
 COMMENT ON COLUMN   CO_TCLAS.CLAS_CLAS          IS     'Identificador primario de la tabla';
 COMMENT ON COLUMN   CO_TCLAS.CLAS_NOMBRE        IS     'Nombre de clase de PUC';
 COMMENT ON COLUMN   CO_TCLAS.CLAS_ESTADO        IS     'Estado de la clase "I" inactivo "A" activo';
