@@ -1,0 +1,1 @@
+----Columna adicionada para referenciar una categoria en una referencia o subcategoria como es en torinillos siete sietes--ALTER TABLE in_trefeADD refe_cate INT;

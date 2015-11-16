@@ -46,6 +46,11 @@
 \i C:/77DATA_BASE/tables/in_tcepr.sql;
 \i C:/77DATA_BASE/tables/fa_tdtre.sql;
 \i C:/77DATA_BASE/tables/fa_trrka.sql;
+\i C:/77DATA_BASE/tables/in_tmprefe;
+--
+--Alters
+--
+\i C:/77DATA_BASE/alters/al_in_trefe.sql;
 --
 -- Cheks constrains
 --
@@ -138,6 +143,7 @@
 \i C:/77DATA_BASE/comments/fa_trrka_com.sql;
 \i C:/77DATA_BASE/comments/em_tpara_com.sql;
 \i C:/77DATA_BASE/comments/em_tsede_com.sql;
+\i C:/77DATA_BASE/comments/in_tmprefe_com;
 --
 -- Llaves foraneas
 --
