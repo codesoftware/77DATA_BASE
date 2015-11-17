@@ -218,6 +218,11 @@ CREATE OR REPLACE FUNCTION IN_REGISTRA_PRODUCTO (
         RAISE EXCEPTION 'La categoria asociada al producto no existe o se encuentra inactiva por favor intente de nuevo. ';
     END IF;
     --
+    UPDATE in_tdska
+       SET dska_sbcu = v_sbcu_sbcu
+     WHERE dska_dska = v_dska_dska
+    ;
+    --
     RETURN 'OK';
     --
     EXCEPTION WHEN OTHERS THEN
