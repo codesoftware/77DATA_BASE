@@ -1,0 +1,12 @@
+COMMENT  ON TABLE in_tmpidex IS 'Tabla encargada de almacenar los datos del excel que se sube para hacer cargue masivo solo id';
+COMMENT ON COLUMN in_in_tmpidex.tmpidex_tmpidex IS 'llave primaria de la tabla';
+COMMENT ON COLUMN in_tmpidex.tmpidex_codexte IS 'Codigo externo del producto';
+COMMENT ON COLUMN in_tmpidex.tmpidex_ubicaci IS 'Ubicacion del producto en el almacen';
+COMMENT ON COLUMN in_tmpidex.tmpidex_descrip IS 'Descripcion del producto en el almacen';
+COMMENT ON COLUMN in_tmpidex.tmpidex_categor IS 'llave de la tabla in_tcate';
+COMMENT ON COLUMN in_tmpidex.tmpidex_subcate IS 'llave de la tabla in_trefe';
+COMMENT ON COLUMN in_tmpidex.tmpidex_tipo IS 'llave del la tabla de marca';
+COMMENT ON COLUMN in_tmpidex.tmpidex_existencia IS 'cantidad de productos';
+COMMENT ON COLUMN in_tmpidex.tmpidex_costo IS 'costo por unidad de los productos';
+COMMENT ON COLUMN in_tmpidex.tmpidex_fecha IS ' fecha de insercion';
+COMMENT ON COLUMN in_tmpidex.tmpidex_usu IS 'usuario que ingreso el excel';
