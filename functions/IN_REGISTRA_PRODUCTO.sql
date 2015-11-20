@@ -1,5 +1,6 @@
--- Funcion con 
-
+--
+-- Funcion con la cual obtengo el registro 
+--
 CREATE OR REPLACE FUNCTION IN_REGISTRA_PRODUCTO (    
                                         p_refe_refe         INT, 
                                         p_descripcion       VARCHAR(100),  --Este campo es la descripcion que da el usuario es el que quiera el usuario (El nombre es la referencia)
@@ -224,7 +225,7 @@ CREATE OR REPLACE FUNCTION IN_REGISTRA_PRODUCTO (
      WHERE dska_dska = v_dska_dska
     ;
     --
-    RETURN 'OK';
+    RETURN 'OK-'||v_dska_dska;
     --
     EXCEPTION WHEN OTHERS THEN
          RETURN 'Err' || sqlerrm;

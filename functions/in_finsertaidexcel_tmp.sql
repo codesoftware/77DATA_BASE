@@ -3,6 +3,15 @@ RETURNS character varying
 AS
 $BODY$
 DECLARE
+    --
+    --Cursor con el cual obtengo el id de un producto
+    --
+    c_formato_dska CURSOR (vc_expresion varchar) IS
+    SELECT cast(kapr_kapr as int)
+      FROM (
+           SELECT regexp_split_to_table('OK-2', '-') kapr_kapr
+           offset 1) as tabla
+           ;
   --
   v_rta                 varchar(1000) :='error';
   v_idCate              int :=0;
@@ -45,6 +54,12 @@ DECLARE
   --
   v_ins_prod             varchar(2000) := '';
   --
+  c_sec_contabilidad CURSOR IS
+  SELECT CAST(nextval('co_temp_tran_factu_sec') AS INT)
+  ;
+  --
+  v_sec_cont                int := 0;
+  --
     BEGIN
     --
         FOR datos IN c_consultadatosexcel LOOP
@@ -74,8 +89,20 @@ DECLARE
                                                 v_idCate
                                                 );
             --
-            IF UPPER(TRIM(v_ins_prod)) <> UPPER('OK') THEN
+            IF UPPER(TRIM(v_ins_prod)) like UPPER('%OK%') THEN
+                --
                 RAISE EXCEPTION 'Error in_finsertaidexcel_tmp % ', v_ins_prod;
+                --  
+            ELSE
+                --
+                OPEN c_sec_contabilidad;
+                FETCH c_sec_contabilidad INTO v_sec_cont;
+                CLOSE c_sec_contabilidad;
+                --
+                INSERT INTO co_ttem_mvco(
+                            tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
+                VALUES (v_sec_cont, '110501', '1000','C');
+                --
             END IF;
             --
         END LOOP;

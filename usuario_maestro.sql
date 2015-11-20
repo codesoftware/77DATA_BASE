@@ -28,3 +28,35 @@ INSERT INTO in_tprov(
             prov_telefono, prov_direccion, prov_celular, prov_estado)
     VALUES ( 'Generico', '123456789', 'Generico', 'Generico', 
             '2334455', 'cra 55 calle 76', '3115566778', 'A');
+--
+--Insercion de subcuentas 
+--
+INSERT INTO co_tsbcu(
+            sbcu_cuen, sbcu_clas, sbcu_grup, sbcu_estado, sbcu_nombre, 
+            sbcu_codigo, sbcu_descripcion, sbcu_naturaleza)
+    VALUES (1, 1, 1, 'A', 'CAJA MENOR', 
+            '01', 'CAJA MENOR', 'D');
+--
+--Insercion de subcuentas 
+--
+INSERT INTO co_tsbcu(
+            sbcu_cuen, sbcu_clas, sbcu_grup, sbcu_estado, sbcu_nombre, 
+            sbcu_codigo, sbcu_descripcion, sbcu_naturaleza)
+    VALUES (136, 2, 13, 'A', 'IVA DESCONTABLE', 
+            '01', 'IVA DESCONTABLE', 'D');
+--
+--Insercion de subcuentas 
+--
+INSERT INTO co_tsbcu(
+            sbcu_cuen, sbcu_clas, sbcu_grup, sbcu_estado, sbcu_nombre, 
+            sbcu_codigo, sbcu_descripcion, sbcu_naturaleza)
+    VALUES (136, 2, 13, 'A', 'IVA GENERADO', 
+            '02', 'IVA GENERADO', 'D');
+--
+--Insercion de subcuentas 
+--
+INSERT INTO co_tsbcu(
+            sbcu_cuen, sbcu_clas, sbcu_grup, sbcu_estado, sbcu_nombre, 
+            sbcu_codigo, sbcu_descripcion, sbcu_naturaleza)
+    VALUES (278, 5, 32, 'A', 'DESCUENTOS', 
+            '35', 'DESCUENTOS', 'D');
