@@ -20,3 +20,11 @@ select US_FINSERTA_USUA('aministrador','sistema','1234','administrdor',to_date('
 INSERT INTO in_tcate(
             cate_desc, cate_estado, cate_runic, cate_feven)
     VALUES ('GENERICA', 'A', 'S', 'S');
+--
+--Insercion de un proveedor generico
+--
+INSERT INTO in_tprov(
+            prov_nombre, prov_nit, prov_razon_social, prov_representante, 
+            prov_telefono, prov_direccion, prov_celular, prov_estado)
+    VALUES ( 'Generico', '123456789', 'Generico', 'Generico', 
+            '2334455', 'cra 55 calle 76', '3115566778', 'A');

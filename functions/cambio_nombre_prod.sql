@@ -21,8 +21,8 @@ $BODY$
         LOOP
         
         update in_tdska
-        set dska_nom_prod = nombre.nombreProd,
-        dska_desc = nombre.nombreProd
+        set dska_nom_prod = nombre.nombreProd
+        --dska_desc = nombre.nombreProd
         where dska_dska = nombre.dska_dska
         ;
       END LOOP;
