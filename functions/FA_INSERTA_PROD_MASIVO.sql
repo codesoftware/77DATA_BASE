@@ -32,7 +32,7 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
                             tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
                 VALUES (v_sec_cont, '110501', dato.tmpidexc_costo ,'C');
             --
-            v_valRegistro := IN_ADICIONA_PROD_EXIS(dato.tmpidexc_dska, dato.tmpidexc_existencia,dato.tmpidexc_costo,dato.sede,1,v_sec_cont);
+            v_valRegistro := IN_ADICIONA_PROD_EXIS(dato.tmpidexc_dska, cast(dato.tmpidexc_existencia as INT) ,dato.tmpidexc_costo,dato.sede,1,v_sec_cont);
             --
             IF UPPER(TRIM(v_valRegistro)) NOT LIKE '%OK%' THEN
                 --

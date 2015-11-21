@@ -62,10 +62,6 @@ DECLARE
   --
   v_ins_prod             varchar(2000) := '';
   --
-  c_sec_contabilidad CURSOR IS
-  SELECT CAST(nextval('co_temp_tran_factu_sec') AS INT)
-  ;
-  --
   v_sec_cont                int := 0;
   v_rta_ingExt              varchar(2000) := '';
   --
