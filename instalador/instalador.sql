@@ -46,7 +46,8 @@
 \i C:/77DATA_BASE/tables/in_tcepr.sql;
 \i C:/77DATA_BASE/tables/fa_tdtre.sql;
 \i C:/77DATA_BASE/tables/fa_trrka.sql;
-\i C:/77DATA_BASE/tables/in_tmprefe;
+\i C:/77DATA_BASE/tables/in_tmprefe.sql;
+\i C:/77DATA_BASE/tables/in_tmpidexc.sql;
 --
 --Alters
 --
@@ -143,7 +144,8 @@
 \i C:/77DATA_BASE/comments/fa_trrka_com.sql;
 \i C:/77DATA_BASE/comments/em_tpara_com.sql;
 \i C:/77DATA_BASE/comments/em_tsede_com.sql;
-\i C:/77DATA_BASE/comments/in_tmprefe_com;
+\i C:/77DATA_BASE/comments/in_tmpidex_com.sql;
+\i C:/77DATA_BASE/comments/in_tmprefe_com.sql;
 --
 -- Llaves foraneas
 --
@@ -230,6 +232,9 @@
 \i C:/77DATA_BASE/functions/FA_FACTURA_RECETA.sql;
 \i C:/77DATA_BASE/functions/cambio_nombre_prod.sql;
 \i C:/77DATA_BASE/functions/FA_CANCELA_FACTURA.sql;
+\i C:/77DATA_BASE/functions/in_finsertaexceltmp.sql;
+\i C:/77DATA_BASE/functions/in_finsertaidexcel_tmp.sql;
+\i C:/77DATA_BASE/functions/IN_REGISTRA_PRODUCTO.sql;
 --
 -- Triggers
 --
@@ -254,17 +259,17 @@
 --
 --  Inserts
 --
---Usuario maestro de la aplicacion
---
-\i C:/77DATA_BASE/usuario_maestro.sql;
-\i C:/77DATA_BASE/inserts/ins_ad_tpara.sql
-
 --inserts de parametrizacion
 \i C:/77DATA_BASE/inserts/ins_co_tclas.sql;    
 \i C:/77DATA_BASE/inserts/ins_co_tgrup.sql;  
 \i C:/77DATA_BASE/inserts/ins_co_tcuen.sql; 
 \i C:/77DATA_BASE/inserts/ins_cuentas_por_tipo_documento.sql; 
 \i C:/77DATA_BASE/inserts/ins_in_tmvin.sql; 
+--
+--Usuario maestro de la aplicacion y parametros basicos para el funcionamiento de la aplicacion
+--
+\i C:/77DATA_BASE/usuario_maestro.sql;
+\i C:/77DATA_BASE/inserts/ins_ad_tpara.sql
 
 --\i C:/77DATA_BASE/cambios/001/instalador001.sql --Se eliminan los cambios ya que se integran a la linea base inicial
 --\i C:/77DATA_BASE/cambios/002/instalador002.sql --Se eliminan los cambios ya que se integran a la linea base inicial

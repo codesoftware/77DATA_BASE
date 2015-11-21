@@ -54,6 +54,8 @@ DECLARE
     SELECT COUNT(*) FROM in_tmarca 
       WHERE upper(trim(marca_nombre)) = upper(trim(marca));
     --
+    v_valida_inProd         varchar(200) := ''; 
+    --
     BEGIN 
     --
     FOR nombreCategoria IN c_consultacategoriastmp LOOP
@@ -65,7 +67,7 @@ DECLARE
         IF contador = 0 THEN
             --
             INSERT INTO in_tcate (cate_cate,cate_desc,cate_estado,cate_runic,cate_feven)
-            VALUES ((SELECT MAX(cate_cate)+1 from in_tcate),nombreCategoria.nombreCate,'A','',''); 
+            VALUES ((SELECT COALESCE(MAX(cate_cate),0)+1 from in_tcate),nombreCategoria.nombreCate,'A','',''); 
             --
         END IF;
         
@@ -76,30 +78,51 @@ DECLARE
        OPEN c_verificareferencias(nombreReferencia.referencia);
        FETCH c_verificareferencias INTO contador;
        CLOSE c_verificareferencias;
+       --
        IF contador = 0 THEN
           --
           OPEN c_consultaIdCategoria(nombreReferencia.referencia);
           FETCH c_consultaIdCategoria INTO idCategoria;
           CLOSE c_consultaIdCategoria;
+          --
           INSERT INTO in_trefe(refe_refe,refe_nombre,refe_desc,refe_estado,refe_cate) 
-          VALUES ((SELECT MAX(refe_refe)+1 from in_trefe),nombreReferencia.referencia,nombreReferencia.referencia,'A',idCategoria);
+          VALUES ((SELECT COALESCE(MAX(refe_refe),0)+1 from in_trefe),nombreReferencia.referencia,nombreReferencia.referencia,'A',idCategoria);
+          --
        END IF;
+       --
     END LOOP;
-    
+    --
     FOR nombreMarca IN c_consultaMarcaTmp LOOP
         --
         OPEN c_verificaMarcas(nombreMarca.marca);
         FETCH c_verificaMarcas INTO contador;
         CLOSE c_verificaMarcas;
+        --
          IF contador = 0 THEN 
             --
             INSERT INTO in_tmarca (marca_marca,marca_nombre,marca_descr,marca_estado)VALUES
-            ((SELECT MAX(marca_marca)+1 FROM in_tmarca),nombreMarca.marca,nombreMarca.marca,'A');
+            ((SELECT COALESCE(MAX(marca_marca),0)+1 from in_tmarca),nombreMarca.marca,nombreMarca.marca,'A');
+            --
          END IF;
-     END LOOP;       
-    RETURN 'OK';
+         --
+     END LOOP;  
+    --
+    v_valida_inProd := in_finsertaidexcel_tmp();
+    --
+    IF UPPER(v_valida_inProd) = 'OK' THEN
+        --
+        v_valida_inProd := cambio_nombre_prod();
+        --
+    ELSE
+        --
+        RAISE EXCEPTION 'Error in_finsertaexceltmp % ', v_valida_inProd; 
+        --
+    END IF;
+    --
+    RETURN v_valida_inProd;
+    --
     EXCEPTION WHEN OTHERS THEN
-         RETURN 'Err';
+         RETURN 'Error' ||SQLERRM;
 END;
 $BODY$
 LANGUAGE plpgsql VOLATILE

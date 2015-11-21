@@ -1,5 +1,6 @@
--- Funcion con 
-
+--
+-- Funcion con la cual obtengo el registro 
+--
 CREATE OR REPLACE FUNCTION IN_REGISTRA_PRODUCTO (    
                                         p_refe_refe         INT, 
                                         p_descripcion       VARCHAR(100),  --Este campo es la descripcion que da el usuario es el que quiera el usuario (El nombre es la referencia)
@@ -34,6 +35,7 @@ CREATE OR REPLACE FUNCTION IN_REGISTRA_PRODUCTO (
      WHERE dska_refe = p_refe_refe
        AND dska_marca = p_marca
        AND dska_cate = p_categoria
+       AND UPPER(TRIM(dska_desc)) = upper(trim(p_descripcion))
        ;
      --Codigo Repetido
     c_prodRepe CURSOR FOR
@@ -156,16 +158,16 @@ CREATE OR REPLACE FUNCTION IN_REGISTRA_PRODUCTO (
     FETCH c_codigo INTO v_codigo ;
     CLOSE c_codigo;
     --         
-    v_cod_prod  :=   US_FVERIFICA_COD_PROD(v_codigo);
-    --
-    IF v_cod_prod = 'S' THEN
-        --
-        RAISE EXCEPTION 'Ya existe un producto con el mismo codigo lo cual es imposible por favor contacte al administrador';
-        --
-    END IF;
+    --v_cod_prod  :=   US_FVERIFICA_COD_PROD(v_codigo);
+    ----
+    --IF v_cod_prod = 'N' THEN
+    --    --
+    --    RAISE EXCEPTION 'Ya existe un producto con el mismo codigo lo cual es imposible por favor contacte al administrador';
+    --    --
+    --END IF;
     --
     INSERT INTO in_tdska(dska_dska,DSKA_REFE,DSKA_COD, DSKA_NOM_PROD, DSKA_DESC, DSKA_IVA, DSKA_PORC_IVA, DSKA_MARCA,DSKA_CATE,DSKA_PROV)
-                  VALUES(v_dska_dska,p_refe_refe,v_codigo,'Por asignar',p_descripcion,'N',0,p_marca,p_categoria,1);
+                  VALUES(v_dska_dska,p_refe_refe,v_codigo,'Por asignar',upper(p_descripcion),'N',0,p_marca,p_categoria,1);
     --
     --Creacion de la subcuenta por categoria
     --
@@ -223,7 +225,7 @@ CREATE OR REPLACE FUNCTION IN_REGISTRA_PRODUCTO (
      WHERE dska_dska = v_dska_dska
     ;
     --
-    RETURN 'OK';
+    RETURN 'OK-'||v_dska_dska;
     --
     EXCEPTION WHEN OTHERS THEN
          RETURN 'Err' || sqlerrm;

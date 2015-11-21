@@ -29,7 +29,7 @@ CREATE OR REPLACE FUNCTION IN_FINSERTA_PROD_KARDEX (
        ;
        
        c_sig_serie CURSOR FOR
-       select max(kapr_cons_pro) + 1 
+       select coalesce(max(kapr_cons_pro),0) + 1 
         from in_tkapr
         where kapr_dska = p_id_producto
         ;
@@ -117,8 +117,8 @@ CREATE OR REPLACE FUNCTION IN_FINSERTA_PROD_KARDEX (
       VALUES(
             v_kapr_kapr, v_consecutivo, p_id_producto, 
             p_id_moviInv, p_numProd, v_valorUnitario, 
-            v_costoTotalMovi, v_uniPonderado, v_costTotProdNew, 
-            v_cantSaldoSig, p_id_tius,p_sede);
+            v_costoTotalMovi, coalesce(v_uniPonderado,v_valorUnitario), coalesce(v_costTotProdNew,v_costoTotalMovi), 
+            coalesce(v_cantSaldoSig,p_numProd), p_id_tius,p_sede);
             
         RETURN 'OK-'||v_kapr_kapr;
       
