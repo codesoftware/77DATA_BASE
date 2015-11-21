@@ -109,7 +109,7 @@ DECLARE
     --
     v_valida_inProd := in_finsertaidexcel_tmp();
     --
-    IF UPPER(v_valida_inProd) = 'OK' THEN
+    IF UPPER(v_valida_inProd) like '%OK%' THEN
         --
         v_valida_inProd := cambio_nombre_prod();
         --

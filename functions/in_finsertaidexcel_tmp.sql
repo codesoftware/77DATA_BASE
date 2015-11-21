@@ -12,12 +12,20 @@ DECLARE
            SELECT regexp_split_to_table('OK-2', '-') kapr_kapr
            offset 1) as tabla
            ;
-  --
-  v_rta                 varchar(1000) :='error';
-  v_idCate              int :=0;
-  v_idRefe              int :=0;
-  v_idMarca             int :=0;
-  v_dska_dska           int :=0;
+    --
+    --Obtengo el id de la tabla
+    --
+    c_idTabla CURSOR FOR
+    SELECT COALESCE(MAX(tmpidexc_tmpidexc), 0) + 1 
+    FROM in_tmpidexc
+    ;
+    --
+    v_rta                 varchar(1000) :='error';
+    v_idCate              int :=0;
+    v_idRefe              int :=0;
+    v_idMarca             int :=0;
+    v_dska_dska           int :=0;
+    v_idTabla             int :=0; 
   --
   --Cursor que consulta los datos de la tabla inicial del excel 
   --
@@ -77,9 +85,15 @@ DECLARE
              FETCH c_consultaIdMarca INTO v_idMarca;
              CLOSE c_consultaIdMarca;
              --
+             --Obtengo el id que va ha tener el registro
+             --
+             OPEN c_idTabla;
+             FETCH c_idTabla INTO v_idTabla;
+             CLOSE c_idTabla;
+             --
              INSERT INTO in_tmpidexc (tmpidexc_tmpidexc,tmpidexc_codexte,tmpidexc_ubicaci,tmpidexc_descrip,
                                       tmpidexc_categor,tmpidexc_subcate,tmpidexc_tipo,tmpidexc_existencia,tmpidexc_costo)
-                               VALUES(COALESCE((SELECT MAX(tmpidexc_tmpidexc) FROM in_tmpidexc)+1,1),datos.tmprefe_codexte,
+                               VALUES(v_idTabla,datos.tmprefe_codexte,
                                       datos.tmprefe_ubicaci,datos.tmprefe_descrip,v_idCate,v_idRefe,v_idMarca,datos.tmprefe_existencia,
                                       datos.tmprefe_costo);  
             --  
@@ -90,40 +104,20 @@ DECLARE
                                                 v_idCate
                                                 );
             --
-            IF UPPER(TRIM(v_ins_prod)) like UPPER('%OK%') THEN
+            IF UPPER(TRIM(v_ins_prod)) NOT LIKE UPPER('%OK%') THEN
                 --
                 RAISE EXCEPTION 'Error in_finsertaidexcel_tmp % ', v_ins_prod;
-                --  
+                --
             ELSE
-                --
-                OPEN c_sec_contabilidad;
-                FETCH c_sec_contabilidad INTO v_sec_cont;
-                CLOSE c_sec_contabilidad;
-                --
-                INSERT INTO co_ttem_mvco(
-                            tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
-                VALUES (v_sec_cont, '110501', '1000','C');
-                --
-                --Obtengo el id del producto
                 --
                 OPEN c_formato_dska(v_ins_prod);
                 FETCH c_formato_dska INTO v_dska_dska;
                 CLOSE c_formato_dska;
                 --
-                v_rta_ingExt := IN_ADICIONA_PROD_EXIS(
-                                                      v_dska_dska,
-                                                      datos.tmprefe_existencia,
-                                                      datos.tmprefe_costo,
-                                                      1,
-                                                      1,
-                                                      v_sec_cont
-                                                      );
-                --
-                IF UPPER(TRIM(v_rta_ingExt)) NOT LIKE 'OK' THEN 
-                    --
-                    RAISE EXCEPTION 'Error al ingresar existencias % ',v_rta_ingExt;
-                    --
-                END IF;
+                UPDATE in_tmpidexc
+                SET tmpidexc_dska = v_dska_dska
+                WHERE tmpidexc_dska = v_idTabla
+                ;
                 --
             END IF;
             --
