@@ -242,6 +242,7 @@
 \i C:/77DATA_BASE/functions/in_finsertaexceltmp.sql;
 \i C:/77DATA_BASE/functions/in_finsertaidexcel_tmp.sql;
 \i C:/77DATA_BASE/functions/IN_REGISTRA_PRODUCTO.sql;
+\i C:/77DATA_BASE/functions/FA_INSERTA_PROD_MASIVO.sql;
 --
 -- Triggers
 --

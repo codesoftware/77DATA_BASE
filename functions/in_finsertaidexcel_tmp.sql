@@ -9,7 +9,7 @@ DECLARE
     c_formato_dska CURSOR (vc_expresion varchar) IS
     SELECT cast(kapr_kapr as int)
       FROM (
-           SELECT regexp_split_to_table('OK-2', '-') kapr_kapr
+           SELECT regexp_split_to_table(vc_expresion, '-') kapr_kapr
            offset 1) as tabla
            ;
     --
@@ -110,13 +110,17 @@ DECLARE
                 --
             ELSE
                 --
+                --Realiza la actualizacion de la tabla temporal con el id del producto
+                --
                 OPEN c_formato_dska(v_ins_prod);
                 FETCH c_formato_dska INTO v_dska_dska;
                 CLOSE c_formato_dska;
                 --
+                --RAISE exception 'Para hacer el update idtabla(%) y el del dska (%)', v_idTabla,v_dska_dska ;
+                --
                 UPDATE in_tmpidexc
                 SET tmpidexc_dska = v_dska_dska
-                WHERE tmpidexc_dska = v_idTabla
+                WHERE tmpidexc_tmpidexc = v_idTabla
                 ;
                 --
             END IF;
