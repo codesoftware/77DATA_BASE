@@ -80,7 +80,7 @@ INSERT INTO co_tsbcu(
 --PARAMETRIZACIONES DE IVA DE VENTA Y COMPRA DE PRODUCTOS
 --
 INSERT INTO em_tpara(para_clave, para_valor)
-VALUES('IVAPR','16')
+VALUES('IVAPR','16');
 --
 INSERT INTO em_tpara(para_clave, para_valor)
-VALUES('IVAPRVENTA','16')
+VALUES('IVAPRVENTA','16');
