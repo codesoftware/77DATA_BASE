@@ -12,14 +12,6 @@ CREATE OR REPLACE FUNCTION FA_CREA_FACTURA_COMPLETO (
                                                     ) RETURNS VARCHAR  AS $$
     DECLARE
     --
-    --Cursor con el cual obtengo el id de un producto
-    --
-    c_formato_dska CURSOR (vc_expresion varchar) IS
-    SELECT cast(kapr_kapr as int)
-      FROM (
-           SELECT regexp_split_to_table('OK-2', '-') kapr_kapr
-           offset 1) as tabla
-    --
     --Logica para validaciones previas a la facturacion
     --
     --

@@ -17,7 +17,7 @@ DECLARE
   v_idCate              int :=0;
   v_idRefe              int :=0;
   v_idMarca             int :=0;
-  
+  v_dska_dska           int :=0;
   --
   --Cursor que consulta los datos de la tabla inicial del excel 
   --
@@ -59,6 +59,7 @@ DECLARE
   ;
   --
   v_sec_cont                int := 0;
+  v_rta_ingExt              varchar(2000) := '';
   --
     BEGIN
     --
@@ -102,6 +103,27 @@ DECLARE
                 INSERT INTO co_ttem_mvco(
                             tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
                 VALUES (v_sec_cont, '110501', '1000','C');
+                --
+                --Obtengo el id del producto
+                --
+                OPEN c_formato_dska(v_ins_prod);
+                FETCH c_formato_dska INTO v_dska_dska;
+                CLOSE c_formato_dska;
+                --
+                v_rta_ingExt := IN_ADICIONA_PROD_EXIS(
+                                                      v_dska_dska,
+                                                      datos.tmprefe_existencia,
+                                                      datos.tmprefe_costo,
+                                                      1,
+                                                      1,
+                                                      v_sec_cont
+                                                      );
+                --
+                IF UPPER(TRIM(v_rta_ingExt)) NOT LIKE 'OK' THEN 
+                    --
+                    RAISE EXCEPTION 'Error al ingresar existencias % ',v_rta_ingExt;
+                    --
+                END IF;
                 --
             END IF;
             --

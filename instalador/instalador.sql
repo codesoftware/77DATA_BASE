@@ -259,17 +259,17 @@
 --
 --  Inserts
 --
---Usuario maestro de la aplicacion
---
-\i C:/77DATA_BASE/usuario_maestro.sql;
-\i C:/77DATA_BASE/inserts/ins_ad_tpara.sql
-
 --inserts de parametrizacion
 \i C:/77DATA_BASE/inserts/ins_co_tclas.sql;    
 \i C:/77DATA_BASE/inserts/ins_co_tgrup.sql;  
 \i C:/77DATA_BASE/inserts/ins_co_tcuen.sql; 
 \i C:/77DATA_BASE/inserts/ins_cuentas_por_tipo_documento.sql; 
 \i C:/77DATA_BASE/inserts/ins_in_tmvin.sql; 
+--
+--Usuario maestro de la aplicacion y parametros basicos para el funcionamiento de la aplicacion
+--
+\i C:/77DATA_BASE/usuario_maestro.sql;
+\i C:/77DATA_BASE/inserts/ins_ad_tpara.sql
 
 --\i C:/77DATA_BASE/cambios/001/instalador001.sql --Se eliminan los cambios ya que se integran a la linea base inicial
 --\i C:/77DATA_BASE/cambios/002/instalador002.sql --Se eliminan los cambios ya que se integran a la linea base inicial
