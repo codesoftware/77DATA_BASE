@@ -12,6 +12,14 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
          FROM in_tmpidexc
          ;
         --
+        --Cursor con el cual calculo el valor del movimiento contable que se va ha realizar
+        --
+        c_valorMvtocont CURSOR(vc_costo NUMERIC) IS
+        SELECT ((CAST(para_valor AS INT) * vc_costo)/100) + vc_costo
+          FROM em_tpara
+         WHERE PARA_CLAVE = 'IVAPR'
+         ;
+        --
         --
         c_sec_contabilidad CURSOR IS
         SELECT CAST(nextval('co_temp_tran_factu_sec') AS INT)
@@ -19,6 +27,14 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
         --
         v_sec_cont      INT :=0;
         v_valRegistro   varchar(200) := '';  
+        --
+        v_precio        NUMERIC(50,6) := 0;
+        --
+        v_modulo        NUMERIC(50,6) := 0;
+        --
+        v_faltante      NUMERIC(50,6) := 0;
+        --
+        v_valorMvto     NUMERIC(50,6) := 0;
         --
     BEGIN
         --
@@ -28,15 +44,64 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
             FETCH c_sec_contabilidad INTO v_sec_cont;
             CLOSE c_sec_contabilidad;
             --
+            OPEN c_valorMvtocont(dato.tmpidexc_costo);
+            FETCH c_valorMvtocont INTO v_valorMvto;
+            CLOSE c_valorMvtocont;
+            --
+            --
             INSERT INTO co_ttem_mvco(
                             tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
-                VALUES (v_sec_cont, '110501', dato.tmpidexc_costo ,'C');
+                VALUES (v_sec_cont, '110501', v_valorMvto ,'C');
             --
-            v_valRegistro := IN_ADICIONA_PROD_EXIS(dato.tmpidexc_dska, cast(dato.tmpidexc_existencia as INT) ,dato.tmpidexc_costo,dato.sede,1,v_sec_cont);
+            v_valRegistro := IN_ADICIONA_PROD_EXIS(dato.tmpidexc_dska, cast(dato.tmpidexc_existencia as INT) , dato.tmpidexc_costo ,dato.sede,1,v_sec_cont);
             --
             IF UPPER(TRIM(v_valRegistro)) NOT LIKE '%OK%' THEN
                 --
                 RAISE EXCEPTION 'Error al realizar el ingreso de existencias masivas ', v_valRegistro;
+                --
+            ELSE
+                --
+                --Calculo de precios para cada producto
+                --                
+                UPDATE in_tprpr
+                   SET prpr_estado = 'I'
+                 WHERE prpr_sede = dato.sede
+                   AND prpr_dska = dato.tmpidexc_dska
+                   ;
+                --
+                v_precio := ((dato.tmpidexc_costo*20)/100) + dato.tmpidexc_costo;
+                --
+                IF v_precio < 50 THEN
+                    --
+                    v_precio := 50;
+                    --
+                ELSIF v_precio between 50 and 100 THEN
+                    --
+                    v_precio := 100;
+                    --
+                ELSIF v_precio between 100 and 1000 THEN
+                    --
+                    v_modulo := v_precio % 100;
+                    v_faltante := 100 - v_modulo;
+                    v_precio := v_precio + v_faltante;
+                    v_precio := round(v_precio);
+                    --
+                ELSE
+                    --
+                    v_modulo := v_precio % 1000;
+                    v_faltante := 1000 - v_modulo;
+                    v_precio := v_precio + v_faltante;
+                    v_precio := round(v_precio);
+                    --
+                END IF;
+                --
+                --Insercion del precio
+                --
+                INSERT INTO in_tprpr(
+                            prpr_dska, prpr_precio, prpr_tius_crea, prpr_tius_update, 
+                            prpr_estado, prpr_sede)
+                    VALUES (dato.tmpidexc_dska, v_precio , 1, 1, 
+                            'A', 1);
                 --
             END IF;
             --

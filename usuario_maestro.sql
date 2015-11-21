@@ -60,3 +60,27 @@ INSERT INTO co_tsbcu(
             sbcu_codigo, sbcu_descripcion, sbcu_naturaleza)
     VALUES (278, 5, 32, 'A', 'DESCUENTOS', 
             '35', 'DESCUENTOS', 'D');
+--
+--Insercion de subcuentas 
+--
+INSERT INTO co_tsbcu(
+            sbcu_cuen, sbcu_clas, sbcu_grup, sbcu_estado, sbcu_nombre, 
+            sbcu_codigo, sbcu_descripcion, sbcu_naturaleza)
+    VALUES (290, 6, 35, 'A',  'COMERCIO AL POR MAYOR Y AL POR MENOR', 
+            '35',  'COMERCIO AL POR MAYOR Y AL POR MENOR', 'D');
+--
+--Insercion de subcuentas 
+--
+INSERT INTO co_tsbcu(
+            sbcu_cuen, sbcu_clas, sbcu_grup, sbcu_estado, sbcu_nombre, 
+            sbcu_codigo, sbcu_descripcion, sbcu_naturaleza)
+    VALUES (221, 4, 27, 'A',  'MERCNCIAS AL POR MAYOR Y AL POR MENOR', 
+            '35',  'MERCNCIAS AL POR MAYOR Y AL POR MENOR', 'C');
+--
+--PARAMETRIZACIONES DE IVA DE VENTA Y COMPRA DE PRODUCTOS
+--
+INSERT INTO em_tpara(para_clave, para_valor)
+VALUES('IVAPR','16')
+--
+INSERT INTO em_tpara(para_clave, para_valor)
+VALUES('IVAPRVENTA','16')
