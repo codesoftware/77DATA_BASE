@@ -1,3 +1,6 @@
+--
+--tabla creada para los parametros empresariales
+--
 CREATE TABLE AD_TPARSADM(
 PARSADM_PARSADM          SERIAL        ,
 PARSADM_NOMBRE           VARCHAR(2000) ,

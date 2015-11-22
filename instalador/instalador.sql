@@ -50,6 +50,7 @@
 \i C:/77DATA_BASE/tables/in_tmpidexc.sql;
 \i C:/77DATA_BASE/tables/in_tpedi.sql;
 \i C:/77DATA_BASE/tables/in_tpedprod.sql;
+\i C:/77DATA_BASE/tables/ad_tparsadm.sql;
 --
 --Alters
 --

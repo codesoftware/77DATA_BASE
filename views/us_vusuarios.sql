@@ -20,7 +20,7 @@ select pers.pers_nombre                         nombre,
        sede_nombre                              nombreSede
 FROM us_ttius tius, us_tpers pers, us_tperf perf, em_tsede
 WHERE tius.tius_pers = pers_pers
-  AND tius.tius_estado = 'A'
+  --AND tius.tius_estado = 'A'
   AND tius.tius_perf = perf.perf_perf
   AND tius_sede = sede_sede
 ;
