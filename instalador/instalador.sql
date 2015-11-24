@@ -51,6 +51,9 @@
 \i C:/77DATA_BASE/tables/in_tpedi.sql;
 \i C:/77DATA_BASE/tables/in_tpedprod.sql;
 \i C:/77DATA_BASE/tables/ad_tparsadm.sql;
+\i C:/77DATA_BASE/tables/ub_tpais.sql;
+\i C:/77DATA_BASE/tables/ub_tdepa.sql;
+\i C:/77DATA_BASE/tables/ub_tciud.sql;
 --
 --Alters
 --
@@ -152,6 +155,9 @@
 \i C:/77DATA_BASE/comments/in_tmprefe_com.sql;
 \i C:/77DATA_BASE/comments/in_tpedi_com.sql;
 \i C:/77DATA_BASE/comments/in_tpedprod_com.sql;
+\i C:/77DATA_BASE/comments/ub_tpais_com.sql;
+\i C:/77DATA_BASE/comments/ub_tdepa_com.sql;
+\i C:/77DATA_BASE/comments/ub_tciud_com.sql;
 --
 -- Llaves foraneas
 --
@@ -274,6 +280,9 @@
 \i C:/77DATA_BASE/inserts/ins_co_tcuen.sql; 
 \i C:/77DATA_BASE/inserts/ins_cuentas_por_tipo_documento.sql; 
 \i C:/77DATA_BASE/inserts/ins_in_tmvin.sql; 
+\i C:/77DATA_BASE/inserts/ins_ub_tpais.sql; 
+\i C:/77DATA_BASE/inserts/ins_ub_tdepa.sql; 
+\i C:/77DATA_BASE/inserts/ins_ub_tciud.sql; 
 --
 --Usuario maestro de la aplicacion y parametros basicos para el funcionamiento de la aplicacion
 --
