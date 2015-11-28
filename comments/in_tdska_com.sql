@@ -6,3 +6,8 @@ COMMENT ON COLUMN IN_TDSKA.DSKA_NOM_PROD            IS          'Nombre que iden
 COMMENT ON COLUMN IN_TDSKA.DSKA_IVA                 IS          'Indica si el producto es gravado con iva';
 COMMENT ON COLUMN IN_TDSKA.DSKA_PORC_IVA            IS          'Porcentaje que se le deve grabar el iva';
 COMMENT ON COLUMN IN_TDSKA.DSKA_MARCA               IS          'Marca del producto que se va a ingresar';
+COMMENT ON COLUMN IN_TDSKA.DSKA_ESTADO              IS          'Estado en el cua se encuentra el producto A(Activo) e I(inactivo) al estar inactivo no se puede vender el producto';
+COMMENT ON COLUMN IN_TDSKA.DSKA_FEC_INGRESO         IS          'Fecha en la cual se ingreso el producto a la base de datos';
+COMMENT ON COLUMN IN_TDSKA.DSKA_CATE                IS          'Categoria del producto esta parametrica funciona para las subcuentas de inventario';
+COMMENT ON COLUMN IN_TDSKA.DSKA_SBCU                IS          'Subcuenta a la cual se va el inventario de los productos';
+COMMENT ON COLUMN IN_TDSKA.DSKA_PROV                IS          'Proveedor principal del producto';

@@ -12,5 +12,6 @@ CREATE TABLE em_tsede(
    sede_fecin               date default now()           ,
    sede_tius                int                          ,
    sede_estado              varchar(2) default   'A'     ,
+   sede_bodega              varchar(2) default   'N'     ,
    PRIMARY KEY (sede_sede)	
 ); 
