@@ -44,6 +44,7 @@
 \i C:/77DATA_BASE/tables/in_tppfa.sql;
 \i C:/77DATA_BASE/tables/co_ttem_fact_rece.sql;
 \i C:/77DATA_BASE/tables/in_tcepr.sql;
+\i C:/77DATA_BASE/tables/in_teprs.sql;
 \i C:/77DATA_BASE/tables/fa_tdtre.sql;
 \i C:/77DATA_BASE/tables/fa_trrka.sql;
 \i C:/77DATA_BASE/tables/in_tmprefe.sql;
@@ -158,6 +159,7 @@
 \i C:/77DATA_BASE/comments/ub_tpais_com.sql;
 \i C:/77DATA_BASE/comments/ub_tdepa_com.sql;
 \i C:/77DATA_BASE/comments/ub_tciud_com.sql;
+\i C:/77DATA_BASE/comments/in_teprs_com.sql;
 --
 -- Llaves foraneas
 --
