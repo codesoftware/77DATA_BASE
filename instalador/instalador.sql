@@ -253,6 +253,7 @@
 \i /77DATA_BASE/functions/in_finsertaidexcel_tmp.sql;
 \i /77DATA_BASE/functions/IN_REGISTRA_PRODUCTO.sql;
 \i /77DATA_BASE/functions/FA_INSERTA_PROD_MASIVO.sql;
+\i /77DATA_BASE/functions/FA_VAL_CON_FACTU.sql;
 --
 -- Triggers
 --
