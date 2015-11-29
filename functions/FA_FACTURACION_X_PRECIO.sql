@@ -132,13 +132,35 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
     --
     v_valida_basica         varchar(4000)   := '':
     --
+    c_valida_Pedido CURSOR FOR
+    select count(*)
+      from in_tpedi
+     where pedi_pedi = p_idPedido
+     ;
+    v_valida_pedido         INT:=0;
+    --
     BEGIN
     --
     v_valida_basica := FA_VAL_CON_FACTU(p_sede);
     --
+    --
     IF UPPER(v_valida_basica) <> 'OK' THEN
         --
-        RAISE EXCEPTION ' %'
+        RAISE EXCEPTION ' %', v_valida_basica;
+        --
+    END IF;
+    --
+    IF p_idPedido <> 0 THEN
+        --
+        OPEN c_valida_Pedido;
+        FETCH c_valida_Pedido INTO v_valida_pedido;
+        CLOSE c_valida_Pedido;
+        --
+        IF v_valida_pedido = 0 THEN
+            --
+            RAISE EXCEPTION ' La factura referencia un pedido inexistente con el numero % ', p_idPedido;
+            --
+        END IF;
         --
     END IF;
     --
@@ -148,20 +170,20 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
     --
     IF upper(p_tipoPago) = 'T' THEN
         --
-        INSERT INTO FA_TFACT(fact_fact,   fact_tius, fact_clien, fact_vlr_total, fact_vlr_iva, fact_tipo_pago, fact_id_voucher, fact_sede)
-                     VALUES (v_fact_fact, p_tius,    p_clien,    v_vlr_total,    v_vlr_iva,    'T',            p_idVoucher,p_sede)
+        INSERT INTO FA_TFACT(fact_fact,   fact_tius, fact_clien, fact_vlr_total, fact_vlr_iva, fact_tipo_pago, fact_id_voucher, fact_sede, fact_pedi)
+                     VALUES (v_fact_fact, p_tius,    p_clien,    v_vlr_total,    v_vlr_iva,    'T',            p_idVoucher,p_sede,p_idPedido)
                     ;
         --
     ELSIF upper(p_tipoPago) = 'M' THEN
         --
-        INSERT INTO FA_TFACT(fact_fact,   fact_tius, fact_clien, fact_vlr_total, fact_vlr_iva, fact_tipo_pago, fact_id_voucher, fact_sede)
-                     VALUES (v_fact_fact, p_tius,    p_clien,    v_vlr_total,    v_vlr_iva,    'M',            p_idVoucher,p_sede)
+        INSERT INTO FA_TFACT(fact_fact,   fact_tius, fact_clien, fact_vlr_total, fact_vlr_iva, fact_tipo_pago, fact_id_voucher, fact_sede, fact_pedi)
+                     VALUES (v_fact_fact, p_tius,    p_clien,    v_vlr_total,    v_vlr_iva,    'M',            p_idVoucher,p_sede,p_idPedido)
                     ;
         --
     ELSE
         --
-        INSERT INTO FA_TFACT(fact_fact,   fact_tius, fact_clien, fact_vlr_total, fact_vlr_iva, fact_sede)
-                     VALUES (v_fact_fact, p_tius,    p_clien,    v_vlr_total,    v_vlr_iva, p_sede)
+        INSERT INTO FA_TFACT(fact_fact,   fact_tius, fact_clien, fact_vlr_total, fact_vlr_iva, fact_sede, fact_pedi)
+                     VALUES (v_fact_fact, p_tius,    p_clien,    v_vlr_total,    v_vlr_iva, p_sede,p_idPedido)
         ;
         --
     END IF;

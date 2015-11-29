@@ -17,3 +17,4 @@ COMMENT ON COLUMN FA_TFACT.FACT_VLR_EFECTIVO        IS          'Indica el valor
 COMMENT ON COLUMN FA_TFACT.FACT_VLR_TARJETA         IS          'Indica el valor que pago el cliente en tarjeta';
 COMMENT ON COLUMN FA_TFACT.FACT_CIERRE              IS          'Referencia el id del cierre en el cual fue realizado la factura';
 COMMENT ON COLUMN FA_TFACT.FACT_SEDE                IS          'Referencia el id de la sede en la cual fue realizada la factura';
+COMMENT ON COLUMN FA_TFACT.FACT_PEDI                IS          'Referencia el id de la tabla de pedidos en el caso en el que el campo sea cero quiere decir que no tiene un pedido asociado';

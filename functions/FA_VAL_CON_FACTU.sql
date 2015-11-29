@@ -245,6 +245,6 @@ CREATE OR REPLACE FUNCTION FA_VAL_CON_FACTU (
     RETURN 'OK';
     --
     EXCEPTION WHEN OTHERS THEN
-         RETURN 'Error '|| sqlerrm;
+         RETURN 'Error FA_VAL_CON_FACTU '|| sqlerrm;
     END;
 $$ LANGUAGE 'plpgsql';

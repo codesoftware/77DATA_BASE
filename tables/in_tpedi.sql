@@ -8,4 +8,3 @@ CREATE TABLE in_tpedi(
      pedi_fact         integer                          ,
      PRIMARY KEY(pedi_pedi)
   ); 
-   
