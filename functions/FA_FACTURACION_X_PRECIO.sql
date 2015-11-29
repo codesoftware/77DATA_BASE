@@ -130,7 +130,7 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
     v_vlr_total_factura     NUMERIC(15,6) := 0;
     v_idTrans_con           INT := 0;
     --
-    v_valida_basica         varchar(4000)   := '':
+    v_valida_basica         varchar(4000)   := '';
     --
     c_valida_Pedido CURSOR FOR
     select count(*)
