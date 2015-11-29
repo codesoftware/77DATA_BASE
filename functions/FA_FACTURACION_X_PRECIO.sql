@@ -1,59 +1,20 @@
 --
--- Funcion encargada de realizar toda la facturacion del sistema
+-- Funcion con la cual se validan las precondiciones necesarias para facturar como lo son 
 --
-CREATE OR REPLACE FUNCTION FA_FACTURACION   (  
-                                                p_tius          INT,
-                                                p_clien         INT,
-                                                p_idTrans       INT,
-                                                p_sede          INT,
-                                                p_tipoPago      varchar,
-                                                p_idVoucher     NUMERIC(15,6),
-                                                p_valrTarjeta   NUMERIC(15,6)
-                                            ) RETURNS VARCHAR  AS $$
+CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (  
+                                p_tius                  INT,
+                                p_clien                 INT,
+                                p_idTrans               INT,
+                                p_sede                  INT, 
+                                p_tipoPago              VARCHAR,
+                                p_idVaucher             NUMERIC(15,6),
+                                p_valrTarjeta           NUMERIC(15,6),
+                                p_idPedido              INT
+                         )RETURNS VARCHAR AS $$
     DECLARE
     --
     --Logica para validaciones previas a la facturacion
     --
-    --
-    --Cursor el cual valida si la subcuenta para el iva generado existe
-    --
-    c_val_caja_menor CURSOR FOR
-    SELECT count(*)
-      FROM co_tsbcu
-     WHERE sbcu_codigo = '110501'
-      ;
-    --
-    --Cursor el cual valida si la subcuenta para el iva generado existe
-    --
-    c_val_iva_generado CURSOR FOR
-    SELECT count(*)
-      FROM co_tsbcu
-     WHERE sbcu_codigo = '240802'
-      ;
-    --
-    --Cursor el cual verifica si existe la subcuenta para el costo por ventas
-    --
-    c_costo_ventas CURSOR FOR
-    SELECT count(*)
-      FROM co_tsbcu
-     WHERE sbcu_codigo = '613535'
-      ;
-    --
-    --Cursor el cual verifica si existe la subcuenta para la Mercancia al por mayor y menor
-    --
-    c_mercancia_mm CURSOR FOR
-    SELECT count(*)
-      FROM co_tsbcu
-     WHERE sbcu_codigo = '413535'
-      ;
-    --
-    --Cursor el cual verifica si existe la subcuenta para los descuentos
-    --
-    c_descuentos CURSOR FOR
-    SELECT count(*)
-      FROM co_tsbcu
-     WHERE sbcu_codigo = '530535'
-      ;
     --
     v_vlr_total_fact_co     NUMERIC(15,6) := 0;
     --
@@ -169,58 +130,15 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION   (
     v_vlr_total_factura     NUMERIC(15,6) := 0;
     v_idTrans_con           INT := 0;
     --
+    v_valida_basica         varchar(4000)   := '':
+    --
     BEGIN
     --
-    --Inicio de Validacion de Subcuentas Contables necesarias para la contabilizacion
+    v_valida_basica := FA_VAL_CON_FACTU(p_sede);
     --
-    --
-    OPEN c_val_iva_generado;
-    FETCH c_val_iva_generado INTO v_val_iva_generado;
-    CLOSE c_val_iva_generado;
-    --
-    OPEN c_costo_ventas;
-    FETCH c_costo_ventas INTO v_val_costo_ventas;
-    CLOSE c_costo_ventas;
-    --
-    OPEN c_mercancia_mm;
-    FETCH c_mercancia_mm INTO v_val_mercancias_mm;
-    CLOSE c_mercancia_mm;
-    --
-    OPEN c_descuentos;
-    FETCH c_descuentos INTO v_val_descuentos;
-    CLOSE c_descuentos;
-    --
-    OPEN c_val_caja_menor;
-    FETCH c_val_caja_menor INTO v_val_caja_menor;
-    CLOSE c_val_caja_menor;
-    --
-    IF v_val_iva_generado <> 1 THEN
+    IF UPPER(v_valida_basica) <> 'OK' THEN
         --
-        RAISE EXCEPTION 'Error cuenta de iva generado 240802 no se encuentra parametrizada por favor comunicarse con el administrador del sistema ';
-        --
-    END IF;
-    --
-    IF v_val_costo_ventas <> 1 THEN
-        --
-        RAISE EXCEPTION 'Error cuenta de costo de ventas 613535 no se encuentra parametrizada por favor comunicarse con el administrador del sistema ';
-        --
-    END IF;
-    --
-    IF v_val_mercancias_mm <> 1 THEN
-        --
-        RAISE EXCEPTION 'Error cuenta de mercancias al por menor y mayor 413535 no se encuentra parametrizada por favor comunicarse con el administrador del sistema ';
-        --
-    END IF;
-    --
-    IF v_val_descuentos <> 1 THEN
-        --
-        RAISE EXCEPTION 'Error cuenta de descuentos por ventas 530535 no se encuentra parametrizada por favor comunicarse con el administrador del sistema ';
-        --
-    END IF;
-    --
-    IF v_val_caja_menor <> 1 THEN
-        --
-        RAISE EXCEPTION 'Error cuenta de caja menor 110501 no se encuentra parametrizada por favor comunicarse con el administrador del sistema ';
+        RAISE EXCEPTION ' %'
         --
     END IF;
     --
@@ -386,8 +304,8 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION   (
     WHERE tem_mvco_trans =  v_idTrans_con
     ;
     RETURN 'Ok-'||v_fact_fact;
-    --    
+    -- 
     EXCEPTION WHEN OTHERS THEN
-         RETURN 'Error FA_FACTURACION '|| sqlerrm;
+         RETURN 'Error FA_FACTURACION_X_PRECIO '|| sqlerrm;
     END;
 $$ LANGUAGE 'plpgsql';
