@@ -12,11 +12,29 @@ CREATE OR REPLACE FUNCTION f_ins_kapr_negativos() RETURNS trigger AS $f_ins_kapr
         --
         v_exist_cepr    int := 0;
         --
+        --Cursor con el cual evaluo si existe un producto en la tabla consolidada de existencias por sede
+        --
+        c_ex_prod_sede CURSOR FOR
+        SELECT eprs_eprs
+          FROM in_teprs
+         WHERE eprs_dska = NEW.KAPR_DSKA
+           AND eprs_sede = NEW.KAPR_SEDE
+           ;
+        --
+        c_cursor_mvto_inv CURSOR FOR
+        SELECT mvin_natu
+         FROM in_tmvin
+         WHERE mvin_mvin = NEW.KAPR_MVIN
+         ;
+        --
+        v_ext_pr_sede   int := 0;
+        v_natuMovi      varchar(2) := '';
+        --
     BEGIN
         --
         IF NEW.kapr_cant_saldo < 0 THEN 
             --
-            raise exception 'El movimiento que esta generando da como resultado un saldo negativo lo cual no es permitido con el siguiente codigo 1-%', NEW.kapr_dska;
+            RAISE EXCEPTION 'El movimiento que esta generando da como resultado un saldo negativo lo cual no es permitido con el siguiente codigo 1-%', NEW.kapr_dska;
             --
         END IF;
         --
@@ -46,6 +64,33 @@ CREATE OR REPLACE FUNCTION f_ins_kapr_negativos() RETURNS trigger AS $f_ins_kapr
              WHERE cepr_dska = NEW.KAPR_DSKA
              ;
         --
+        END IF;
+        --
+        OPEN c_ex_prod_sede;
+        FETCH c_ex_prod_sede INTO v_ext_pr_sede;
+        CLOSE c_ex_prod_sede;
+        --
+        IF v_ext_pr_sede is null THEN 
+            --
+            INSERT INTO IN_TEPRS(eprs_dska,eprs_existencia,eprs_sede)
+            VALUES(NEW.KAPR_DSKA, NEW.KAPR_CANT_MVTO,NEW.KAPR_SEDE);
+            --
+        ELSE
+            --
+            OPEN c_cursor_mvto_inv;
+            FETCH c_cursor_mvto_inv INTO v_natuMovi;
+            CLOSE c_cursor_mvto_inv;
+            --
+            IF upper(v_natuMovi) = 'E' then
+                --
+                NEW.KAPR_CANT_MVTO := NEW.KAPR_CANT_MVTO * (-1);
+                --
+            END IF;
+            --
+            UPDATE IN_TEPRS
+               SET eprs_existencia = eprs_existencia + NEW.KAPR_CANT_MVTO
+             WHERE eprs_eprs = v_ext_pr_sede
+             ;
         END IF;
         --
         RETURN NEW;        
