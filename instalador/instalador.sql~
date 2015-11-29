@@ -55,7 +55,6 @@
 \i /77DATA_BASE/tables/ub_tpais.sql;
 \i /77DATA_BASE/tables/ub_tdepa.sql;
 \i /77DATA_BASE/tables/ub_tciud.sql;
-\i /77DATA_BASE/tables/fa_tprodhome.sql;
 --
 --Alters
 --
