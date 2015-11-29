@@ -13,5 +13,6 @@ CREATE TABLE em_tsede(
    sede_tius                int                          ,
    sede_estado              varchar(2) default   'A'     ,
    sede_bodega              varchar(2) default   'N'     ,
+   sede_sbcu_caja           int        default    0      ,
    PRIMARY KEY (sede_sede)	
 ); 
