@@ -139,6 +139,17 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
      ;
     v_valida_pedido         INT:=0;
     --
+    --Cursor con el cual se obtiene el id de la subcuenta de la caja menor
+    --
+    c_sbcu_caja CURSOR FOR
+    SELECT sbcu_codigo
+      FROM em_tsede, co_tsbcu
+     WHERE sede_sede = p_sede
+       AND sbcu_sbcu = sede_sbcu_caja
+     ;
+    --
+    v_sbcu_caja_cod     varchar(10):= '';
+    --
     BEGIN
     --
     v_valida_basica := FA_VAL_CON_FACTU(p_sede);
@@ -276,9 +287,13 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
     --
     --Logica para que el dinero valla directo a la caja menor
     --
+    OPEN c_sbcu_caja;
+    FETCH c_sbcu_caja INTO v_sbcu_caja_cod;
+    CLOSE c_sbcu_caja;
+    --
     INSERT INTO co_ttem_mvco(
             tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
-                     VALUES (v_idTrans_con, '110501' , v_vlr_total_fact_co , 'D');
+                     VALUES (v_idTrans_con, v_sbcu_caja_cod , v_vlr_total_fact_co , 'D');
     --
     UPDATE fa_tfact
     SET fact_vlr_efectivo = v_vlr_total_fact_co

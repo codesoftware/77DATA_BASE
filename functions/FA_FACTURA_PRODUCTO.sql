@@ -93,7 +93,8 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(
     --Cursor con el cual obtengo el valor del promedio pornderado del producto
     --
     c_prom_pond_prod CURSOR(vc_dska_dska INT) IS
-    SELECT kapr_cost_saldo_uni, kapr_cant_saldo,kapr_cost_saldo_tot
+    SELECT kapr_cost_mvto_uni, kapr_cant_saldo,kapr_cost_saldo_tot 
+    --SELECT kapr_cost_saldo_uni, kapr_cant_saldo,kapr_cost_saldo_tot -- Se cambia por que en el caso de que se venda la ultima existencia todos los valores daran en ceros
       FROM in_tkapr
      WHERE kapr_kapr = (select max(kapr_kapr) from in_tkapr where kapr_dska = vc_dska_dska)
     ;

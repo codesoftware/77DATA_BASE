@@ -22,7 +22,7 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
         --
         --
         c_sec_contabilidad CURSOR IS
-        SELECT CAST(nextval('co_temp_tran_factu_sec') AS INT)
+        SELECT CAST(nextval('co_temp_movi_contables') AS INT)
         ;
         --
         --Cursor con el cual obtengo el porcentaje para calcular el precio dependiendo su categoria
