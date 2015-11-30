@@ -7,7 +7,8 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(
                                                 p_sede          INT,        --Sede en la cual se esta vendiendo el producto
                                                 p_cantidad      INT,        --Cantidad de productos que se vendieron
                                                 p_idmvco        INT,        --Id de los movimientos contables que generar la transaccion
-                                                p_fact          INT         --Id de facturacion    
+                                                p_fact          INT,        --Id de facturacion 
+                                                p_precio        NUMERIC
                                             ) RETURNS VARCHAR  AS $$
     DECLARE
     --
@@ -153,6 +154,13 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(
     OPEN c_precio_prod(p_dska);
     FETCH c_precio_prod INTO v_precio_prod;
     CLOSE c_precio_prod;
+    --
+    --
+    IF p_precio > v_precio_prod THEN 
+        --
+        v_precio_prod := p_precio;
+        --
+    END IF;
     --
     --Obtengo el valor del promedio ponderado del producto
     --

@@ -7,8 +7,8 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
                                 p_idTrans               INT,
                                 p_sede                  INT, 
                                 p_tipoPago              VARCHAR,
-                                p_idVaucher             NUMERIC(15,6),
-                                p_valrTarjeta           NUMERIC(15,6),
+                                p_idVaucher             int,
+                                p_valrTarjeta           int,
                                 p_idPedido              INT
                          )RETURNS VARCHAR AS $$
     DECLARE
@@ -43,7 +43,7 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
     --Cursor el cual obtiene todos los productos que fueron facturados teniendo en cuenta el id de transaccion
     --
     c_prod_fact CURSOR FOR
-    SELECT tem_fact_dska, tem_fact_cant,tem_fact_dcto 
+    SELECT tem_fact_dska, tem_fact_cant,tem_fact_dcto , tem_fact_pruni
       FROM co_ttem_fact
      WHERE tem_fact_trans = p_idTrans
      ;
@@ -59,7 +59,8 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
     --Variable con la cual utilizo para almacenar la respuesta de 
     --
     v_rta_fact_prod             varchar(500):= '';
-    v_rta_fact_rece             varchar(500):= '';    
+    v_rta_fact_rece             varchar(500):= '';  
+    v_precio_prod               numeric(15,6):= 0;
     --
     --Cursor el cual sirve para obtener el id temporal de transaccion para la tabla temporal
     --de movimientos contables
@@ -216,7 +217,8 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
                                                 p_sede,
                                                 prod.tem_fact_cant,
                                                 v_idTrans_con,
-                                                cast(v_fact_fact as int)
+                                                cast(v_fact_fact as int),
+                                                prod.tem_fact_pruni
                                                 );
         --
         IF UPPER(v_rta_fact_prod) <> 'OK' THEN 
