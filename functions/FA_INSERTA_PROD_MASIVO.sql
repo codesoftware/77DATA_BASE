@@ -75,7 +75,7 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
             --
             IF UPPER(TRIM(v_valRegistro)) NOT LIKE '%OK%' THEN
                 --
-                RAISE EXCEPTION 'Error al realizar el ingreso de existencias masivas ', v_valRegistro;
+                RAISE EXCEPTION 'Error al realizar el ingreso de existencias masivas %', v_valRegistro;
                 --
             ELSE
                 --

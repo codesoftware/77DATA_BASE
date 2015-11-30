@@ -195,7 +195,20 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(
     --
     v_vlr_uni_fact_iva := v_precio_prod + v_vlr_iva_uni;
     --
-    v_prom_pond_tot := p_cantidad * v_prom_pond;
+    v_prom_pond_tot := p_cantidad * v_vlr_prom_pond;
+    --
+--    INSERT INTO fa_tdtpr(
+--            dtpr_dtpr, dtpr_dska, dtpr_fact, 
+--            dtpr_num_prod, dtpr_cant, dtpr_vlr_pr_tot, 
+--            dtpr_vlr_uni_prod, dtpr_vlr_iva_tot, dtpr_vlr_iva_uni, 
+--            dtpr_vlr_venta_tot, dtpr_vlr_venta_uni, dtpr_vlr_total, 
+--            dtpr_desc, dtpr_kapr,dtpr_valor_desc,dtpr_utilidad)
+--        VALUES (
+--            v_dtpr_dtpr, p_dska, p_fact, 
+--            0, p_cantidad, v_prom_pond_tot, 
+--            v_vlr_prom_pond, v_vlr_iva_tot, v_vlr_iva_uni, 
+--            v_vlr_tot_fact_iva, v_vlr_uni_fact_iva, v_vlr_tot_fact_iva,
+--            'N', v_kapr_kapr,0,v_utilidad_prod );
     --
     INSERT INTO fa_tdtpr(
             dtpr_dtpr, dtpr_dska, dtpr_fact, 
@@ -205,8 +218,8 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(
             dtpr_desc, dtpr_kapr,dtpr_valor_desc,dtpr_utilidad)
         VALUES (
             v_dtpr_dtpr, p_dska, p_fact, 
-            0, p_cantidad, v_prom_pond_tot, 
-            v_prom_pond, v_vlr_iva_tot, v_vlr_iva_uni, 
+            0, p_cantidad, v_precio_prod*p_cantidad, 
+            v_precio_prod, v_vlr_iva_tot, v_vlr_iva_uni, 
             v_vlr_tot_fact_iva, v_vlr_uni_fact_iva, v_vlr_tot_fact_iva,
             'N', v_kapr_kapr,0,v_utilidad_prod );
     --
