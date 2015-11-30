@@ -25,6 +25,15 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
         SELECT CAST(nextval('co_temp_tran_factu_sec') AS INT)
         ;
         --
+        --Cursor con el cual obtengo el porcentaje para calcular el precio dependiendo su categoria
+        --
+        c_porcentaje_precio CURSOR(vc_dska_dska INT) IS
+        select cate_porcentaje
+          from in_tdska, in_tcate
+         where dska_cate = cate_cate
+           and dska_dska = vc_dska_dska
+           ;
+        --
         v_sec_cont      INT :=0;
         v_valRegistro   varchar(200) := '';  
         --
@@ -36,15 +45,24 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
         --
         v_valorMvto     NUMERIC(50,6) := 0;
         --
+        v_costo_total   NUMERIC(15,6) := 0;
+        --
+        v_porc_precio   numeric(15,6) := 0;
     BEGIN
         --
         FOR dato IN c_datosExcel LOOP
-        --
+        --  
+            OPEN c_porcentaje_precio(dato.tmpidexc_dska);
+            FETCH c_porcentaje_precio INTO v_porc_precio;
+            CLOSE c_porcentaje_precio;
+            --
+            v_costo_total := dato.tmpidexc_costo * cast(dato.tmpidexc_existencia as INT);
+            --
             OPEN c_sec_contabilidad;
             FETCH c_sec_contabilidad INTO v_sec_cont;
             CLOSE c_sec_contabilidad;
             --
-            OPEN c_valorMvtocont(dato.tmpidexc_costo);
+            OPEN c_valorMvtocont(v_costo_total);
             FETCH c_valorMvtocont INTO v_valorMvto;
             CLOSE c_valorMvtocont;
             --
@@ -53,7 +71,7 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
                             tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
                 VALUES (v_sec_cont, '110501', v_valorMvto ,'C');
             --
-            v_valRegistro := IN_ADICIONA_PROD_EXIS(dato.tmpidexc_dska, cast(dato.tmpidexc_existencia as INT) , dato.tmpidexc_costo ,dato.sede,1,v_sec_cont);
+            v_valRegistro := IN_ADICIONA_PROD_EXIS(dato.tmpidexc_dska, cast(dato.tmpidexc_existencia as INT) , v_costo_total ,dato.sede,1,v_sec_cont);
             --
             IF UPPER(TRIM(v_valRegistro)) NOT LIKE '%OK%' THEN
                 --
@@ -69,7 +87,9 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
                    AND prpr_dska = dato.tmpidexc_dska
                    ;
                 --
-                v_precio := ((dato.tmpidexc_costo*25)/100) + dato.tmpidexc_costo;
+                v_precio := ((dato.tmpidexc_costo*v_porc_precio)/100) + dato.tmpidexc_costo;
+                --
+                v_precio := round(v_precio);
                 --
                 IF v_precio < 50 THEN
                     --

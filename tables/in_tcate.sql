@@ -11,6 +11,6 @@ CREATE TABLE in_tcate(
    cate_runic               varchar(2)                   , 
    cate_feven               varchar(2)                   ,
    cate_sbcu                int                          ,
-   cate_porcentaje          numeric(15,6)   default  20  ,
+   cate_porcentaje          numeric(15,6)   default  25  ,
    PRIMARY KEY (cate_cate)
 ); 

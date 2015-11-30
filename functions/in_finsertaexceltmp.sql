@@ -66,8 +66,18 @@ DECLARE
         --
         IF contador = 0 THEN
             --
-            INSERT INTO in_tcate (cate_cate,cate_desc,cate_estado,cate_runic,cate_feven)
-            VALUES ((SELECT COALESCE(MAX(cate_cate),0)+1 from in_tcate),nombreCategoria.nombreCate,'A','',''); 
+            IF upper(nombreCategoria.nombreCate) = 'TORNILLOS' THEN 
+            --
+                INSERT INTO in_tcate (cate_cate,cate_desc,cate_estado,cate_runic,cate_feven,cate_porcentaje)
+                VALUES ((SELECT COALESCE(MAX(cate_cate),0)+1 from in_tcate),nombreCategoria.nombreCate,'A','','', 25); 
+            --
+            ELSE
+            --
+                INSERT INTO in_tcate (cate_cate,cate_desc,cate_estado,cate_runic,cate_feven, cate_porcentaje)
+                VALUES ((SELECT COALESCE(MAX(cate_cate),0)+1 from in_tcate),nombreCategoria.nombreCate,'A','','', 20); 
+            --
+            END IF;
+            
             --
         END IF;
         
