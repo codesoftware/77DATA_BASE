@@ -10,6 +10,7 @@ CREATE TABLE in_tcate(
    cate_estado              varchar(2)                   , 
    cate_runic               varchar(2)                   , 
    cate_feven               varchar(2)                   ,
-   cate_sbcu	            int 					     ,
-   PRIMARY KEY (cate_cate)	
+   cate_sbcu                int                          ,
+   cate_porcentaje          numeric(15,6)   default  20  ,
+   PRIMARY KEY (cate_cate)
 ); 

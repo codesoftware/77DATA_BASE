@@ -69,7 +69,7 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
                    AND prpr_dska = dato.tmpidexc_dska
                    ;
                 --
-                v_precio := ((dato.tmpidexc_costo*20)/100) + dato.tmpidexc_costo;
+                v_precio := ((dato.tmpidexc_costo*25)/100) + dato.tmpidexc_costo;
                 --
                 IF v_precio < 50 THEN
                     --
@@ -79,7 +79,7 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
                     --
                     v_precio := 100;
                     --
-                ELSIF v_precio between 100 and 1000 THEN
+                ELSIF v_precio between 100 and 10000 THEN
                     --
                     v_modulo := v_precio % 100;
                     v_faltante := 100 - v_modulo;
