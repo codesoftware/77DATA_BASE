@@ -107,7 +107,12 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(
     v_prom_pond             NUMERIC := 0;
     v_prom_pond_tot         NUMERIC := 0;
     --
+	v_aplica_desc 			varchar(2):= 0;
+	v_valor_descuento		NUMERIC(15,6):= 0;
+	--
     BEGIN
+	--
+	v_aplica_desc := 'N';
     --
     --Validacion de existencia de movimientos de inventario referenciando facturacion
     --
@@ -155,11 +160,17 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(
     FETCH c_precio_prod INTO v_precio_prod;
     CLOSE c_precio_prod;
     --
-    --
-    IF p_precio > v_precio_prod THEN 
+    --Evaluo si el precio parametrizado del producto es menor al dado por el usuario para realizar el usuario
+	--
+    IF p_precio >= v_precio_prod THEN 
         --
         v_precio_prod := p_precio;
         --
+	ELSE
+		--
+		v_valor_descuento := v_precio_prod - p_precio; 
+		v_aplica_desc := 'S';
+		--
     END IF;
     --
     --Obtengo el valor del promedio ponderado del producto
@@ -167,10 +178,16 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(
     OPEN c_prom_pond_prod(p_dska);
     FETCH c_prom_pond_prod INTO v_vlr_prom_pond;
     CLOSE c_prom_pond_prod;
+	--
+	IF v_vlr_prom_pond >= p_precio THEN
+		--
+		RAISE EXCEPTION 'Precio demasiado bajo para realizar la venta, con el producto con el codigo 1-%',p_dska;
+		--
+	END IF; 
     --
     --Realiza el calculo de utilidad del que dejara el producto
     --
-    v_utilidad_prod := v_precio_prod - v_vlr_prom_pond;
+    v_utilidad_prod := (v_precio_prod - v_vlr_prom_pond) - v_valor_descuento;
     v_utilidad_prod := v_utilidad_prod * p_cantidad;
     --
     IF v_utilidad_prod < 0 THEN
@@ -223,13 +240,13 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(
             dtpr_num_prod, dtpr_cant, dtpr_vlr_pr_tot, 
             dtpr_vlr_uni_prod, dtpr_vlr_iva_tot, dtpr_vlr_iva_uni, 
             dtpr_vlr_venta_tot, dtpr_vlr_venta_uni, dtpr_vlr_total, 
-            dtpr_desc, dtpr_kapr,dtpr_valor_desc,dtpr_utilidad)
+            dtpr_desc, dtpr_kapr,dtpr_valor_desc,dtpr_utilidad,dtpr_con_desc)
         VALUES (
             v_dtpr_dtpr, p_dska, p_fact, 
             0, p_cantidad, v_precio_prod*p_cantidad, 
             v_precio_prod, v_vlr_iva_tot, v_vlr_iva_uni, 
             v_vlr_tot_fact_iva, v_vlr_uni_fact_iva, v_vlr_tot_fact_iva,
-            'N', v_kapr_kapr,0,v_utilidad_prod );
+            v_aplica_desc, v_kapr_kapr,v_valor_descuento,v_utilidad_prod, v_aplica_desc);
     --
     OPEN c_cod_sbcu(p_dska);
     FETCH c_cod_sbcu INTO v_sbcu_cod_prod;
@@ -251,6 +268,16 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(
             tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
     VALUES (p_idmvco, '613535' , v_vlr_prom_pond_tot , 'D');
     --
+	IF v_valor_descuento <> 0  THEN
+		--
+		--Insercion de descuentos para la factura
+		--
+		INSERT INTO co_ttem_mvco(
+				tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
+		VALUES (v_idTrans_con, '530535' , v_valor_descuento , 'D');
+		--
+	END IF;
+	--
     RETURN 'Ok';
     -- 
     EXCEPTION WHEN OTHERS THEN

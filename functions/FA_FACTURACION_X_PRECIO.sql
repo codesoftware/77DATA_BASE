@@ -151,6 +151,16 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
     --
     v_sbcu_caja_cod     varchar(10):= '';
     --
+	--Cursor con el cual se obtiene el valor del descuento de la factura
+	--
+	c_valor_dcto CURSOR(vc_fact_fact INT) FOR
+	SELECT fact_vlr_dcto
+	  FROM fa_tfact
+	 WHERE fact_fact = vc_fact_fact
+	  ;
+	--
+	v_vlr_dsc 		NUMERIC(15,6) := 0;
+	--
     BEGIN
     --
     v_valida_basica := FA_VAL_CON_FACTU(p_sede);
@@ -274,13 +284,13 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
     INSERT INTO co_ttem_mvco(
             tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
     VALUES (v_idTrans_con, '413535' , v_vlr_total_factura , 'C');
-    --
-    --Insercion de descuentos para la factura
-    --
-    INSERT INTO co_ttem_mvco(
-            tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
-    VALUES (v_idTrans_con, '530535' , 0 , 'D');
-    --
+	--
+	OPEN c_valor_dcto(v_fact_fact);
+	FETCH c_valor_dcto INTO v_vlr_dsc;
+	CLOSE c_valor_dcto;
+	raise exception 'Descuento % ', v_vlr_dsc;
+	--
+	--
     --Obtengo el valor total de la factura
     --
     OPEN c_vlr_total_fact(v_fact_fact);
@@ -295,7 +305,7 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
     --
     INSERT INTO co_ttem_mvco(
             tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
-                     VALUES (v_idTrans_con, v_sbcu_caja_cod , v_vlr_total_fact_co , 'D');
+                     VALUES (v_idTrans_con, v_sbcu_caja_cod , v_vlr_total_fact_co - v_vlr_dsc, 'D');
     --
     UPDATE fa_tfact
     SET fact_vlr_efectivo = v_vlr_total_fact_co
