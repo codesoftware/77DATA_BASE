@@ -205,7 +205,7 @@ CREATE OR REPLACE FUNCTION US_FINSERT_NUEVO_PROD (    p_ref        INT          
         --
         --
         --
-        v_nom_prod  varchar(50):= '';
+        v_nom_prod  varchar(200):= '';
         --
         --
         --

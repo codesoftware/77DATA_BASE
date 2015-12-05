@@ -1,8 +1,0 @@
-COMMENT ON TABLE in_tpedi             IS 'Tabla encargada de almacenar los datos de los pedidos';
-COMMENT ON COLUMN in_tpedi.pedi_pedi  IS 'Id de la tabla de pedidos';
-COMMENT ON COLUMN in_tpedi.pedi_pedi  IS 'Id de la tabla de pedidos';
-COMMENT ON COLUMN in_tpedi.pedi_pedi  IS 'Id de la tabla de pedidos';
-COMMENT ON COLUMN in_tpedi.pedi_pedi  IS 'Id de la tabla de pedidos';
-
-
-

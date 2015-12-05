@@ -354,6 +354,14 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
     DELETE FROM co_ttem_mvco
     WHERE tem_mvco_trans =  v_idTrans_con
     ;
+    --
+    --
+    UPDATE in_tpedi
+       SET pedi_fact = v_fact_fact,
+       pedi_esta = 'FA'
+     WHERE pedi_pedi = p_idPedido
+    ;
+    --
     RETURN 'Ok-'||v_fact_fact;
     -- 
     EXCEPTION WHEN OTHERS THEN
