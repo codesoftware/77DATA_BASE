@@ -288,7 +288,9 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
 	OPEN c_valor_dcto(v_fact_fact);
 	FETCH c_valor_dcto INTO v_vlr_dsc;
 	CLOSE c_valor_dcto;
-	raise exception 'Descuento % ', v_vlr_dsc;
+    --
+	--v_vlr_dsc := FA_CONSLUTA_COSTS_FACT(new.dtpr_fact,3,4);
+	--raise exception 'Descuento % ', v_vlr_dsc;
 	--
 	--
     --Obtengo el valor total de la factura

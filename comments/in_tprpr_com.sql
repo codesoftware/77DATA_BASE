@@ -7,3 +7,4 @@ COMMENT ON COLUMN IN_TPRPR.PRPR_TIUS_UPDATE     IS          'Ultimo usuario que 
 COMMENT ON COLUMN IN_TPRPR.PRPR_ESTADO          IS          'Estado de el precio del producto, Inactivo (I) Activo o en uso(A)';
 COMMENT ON COLUMN IN_TPRPR.PRPR_FECHA           IS          'Fecha en la cual se creo el registro';
 COMMENT ON COLUMN IN_TPRPR.PRPR_SEDE            IS          'Sede en la cual funcionara el precio parametrizado';
+COMMENT ON COLUMN IN_TPRPR.PRPR_PREMSIVA        IS          'Precio calculado por medio de un trigger con el cual calcula el precio mas el iva parametrizado y redondenado';

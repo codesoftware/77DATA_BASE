@@ -48,6 +48,17 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
         v_costo_total   NUMERIC(15,6) := 0;
         --
         v_porc_precio   numeric(15,6) := 0;
+        --
+        c_iva_precio CURSOR IS
+        SELECT cast(para_valor as numeric)
+          FROM em_tpara
+         WHERE para_clave = 'IVAPRVENTA'
+        ;
+        --
+        v_iva_precio                numeric(50,6) := 0;
+        --
+        v_auxiliar                  numeric(50,6) := 100.00;
+        --
     BEGIN
         --
         FOR dato IN c_datosExcel LOOP
@@ -114,6 +125,16 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
                     v_precio := round(v_precio);
                     --
                 END IF;
+                --
+                OPEN c_iva_precio;
+                FETCH c_iva_precio INTO v_iva_precio;
+                CLOSE c_iva_precio;
+                --
+                v_auxiliar := 100.00;
+                --
+                v_auxiliar :=  (v_iva_precio / v_auxiliar)+1;
+                --
+                v_precio :=  v_precio /v_auxiliar;
                 --
                 --Insercion del precio
                 --

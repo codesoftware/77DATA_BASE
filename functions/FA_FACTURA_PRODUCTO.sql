@@ -111,6 +111,7 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(
 	v_valor_descuento		NUMERIC(15,6):= 0;
 	--
     BEGIN
+	raise exception 'Id % ' , p_dska; 
 	--
 	v_aplica_desc := 'N';
     --

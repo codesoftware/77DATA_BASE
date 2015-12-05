@@ -5,6 +5,7 @@ CREATE TABLE in_tprpr(
     prpr_prpr           serial               NOT NULL        ,
     prpr_dska           int                  NOT NULL        ,
     prpr_precio         numeric(50,6)        NOT NULL        ,
+    prpr_premsiva       numeric(50,6)        NOT NULL        ,
     prpr_tius_crea      int                  NOT NULL        ,
     prpr_tius_update    int                  NOT NULL        ,
     prpr_estado         VARCHAR(1)           NOT NULL   DEFAULT 'A'      ,
