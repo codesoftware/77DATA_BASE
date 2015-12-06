@@ -271,6 +271,7 @@
 \i /77DATA_BASE/triggers/fa_tdtre_after_insert_or_update.sql;
 \i /77DATA_BASE/triggers/fa_dtpr_before_insert_or_update.sql;
 \i /77DATA_BASE/triggers/em_tpara_before_insert_or_update.sql;
+\i /77DATA_BASE/triggers/in_tpedi_before_insert.sql;
 --
 --SECUENCIAS
 --

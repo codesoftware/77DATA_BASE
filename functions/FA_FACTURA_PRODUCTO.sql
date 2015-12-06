@@ -155,6 +155,10 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(
         --
     END IF;
     --
+    --Calculo la base del iva
+    --
+    p_precio := p_precio / 1.6;
+    --
     v_aplica_desc := 'N';
     --
     --Validacion de existencia de movimientos de inventario referenciando facturacion
