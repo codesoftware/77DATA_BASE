@@ -110,8 +110,50 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(
     v_aplica_desc               VARCHAR(2):= 0;
     v_valor_descuento           NUMERIC(15,6):= 0;
     --
+    --Cursor con el cual obtengo las existencias de la sede
+    --
+    c_exit_x_sede CURSOR IS
+    SELECT eprs_existencia
+      FROM in_teprs
+     WHERE eprs_dska = p_dska
+       AND eprs_sede = p_sede
+       ;
+    --
+    v_existencias           NUMERIC(15,6) := 0;
+    --
+    --Cursor con el cual obtengo las existencias totales de un producto
+    --
+    c_exist_total CURSOR IS
+    SELECT cepr_existencia
+      FROM in_tcepr
+     WHERE cepr_dska = p_dska
+     ;
+    --
+    v_exis_total            NUMERIC(15,6) := 0;
+    --
     BEGIN
-    --raise exception 'Id % ' , p_dska; 
+    --
+    OPEN c_exit_x_sede;
+    FETCH c_exit_x_sede INTO v_existencias;
+    CLOSE c_exit_x_sede;
+    --
+    IF v_existencias < p_cantidad THEN
+        --
+        OPEN c_exist_total;
+        FETCH c_exist_total INTO v_exis_total;
+        CLOSE c_exist_total;
+        --
+        IF v_exis_total > p_cantidad THEN
+            --
+            RAISE EXCEPTION 'En la sede en la cual esta facturando no hay las cantidades suficientes pero en el resto de la empresa si hay suficientes para satisfacer la compra, cantidad total de productos con codigo: 1-% , cantidades totales: % ',p_dska, v_exis_total;
+            --
+        ELSE
+            --
+            RAISE EXCEPTION 'No existe la cantidad de productos suficientes del producto con el codigo 1-% Las cantidades en toda la empresa actualmente son: % ', p_dska,v_exis_total;
+            --
+        END IF;
+        --
+    END IF;
     --
     v_aplica_desc := 'N';
     --

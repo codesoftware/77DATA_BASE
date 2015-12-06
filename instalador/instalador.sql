@@ -192,6 +192,7 @@
 \i /77DATA_BASE/foreignKey/fk_fa_trrka.sql;
 \i /77DATA_BASE/foreignKey/fk_in_tpedi.sql;
 \i /77DATA_BASE/foreignKey/fk_in_tpedprod.sql;
+\i /77DATA_BASE/foreignKey/fk_in_teprs.sql;
 --
 --Vistas
 --
