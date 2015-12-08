@@ -56,6 +56,7 @@
 \i /77DATA_BASE/tables/ub_tdepa.sql;
 \i /77DATA_BASE/tables/ub_tciud.sql;
 \i /77DATA_BASE/tables/fa_tprodhome.sql;
+\i /77DATA_BASE/tables/in_tprpd.sql;
 --
 --Alters
 --
@@ -162,6 +163,7 @@
 \i /77DATA_BASE/comments/ub_tdepa_com.sql;
 \i /77DATA_BASE/comments/ub_tciud_com.sql;
 \i /77DATA_BASE/comments/in_teprs_com.sql;
+\i /77DATA_BASE/comments/in_tprpd_com.sql;
 --
 -- Llaves foraneas
 --
@@ -193,6 +195,7 @@
 \i /77DATA_BASE/foreignKey/fk_in_tpedi.sql;
 \i /77DATA_BASE/foreignKey/fk_in_tpedprod.sql;
 \i /77DATA_BASE/foreignKey/fk_in_teprs.sql;
+\i /77DATA_BASE/foreignKey/fk_in_tprpd.sql;
 --
 --Vistas
 --
