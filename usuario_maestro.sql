@@ -11,6 +11,9 @@ INSERT INTO us_tperf(
 insert into em_tsede (sede_nombre,sede_direccion, sede_telefono)
     values ('BODEGA', 'Cra 14 No. 112' , '778899');
 --
+insert into em_tsede (sede_nombre,sede_direccion, sede_telefono)
+    values ('VENTA MOSTRADOR', 'Cra 24 No. 112' , '778899');
+--
 --Usuario administrador
 --
 select US_FINSERTA_USUA('aministrador','sistema','1234','administrdor',to_date('14/01/1991','dd/mm/yyyy'),'admin','admin',1,1);
