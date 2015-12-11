@@ -15,4 +15,4 @@ ALTER TABLE in_tdska
 ADD FOREIGN KEY (dska_marca)
 REFERENCES in_tmarca(marca_marca)
 ;
-alter table in_teprs  add constraint fk_sede foreign key (eprs_sede) references em_tsede;
+
