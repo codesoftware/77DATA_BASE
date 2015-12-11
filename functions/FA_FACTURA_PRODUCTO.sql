@@ -157,7 +157,7 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(
     --
     --Calculo la base del iva
     --
-    p_precio := p_precio / 1.6;
+    p_precio := p_precio / 1.16;
     --
     v_aplica_desc := 'N';
     --
@@ -207,18 +207,19 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(
     FETCH c_precio_prod INTO v_precio_prod;
     CLOSE c_precio_prod;
     --
-    --Evaluo si el precio parametrizado del producto es menor al dado por el usuario para realizar el usuario
+    --Evaluo si el precio parametrizado del producto es menor al dado por el usuario para realizar el usuario(SE COMENTAREA POR CUESTIONRES DE VISTA )
     --
-    IF p_precio >= v_precio_prod THEN 
-        --
-        v_precio_prod := p_precio;
-        --
-    ELSE
-        --
-        v_valor_descuento := v_precio_prod - p_precio; 
-        v_aplica_desc := 'S';
-        --
-    END IF;
+    --IF p_precio >= v_precio_prod THEN 
+    --    --
+    --    v_precio_prod := p_precio;
+    --    --
+    --ELSE
+    --    --
+    --    v_valor_descuento := v_precio_prod - p_precio; 
+    --    v_aplica_desc := 'S';
+    --    --
+    --END IF;
+    v_precio_prod := p_precio;
     --
     --Obtengo el valor del promedio ponderado del producto
     --
