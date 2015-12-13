@@ -24,5 +24,6 @@ CREATE TABLE FA_TFACT(
     FACT_CIERRE              INT                                         ,
     FACT_SEDE                INT                NOT NULL                 ,
     FACT_PEDI                INT                           DEFAULT 0     ,
+    FACT_FECHAEX             TIMESTAMP                     DEFAULT NOW() ,
     PRIMARY KEY (FACT_FACT)
 );

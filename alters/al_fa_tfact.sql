@@ -1,3 +1,6 @@
+<<<<<<< HEAD
 ALTER TABLE fa_tfact ADD fact_cierre int;
 ALTER TABLE FA_TFACT ADD COLUMN FACT_FECHAEX TIMESTAMP DEFAULT NOW();
  
+=======
+>>>>>>> 87e1220be839daa8d93960dfcd38b59aef70fb9a
