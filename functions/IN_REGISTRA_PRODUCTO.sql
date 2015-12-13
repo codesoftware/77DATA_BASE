@@ -144,7 +144,7 @@ CREATE OR REPLACE FUNCTION IN_REGISTRA_PRODUCTO (
         FETCH c_prodRepe INTO v_codRep;
         CLOSE c_prodRepe;
         --
-        RAISE EXCEPTION 'Ya existe un producto con la misma categoria, subcategoria y marca lo cual es imposible en el sistema y su codigo es %', v_codRep;
+        RAISE EXCEPTION 'Ya existe un producto con la misma categoria, subcategoria, marca y descripcion lo cual es imposible en el sistema y su codigo es % y su descripcion es % ', v_codRep , p_descripcion;
         --
     END IF;
     --Finalizacion de validaciones
