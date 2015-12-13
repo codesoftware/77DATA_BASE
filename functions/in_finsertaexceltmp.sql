@@ -54,7 +54,7 @@ DECLARE
     SELECT COUNT(*) FROM in_tmarca 
       WHERE upper(trim(marca_nombre)) = upper(trim(marca));
     --
-    v_valida_inProd         varchar(200) := ''; 
+    v_valida_inProd         varchar(2000) := ''; 
     --
     BEGIN 
     --
@@ -69,12 +69,12 @@ DECLARE
             IF upper(nombreCategoria.nombreCate) = 'TORNILLOS' THEN 
             --
                 INSERT INTO in_tcate (cate_cate,cate_desc,cate_estado,cate_runic,cate_feven,cate_porcentaje)
-                VALUES ((SELECT COALESCE(MAX(cate_cate),0)+1 from in_tcate),nombreCategoria.nombreCate,'A','','', 25); 
+                VALUES ((SELECT COALESCE(MAX(cate_cate),0)+1 from in_tcate),nombreCategoria.nombreCate,'A','','', 40); 
             --
             ELSE
             --
                 INSERT INTO in_tcate (cate_cate,cate_desc,cate_estado,cate_runic,cate_feven, cate_porcentaje)
-                VALUES ((SELECT COALESCE(MAX(cate_cate),0)+1 from in_tcate),nombreCategoria.nombreCate,'A','','', 20); 
+                VALUES ((SELECT COALESCE(MAX(cate_cate),0)+1 from in_tcate),nombreCategoria.nombreCate,'A','','', 45); 
             --
             END IF;
             
@@ -132,7 +132,7 @@ DECLARE
     RETURN v_valida_inProd;
     --
     EXCEPTION WHEN OTHERS THEN
-         RETURN 'Error' ||SQLERRM;
+         RETURN 'Error in_finsertaexceltmp ' ||SQLERRM;
 END;
 $BODY$
 LANGUAGE plpgsql VOLATILE

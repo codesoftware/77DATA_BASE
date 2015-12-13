@@ -34,6 +34,15 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
            and dska_dska = vc_dska_dska
            ;
         --
+        c_tipo_cate CURSOR(vc_dska_dska INT) IS
+        select upper(cate_desc)
+          from in_tdska, in_tcate
+         where dska_cate = cate_cate
+           and dska_dska = vc_dska_dska
+           ;
+        --
+        v_desc_cat      varchar(500) := '';
+        --
         v_sec_cont      INT :=0;
         v_valRegistro   varchar(200) := '';  
         --
@@ -63,6 +72,7 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
         v_centenas                  numeric(50,6) := 0;
         v_millar                    numeric(50,6) := 0;
         --
+        v_modulo_pre_mayor          NUMERIC(50,6) := 0;
     BEGIN
         --
         FOR dato IN c_datosExcel LOOP
@@ -104,6 +114,7 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
                 --
                 v_precio := ((dato.tmpidexc_costo*v_porc_precio)/100) + dato.tmpidexc_costo;
                 --
+                --
                 v_precio := round(v_precio);
                 --
                 IF v_precio < 50 THEN
@@ -134,30 +145,77 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
                 FETCH c_iva_precio INTO v_iva_precio;
                 CLOSE c_iva_precio;
                 --
-                v_auxiliar := 100.00;
+                --Calculos de precios auxiliares discriminados por categorias
                 --
-                v_auxiliar :=  (v_iva_precio / v_auxiliar)+1;
+                OPEN c_tipo_cate(dato.tmpidexc_dska);
+                FETCH c_tipo_cate INTO v_desc_cat;
+                CLOSE c_tipo_cate;
                 --
-                v_precio :=  v_precio /v_auxiliar;
-                --
-                v_millar := 0;
-                v_centenas := 0;
-                v_unidad := 0;
-                --
-                --Calculos para los precios por unidad, centena y millar
-                --
-                v_millar := ((dato.tmpidexc_costo * 20.00 )/100.00) + dato.tmpidexc_costo;
-                --
-                v_centenas := ((dato.tmpidexc_costo * 25.00 )/100.00) + dato.tmpidexc_costo;
-                --
-                v_unidad := ((dato.tmpidexc_costo * 30.00 )/100.00) + dato.tmpidexc_costo;
-                --
-                v_millar := (( v_millar * v_iva_precio )/100.00) + v_millar;
-                --
-                v_centenas := (( v_centenas * v_iva_precio )/100.00) + v_centenas;
-                --
-                v_unidad := (( v_unidad * v_iva_precio )/100.00) + v_unidad;
-                --
+                IF v_desc_cat = 'TORNILLOS' THEN
+                    --
+                    v_auxiliar := 100.00;
+                    --
+                    v_auxiliar :=  (v_iva_precio / v_auxiliar)+1;
+                    --
+                    v_precio :=  v_precio /v_auxiliar;
+                    --
+                    v_millar := 0;
+                    v_centenas := 0;
+                    v_unidad := 0;
+                    --
+                    --Calculos para los precios por unidad, centena y millar
+                    --
+                    v_millar := ((dato.tmpidexc_costo * 20.00 )/100.00) + dato.tmpidexc_costo;
+                    --
+                    v_centenas := ((dato.tmpidexc_costo * 25.00 )/100.00) + dato.tmpidexc_costo;
+                    --
+                    v_unidad := ((dato.tmpidexc_costo * 30.00 )/100.00) + dato.tmpidexc_costo;
+                    --
+                    v_millar := (( v_millar * v_iva_precio )/100.00) + v_millar;
+                    --
+                    v_centenas := (( v_centenas * v_iva_precio )/100.00) + v_centenas;
+                    --
+                    v_unidad := (( v_unidad * v_iva_precio )/100.00) + v_unidad;
+                    --
+                ELSE
+                    --
+                    v_auxiliar := 100.00;
+                    --
+                    v_auxiliar :=  (v_iva_precio / v_auxiliar)+1;
+                    --
+                    v_precio :=  v_precio /v_auxiliar;
+                    --
+                    v_millar := 0;
+                    v_centenas := 0;
+                    v_unidad := 0;
+                    --
+                    --Calculos para los precios por unidad, centena y millar
+                    --
+                    v_millar := ((dato.tmpidexc_costo * 18.00 )/100.00) + dato.tmpidexc_costo;
+                    --
+                    v_centenas := ((dato.tmpidexc_costo * 28.00 )/100.00) + dato.tmpidexc_costo;
+                    --
+                    v_unidad := ((dato.tmpidexc_costo * 35.00 )/100.00) + dato.tmpidexc_costo;
+                    --
+                    v_millar := (( v_millar * v_iva_precio )/100.00) + v_millar;
+                    --
+                    v_centenas := (( v_centenas * v_iva_precio )/100.00) + v_centenas;
+                    --
+                    v_unidad := (( v_unidad * v_iva_precio )/100.00) + v_unidad;
+                    --
+                    v_modulo_pre_mayor := v_unidad % 100;
+                    v_faltante :=  100 -  v_modulo_pre_mayor;
+                    v_unidad := v_unidad + v_faltante;
+                    --
+                    v_modulo_pre_mayor := v_centenas % 100;
+                    v_faltante :=  100 -  v_modulo_pre_mayor;
+                    v_centenas := v_centenas + v_faltante;
+                    --
+                    v_modulo_pre_mayor := v_millar % 100;
+                    v_faltante :=  100 -  v_modulo_pre_mayor;
+                    v_millar := v_millar + v_faltante;
+                    --
+                END IF;
                 --
                 --Insercion del precio
                 --

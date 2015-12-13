@@ -65,10 +65,13 @@ DECLARE
   v_sec_cont                int := 0;
   v_rta_ingExt              varchar(2000) := '';
   --
+  v_excepcion               varchar(2000) := '';
     BEGIN
     --
         FOR datos IN c_consultadatosexcel LOOP
         --
+             v_excepcion := datos.tmprefe_codexte;
+             --
              OPEN  c_consultaIdCategoria(datos.tmprefe_categor);
              FETCH c_consultaIdCategoria INTO v_idCate;
              CLOSE c_consultaIdCategoria;
@@ -134,7 +137,7 @@ DECLARE
     RETURN 'OK';
     --
     EXCEPTION WHEN OTHERS THEN
-    RETURN 'Err'||SQLERRM;
+    RETURN 'Error in_finsertaidexcel_tmp con este codigo: '|| v_excepcion ||SQLERRM;
     --
     END;
 	$BODY$
