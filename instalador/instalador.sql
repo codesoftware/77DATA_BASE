@@ -260,6 +260,7 @@
 \i /77DATA_BASE/functions/FA_INSERTA_PROD_MASIVO.sql;
 \i /77DATA_BASE/functions/FA_VAL_CON_FACTU.sql;
 \i /77DATA_BASE/functions/FA_FACTURACION_X_PRECIO.sql;
+\i /77DATA_BASE/functions/f_cargacliente.sql
 --
 -- Triggers
 --

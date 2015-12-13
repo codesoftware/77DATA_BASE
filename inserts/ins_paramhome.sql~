@@ -1,0 +1,23 @@
+insert into fa_tprodhome values(1,2,1,2,'zapata.png','A','ZAPATA');
+insert into fa_tprodhome values(2,2,2,2,'hexagonal.png','A','HEXAGONAL');
+insert into fa_tprodhome values(3,2,4,2,'argolla.png','A','ARGOLLA');
+insert into fa_tprodhome values(4,2,8,2,'chazo.png','A','CHAZO');
+insert into fa_tprodhome values(5,2,9,2,'esparrago.png','A','ESPARRAGO');
+insert into fa_tprodhome values(6,2,26,2,'tuerca.png','A','TUERCA');
+insert into fa_tprodhome values(7,2,62,2,'wasa.jpg','A','WASA');
+insert into fa_tprodhome values(8,2,105,2,'perro.jpg','A','PERRO');
+insert into fa_tprodhome values(9,2,116,2,'remache.png','A','REMACHE');
+insert into fa_tprodhome values(10,2,133,2,'bristol.jpg','A','BRISTOL');
+insert into fa_tprodhome values(11,2,107,2,'carriaje.png','A','CARRIAJE');
+insert into fa_tprodhome values(12,2,115,2,'arandela.png','A','ARANDELA');
+insert into fa_tprodhome values(13,3,132,2,'alicate.png','A','ALICATE');
+insert into fa_tprodhome values(14,3,130,2,'lima.png','A','LIMA');
+insert into fa_tprodhome values(15,3,107,2,'cincel.png','A','CINCEL');
+insert into fa_tprodhome values(16,3,121,2,'hombresolo.png','A','HOMBRESOLO');
+insert into fa_tprodhome values(17,3,109,2,'martillo.png','A','MARTILLO');
+insert into fa_tprodhome values(18,3,89,2,'mazo.png','A','MAZO');
+insert into fa_tprodhome values(19,3,56,2,'segueta.png','A','SEGUETA');
+insert into fa_tprodhome values(20,3,17,2,'destornillador.png','A','DESTORNILLADOR');
+insert into fa_tprodhome values(21,3,12,2,'serrucho.png','A','SERRUCHO');
+
+
