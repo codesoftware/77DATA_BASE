@@ -5,7 +5,7 @@ CREATE OR REPLACE FUNCTION US_FVERIFICA_COD_PROD(   P_COD_PROD    VARCHAR(10)
                                     ) RETURNS VARCHAR AS $$
    DECLARE
    
-      v_cod_prod     INTEGER;
+      v_cod_prod     BIGINT;
       
       c_cod_prod CURSOR FOR
       SELECT count(dska_cod)

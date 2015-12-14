@@ -6,7 +6,7 @@ CREATE OR REPLACE FUNCTION US_FRECUPERAR_USUA   (
                                                 ) RETURNS VARCHAR AS $$
    DECLARE
       
-   p_usuario       varchar(50);
+   p_usuario       varchar(500);
       
    c_usuario CURSOR FOR
    SELECT tius_usuario

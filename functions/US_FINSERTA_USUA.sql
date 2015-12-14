@@ -1,12 +1,12 @@
 -- Funcion encargada de insertar la base de los usuarios
 
-CREATE OR REPLACE FUNCTION US_FINSERTA_USUA (   p_nombre      varchar(50),
-                                                p_apellido    varchar(50),
-                                                p_cedula      varchar(50),
-                                                p_email       varchar(50),
+CREATE OR REPLACE FUNCTION US_FINSERTA_USUA (   p_nombre      varchar(500),
+                                                p_apellido    varchar(500),
+                                                p_cedula      varchar(500),
+                                                p_email       varchar(500),
                                                 p_fecha_nac   DATE,
-                                                p_usuario     varchar(20),
-                                                p_contra      varchar(20),
+                                                p_usuario     varchar(500),
+                                                p_contra      varchar(500),
                                                 p_perfil      INT        ,
                                                 p_sede        INT
                                     ) RETURNS VARCHAR AS $$
@@ -18,7 +18,7 @@ CREATE OR REPLACE FUNCTION US_FINSERTA_USUA (   p_nombre      varchar(50),
       and pers_email = p_email
       ;
    
-   v_pers_pers     int;
+   v_pers_pers     bigint;
    v_rta           varchar;       
    
    BEGIN

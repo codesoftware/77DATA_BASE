@@ -3,7 +3,7 @@ CREATE FUNCTION US_FVERIFICA_CEDULA(
                                     ) RETURNS VARCHAR AS'
    DECLARE
    
-   v_num_cedula    int := 0;
+   v_num_cedula    bigint := 0;
    
    c_cedula CURSOR FOR 
       SELECT count(*)

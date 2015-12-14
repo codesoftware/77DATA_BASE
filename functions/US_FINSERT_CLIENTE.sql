@@ -1,11 +1,11 @@
 -- Función con la cual se realizara la inserccion de un cliente
 
 CREATE OR REPLACE FUNCTION US_FINSERT_CLIENTE (    
-                                            p_nombres           varchar(50), 
-                                            p_apellidos         varchar(50), 
+                                            p_nombres           varchar(500), 
+                                            p_apellidos         varchar(500), 
                                             p_cedula            numeric, 
-                                            p_email             varchar(50), 
-                                            p_telefono          varchar(50)                                            
+                                            p_email             varchar(500), 
+                                            p_telefono          varchar(500)                                            
                                             ) RETURNS varchar AS $$
     DECLARE
                                             
@@ -15,9 +15,9 @@ CREATE OR REPLACE FUNCTION US_FINSERT_CLIENTE (
      WHERE clien_cedula = p_cedula
     ;        
     --
-    v_clien_cedula    numeric(10,0);
+    v_clien_cedula    numeric(1000,10);
     --
-    v_clien_clien     int;
+    v_clien_clien     bigint;
     --
     c_clien_clien CURSOR FOR
     SELECT nextval('us_tclien_clien_clien_seq')

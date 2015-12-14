@@ -8,7 +8,7 @@ CREATE OR REPLACE FUNCTION US_FINSERT_NUEVO_PROD (    p_ref        INT          
                                                       p_porc_iva   INTEGER      ,       -- Porcentaje con el cual se gravara el producto
                                                       p_marca      INTEGER      ,       -- Marca del producto el cual se 
                                                       p_cant       INTEGER      ,       -- Cantidad de productos que se desean inventariar
-                                                      p_cost       NUMERIC(50,6),       -- Costo del producto por unidad
+                                                      p_cost       NUMERIC(1000,10),       -- Costo del producto por unidad
                                                       p_usua       VARCHAR(50)  ,       -- Usuario el cual registra el inventario
                                                       p_sede       INTEGER      ,       -- Sede a la cual ingresa el producto al sitema
                                                       p_cate       INTEGER      ,       -- Categoria a la cual pertenece el producto
@@ -21,14 +21,14 @@ CREATE OR REPLACE FUNCTION US_FINSERT_NUEVO_PROD (    p_ref        INT          
       
          v_cod_prod     varchar(1);
          v_tius_tius    integer;
-         rta            varchar(10) := 'Err';
-         v_cost_tot     Numeric(50,6) := 0;         
+         rta            varchar(500) := 'Err';
+         v_cost_tot     Numeric(1000,10) := 0;         
          
          c_dska_dska CURSOR FOR
          SELECT coalesce(max(dska_dska),0)+ 1 as dska_dska
            FROM in_tdska
            ;
-        v_dska_dska     INTEGER := 0;
+        v_dska_dska     bigint := 0;
         
         c_kapr_kapr CURSOR FOR
          SELECT coalesce(max(kapr_kapr),0)+ 1 as kapr_kapr
@@ -57,13 +57,13 @@ CREATE OR REPLACE FUNCTION US_FINSERT_NUEVO_PROD (    p_ref        INT          
         SELECT nextval('co_tsbcu_sbcu_sbcu_seq');
         
         --
-        v_kapr_kapr     INTEGER := 0;
-        v_cont_mvin     INTEGER := 0;       -- cuenta cuantos movimientos de inventario inicial existen
-        v_mvin_inicial  INTEGER := 0;       -- Obtiene el identificador del movimiento inicial de inventario 
-        v_codigo        varchar(100) := '';
-        v_codigosbcu    varchar(50) :='';
-        v_sbcu_sbcu     INTEGER := 0;        --Id de la futura subcuenta
-        v_costo_unidad  numeric(15,5) := 0;
+        v_kapr_kapr     BIGINT := 0;
+        v_cont_mvin     BIGINT := 0;       -- cuenta cuantos movimientos de inventario inicial existen
+        v_mvin_inicial  BIGINT := 0;       -- Obtiene el identificador del movimiento inicial de inventario 
+        v_codigo        varchar(500) := '';
+        v_codigosbcu    varchar(500) :='';
+        v_sbcu_sbcu     bigint := 0;        --Id de la futura subcuenta
+        v_costo_unidad  numeric(1000,5) := 0;
         --
         --Contabilidad
         --
@@ -95,10 +95,10 @@ CREATE OR REPLACE FUNCTION US_FINSERT_NUEVO_PROD (    p_ref        INT          
           AND sbcu_codigo = sbft_sbcu_codigo
         ;
         
-        v_creditos          numeric(15,5) := 0;
-        v_debitos           numeric(15,5) := 0;
-        v_cre_usu           numeric(15,5) := 0;
-        v_deb_usu           numeric(15,5) := 0;
+        v_creditos          numeric(1000,10) := 0;
+        v_debitos           numeric(1000,10) := 0;
+        v_cre_usu           numeric(1000,10) := 0;
+        v_deb_usu           numeric(1000,10) := 0;
         v_tipoDocumento     integer := 0;
         --
         --Obtiene debtitos parametrizados en el sistema
@@ -164,7 +164,7 @@ CREATE OR REPLACE FUNCTION US_FINSERT_NUEVO_PROD (    p_ref        INT          
         
         v_dummy             varchar(500) := '';
         --Variable con la cual se evaluara si existe la subcuenta
-        v_con_sub           INTEGER := 0;
+        v_con_sub           bigint := 0;
         --
         c_mov_cont  CURSOR (vc_cod_prod varchar) IS
         SELECT sbcu_sbcu, movimSbCu.valor, movimSbCu.natu
@@ -191,9 +191,9 @@ CREATE OR REPLACE FUNCTION US_FINSERT_NUEVO_PROD (    p_ref        INT          
            AND cate_estado = 'A'
          ;
         --
-        v_cate_cate             int := 0;
-        v_cate_sbcu             int := 0;
-        v_cate_desc             varchar(100):= '';
+        v_cate_cate             bigint := 0;
+        v_cate_sbcu             bigint := 0;
+        v_cate_desc             varchar(500):= '';
         --
         --
         --
@@ -205,7 +205,7 @@ CREATE OR REPLACE FUNCTION US_FINSERT_NUEVO_PROD (    p_ref        INT          
         --
         --
         --
-        v_nom_prod  varchar(200):= '';
+        v_nom_prod  varchar(500):= '';
         --
         --
         --
