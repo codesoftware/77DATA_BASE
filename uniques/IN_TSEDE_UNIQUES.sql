@@ -1,0 +1,4 @@
+ALTER TABLE em_tsede
+ADD CONSTRAINT SEDE_NOMBRE_UNIQUE 
+UNIQUE (sede_nombre)
+;
