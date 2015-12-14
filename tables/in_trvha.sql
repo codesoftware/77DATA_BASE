@@ -4,7 +4,7 @@
 --DROP TABLE IF EXISTS IN_TRVHA; 
 
 CREATE TABLE IN_TRVHA(
-RVHA_RVHA                SERIAL           NOT NULL                 ,
+RVHA_RVHA                BIGSERIAL        NOT NULL                 ,
 RVHA_DSHA                INT              NOT NULL                 ,
 RVHA_CLIEN               INT              NOT NULL                 ,
 RVHA_FECHA               DATE             NOT NULL   DEFAULT NOW() ,

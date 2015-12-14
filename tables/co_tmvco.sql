@@ -2,7 +2,7 @@
 -- Creacion de la tabla subcuentas fijas por tipo de documento
 --
 CREATE TABLE CO_TMVCO(
-    MVCO_MVCO                   SERIAL              NOT NULL    ,
+    MVCO_MVCO                   BIGSERIAL           NOT NULL    ,
     MVCO_TRANS                  INT                 NOT NULL    ,
     MVCO_SBCU                   INT                 NOT NULL    ,
     MVCO_NATURALEZA             VARCHAR(2)          NOT NULL    ,

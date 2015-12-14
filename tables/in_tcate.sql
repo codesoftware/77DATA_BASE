@@ -5,12 +5,12 @@
 --DROP TABLE IF EXISTS in_tcate;
 
 CREATE TABLE in_tcate(
-   cate_cate                SERIAL                       ,  
-   cate_desc                varchar(200)                 , 
-   cate_estado              varchar(2)                   , 
-   cate_runic               varchar(2)                   , 
-   cate_feven               varchar(2)                   ,
-   cate_sbcu                int                          ,
-   cate_porcentaje          numeric(15,6)   default  45  ,
+   cate_cate                BIGSERIAL                       ,  
+   cate_desc                varchar(500)                    , 
+   cate_estado              varchar(2)                      , 
+   cate_runic               varchar(2)                      , 
+   cate_feven               varchar(2)                      ,
+   cate_sbcu                int                             ,
+   cate_porcentaje          numeric(1000,10)   default  45  ,
    PRIMARY KEY (cate_cate)
 ); 

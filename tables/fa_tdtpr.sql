@@ -4,9 +4,9 @@
 --DROP TABLE IF EXISTS IN_TDSHA; 
 
 CREATE TABLE fa_tdtpr(
-    DTPR_DTPR               INT              NOT NULL                 ,
-    DTPR_DSKA               INT              NOT NULL                 ,
-    DTPR_FACT               INT              NOT NULL                 ,
+    DTPR_DTPR               BIGINT           NOT NULL                 ,
+    DTPR_DSKA               BIGINT           NOT NULL                 ,
+    DTPR_FACT               BIGINT              NOT NULL                 ,
     DTPR_FECHA              TIMESTAMP        NOT NULL   DEFAULT NOW() ,
     DTPR_NUM_PROD           INT              NOT NULL                 ,
     DTPR_CANT               INT              NOT NULL                 ,

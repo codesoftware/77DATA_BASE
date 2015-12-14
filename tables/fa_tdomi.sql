@@ -5,9 +5,9 @@
 --DROP TABLE IF EXISTS fa_tdomi;
 
 CREATE TABLE fa_tdomi(
-   domi_domi                SERIAL                       ,  
-   domi_fact                integer not null             , 
-   domi_clien               integer not null             , 
+   domi_domi                BIGSERIAL                    ,
+   domi_fact                integer     not null         , 
+   domi_clien               integer     not null         , 
    domi_estado              varchar(20)                  ,
    PRIMARY KEY (domi_domi)	
 )

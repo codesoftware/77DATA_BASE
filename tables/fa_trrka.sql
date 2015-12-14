@@ -4,11 +4,11 @@
 --DROP TABLE IF EXISTS IN_TDSHA; 
 
 CREATE TABLE FA_TRRKA(
-    RRKA_RRKA               SERIAL           NOT NULL                 ,
-    RRKA_DTRE               INT              NOT NULL                 ,
-    RRKA_RECE               INT              NOT NULL                 ,
-    RRKA_DSKA               INT              NOT NULL                 ,
-    RRKA_KAPR               INT              NOT NULL                 ,
-    RRKA_FECHA              TIMESTAMP        NOT NULL   DEFAULT NOW() ,
-PRIMARY KEY (RRKA_RRKA)
+    RRKA_RRKA               BIGSERIAL           NOT NULL                 ,
+    RRKA_DTRE               BIGINT              NOT NULL                 ,
+    RRKA_RECE               BIGINT              NOT NULL                 ,
+    RRKA_DSKA               BIGINT              NOT NULL                 ,
+    RRKA_KAPR               BIGINT              NOT NULL                 ,
+    RRKA_FECHA              TIMESTAMP        NOT NULL   DEFAULT now()    ,
+    PRIMARY KEY (RRKA_RRKA)
 );

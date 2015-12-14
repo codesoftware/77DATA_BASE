@@ -3,7 +3,7 @@
 --
 
 CREATE TABLE co_ttem_simmvco(
-    TEM_SIMMVCO_TRANS                 INT                 NOT NULL                   ,
+    TEM_SIMMVCO_TRANS                 BIGINT              NOT NULL                   ,
     TEM_SIMMVCO_SBCU                  VARCHAR(10)         NOT NULL                   ,
     TEM_SIMMVCO_VALOR                 VARCHAR(250)        NOT NULL                   ,
     TEM_SIMMVCO_NATURALEZA            VARCHAR(2)          NOT NULL                   

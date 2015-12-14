@@ -5,12 +5,12 @@
 --DROP TABLE IF EXISTS em_tsede;
 
 CREATE TABLE em_tsede(
-   sede_sede                SERIAL                       ,  
-   sede_nombre              varchar(200)                 , 
-   sede_direccion           varchar(200)                 , 
+   sede_sede                BIGSERIAL                    ,  
+   sede_nombre              varchar(500)                 , 
+   sede_direccion           varchar(500)                 , 
    sede_telefono            varchar(20)                  , 
-   sede_fecin               date default now()           ,
-   sede_tius                int                          ,
+   sede_fecin               DATE        default now()    ,
+   sede_tius                INT                          ,
    sede_estado              varchar(2) default   'A'     ,
    sede_bodega              varchar(2) default   'N'     ,
    sede_sbcu_caja           int        default    0      ,

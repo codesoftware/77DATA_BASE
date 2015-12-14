@@ -7,7 +7,7 @@ CREATE TABLE IN_TREPR(
     REPR_REPR                   SERIAL              NOT NULL ,
     REPR_RECE                   INT                 NOT NULL ,
     REPR_DSKA                   INT                 NOT NULL ,
-    REPR_PROMEDIO               NUMERIC(15,6)       NOT NULL ,
+    REPR_PROMEDIO               NUMERIC(1000,10)    NOT NULL ,
     REPR_ESTADO                 VARCHAR(2)          NOT NULL    DEFAULT 'A'     ,
     REPR_FEC_INGRESO            TIMESTAMP           NOT NULL    DEFAULT NOW()   ,
     REPR_TIUS                   INT                 NOT NULL ,
