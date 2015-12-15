@@ -1,12 +1,12 @@
 CREATE OR REPLACE 
 FUNCTION FA_CREA_FACTURA (  
-                            ptius       int,
-                            pclien      int                                      
+                            ptius       BIGINT,
+                            pclien      BIGINT                                      
                          ) RETURNS VARCHAR  AS $$
     DECLARE
     
-    v_vlr_total     NUMERIC  :=0;
-    v_vlr_iva       NUMERIC  :=0;
+    v_vlr_total     NUMERIC(1000,10)  :=0;
+    v_vlr_iva       NUMERIC(1000,10)  :=0;
     v_fact_fact     Varchar(10);
     
     c_id_fact CURSOR FOR

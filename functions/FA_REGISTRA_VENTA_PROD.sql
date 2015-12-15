@@ -1,22 +1,22 @@
 -- Funcion la cual se encargara de ingresar los detalles del inventario de cada producto
 
 CREATE OR REPLACE FUNCTION FA_REGISTRA_VENTA_PROD (  
-                                                    p_id_producto     INTEGER ,         -- Identificador unico del producto (DSKA_DSKA) al cual se le realizara el movimiento de inventario
-                                                    p_fact_fact       INTEGER ,         -- Identificador del la factura a la cual se le añadira el movimiento
-                                                    p_cant            INTEGER ,         -- Cantidad de productos a registrar
-                                                    p_usuario         INTEGER          -- Usuario que registro la venta
+                                                    p_id_producto     BIGINT ,         -- Identificador unico del producto (DSKA_DSKA) al cual se le realizara el movimiento de inventario
+                                                    p_fact_fact       BIGINT ,         -- Identificador del la factura a la cual se le añadira el movimiento
+                                                    p_cant            BIGINT ,         -- Cantidad de productos a registrar
+                                                    p_usuario         BIGINT          -- Usuario que registro la venta
                                                     ) RETURNS VARCHAR AS $$
 DECLARE
     --Variable en la cual se almacenara la respuesta al ingresar el movimiento de inventario (Venta).
     v_rta_kardex      varchar(500) := '';
     --Variable con la cual obtendre el valor de movimiento de inventario de venta.
-    v_mov_inv_venta   INTEGER := 4;
+    v_mov_inv_venta   BIGINT := 4;
     v_vetor_rta       text[];
     --
-    v_cont_fact       INTEGER;
+    v_cont_fact       BIGINT;
     --
     --Identificador del kardex
-    v_kapr_kapr       INTEGER :=0;
+    v_kapr_kapr       BIGINT :=0;
     --Cursor el cual verifica si la factura existe    
     c_existe_fact CURSOR FOR
     SELECT count(*)
@@ -28,14 +28,14 @@ DECLARE
      SELECT coalesce(max(dtpr_dtpr),0)+ 1 as dtpr_dtpr
        FROM fa_tdtpr
          ;
-    v_dtpr_dtpr     INTEGER  := 0;
+    v_dtpr_dtpr     BIGINT  := 0;
     --
     --Valores de venta de los productos
     --
-    v_valor_uni         numeric(50,6) := 0;
-    v_valor_iva         numeric(50,6) := 0;
-    v_valor_prod        numeric(50,6) := 0; --Valor del producto bruto sin el cobro del iva
-    v_valor_total       numeric(50,6) := 0;
+    v_valor_uni         numeric(1000,10) := 0;
+    v_valor_iva         numeric(1000,10) := 0;
+    v_valor_prod        numeric(1000,10) := 0; --Valor del producto bruto sin el cobro del iva
+    v_valor_total       numeric(1000,10) := 0;
     --
     --Cursor con el cual obtenemos el precio parametrizado el cual en el momento 
     --de adicionar el producto esta parametrizado
@@ -57,6 +57,7 @@ DECLARE
       FROM in_tdska
      WHERE dska_dska = p_id_producto
      ;
+     --
 BEGIN
     
     OPEN c_existe_fact;

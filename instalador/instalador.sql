@@ -300,13 +300,9 @@
 --
 --Usuario maestro de la aplicacion y parametros basicos para el funcionamiento de la aplicacion
 --
+\i /77DATA_BASE/inserts/ins_ad_tpara.sql;
 \i /77DATA_BASE/usuario_maestro.sql;
-\i /77DATA_BASE/inserts/ins_ad_tpara.sql
 --
 --Inserta las subcategorias del home en pedidos
 --
-\i /77DATA_BASE/inserts/ins_paramhome.sql
-
-
---\i /77DATA_BASE/cambios/001/instalador001.sql --Se eliminan los cambios ya que se integran a la linea base inicial
---\i /77DATA_BASE/cambios/002/instalador002.sql --Se eliminan los cambios ya que se integran a la linea base inicial
+\i /77DATA_BASE/inserts/ins_paramhome.sql;

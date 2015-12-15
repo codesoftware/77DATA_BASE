@@ -1,5 +1,5 @@
 CREATE FUNCTION US_FVERIFICA_CEDULA(  
-                                       p_cedula      varchar(50)
+                                       p_cedula      varchar(500)
                                     ) RETURNS VARCHAR AS'
    DECLARE
    

@@ -7,8 +7,8 @@ CREATE OR REPLACE FUNCTION US_FINSERTA_USUA (   p_nombre      varchar(500),
                                                 p_fecha_nac   DATE,
                                                 p_usuario     varchar(500),
                                                 p_contra      varchar(500),
-                                                p_perfil      INT        ,
-                                                p_sede        INT
+                                                p_perfil      BIGINT      ,
+                                                p_sede        BIGINT
                                     ) RETURNS VARCHAR AS $$
    DECLARE 
    c_pers_usua cursor for

@@ -1,5 +1,5 @@
 CREATE FUNCTION US_FVERIFICA_CORREO(  
-                                       p_correo      varchar(50)
+                                       p_correo      varchar(200)
                                     ) RETURNS VARCHAR AS'
    DECLARE
    

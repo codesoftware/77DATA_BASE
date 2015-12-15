@@ -1,5 +1,5 @@
 CREATE FUNCTION US_FVERIFICA_USUARIO(  
-                                       p_usuario      varchar(50)
+                                       p_usuario      varchar(200)
                                     ) RETURNS VARCHAR AS'
    DECLARE
    

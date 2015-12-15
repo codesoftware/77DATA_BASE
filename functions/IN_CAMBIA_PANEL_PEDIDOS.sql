@@ -16,8 +16,8 @@ CREATE OR REPLACE FUNCTION IN_CAMBIA_PANEL_PEDIDOS(
      WHERE refe_nombre = vc_nombre
      ;
     --
-    v_refe_refe         int := 0;
-    v_refe_cate         int := 0;
+    v_refe_refe         bigint := 0;
+    v_refe_cate         bigint := 0;
     --
     BEGIN
     --

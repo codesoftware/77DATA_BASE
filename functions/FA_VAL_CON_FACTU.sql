@@ -2,7 +2,7 @@
 -- Funcion con la cual se validan las precondiciones necesarias para facturar como lo son 
 --
 CREATE OR REPLACE FUNCTION FA_VAL_CON_FACTU (  
-                                p_sede              int
+                                p_sede              BIGINT
                          )RETURNS VARCHAR AS $$
     DECLARE
     --
@@ -42,10 +42,10 @@ CREATE OR REPLACE FUNCTION FA_VAL_CON_FACTU (
     --
     --Variables necesarias para la validacion de subcuentas
     --
-    v_val_iva_generado          int :=0;
-    v_val_costo_ventas          int :=0;
-    v_val_mercancias_mm         int :=0;
-    v_val_descuentos            int :=0;
+    v_val_iva_generado          BIGINT :=0;
+    v_val_costo_ventas          BIGINT :=0;
+    v_val_mercancias_mm         BIGINT :=0;
+    v_val_descuentos            BIGINT :=0;
     --
     --Cursor con el cual evaluo si la sede puede facturar osea que no esta marcada como bodega
     --
@@ -65,7 +65,7 @@ CREATE OR REPLACE FUNCTION FA_VAL_CON_FACTU (
      WHERE sede_sede = p_sede
      ;
     --
-    v_sbcu_caja_val             int :=0;
+    v_sbcu_caja_val             BIGINT :=0;
     --
     --Da la primera posibilidad para la creacion de la subcuenta de caja
     --
@@ -78,7 +78,7 @@ CREATE OR REPLACE FUNCTION FA_VAL_CON_FACTU (
        AND sbcu_cuen = cuen_cuen
        ;
     --
-    v_sbcu_caja         varchar(20) := '';
+    v_sbcu_caja         varchar(200) := '';
     --
     c_validaCreacionSbcu CURSOR(vc_sbcu_codigo VARCHAR) FOR
     SELECT count(1)
@@ -86,16 +86,16 @@ CREATE OR REPLACE FUNCTION FA_VAL_CON_FACTU (
      WHERE sbcu_codigo = vc_sbcu_codigo
      ;
     --
-    v_validaSbcu        int :=0;
+    v_validaSbcu        BIGINT :=0;
     --
-    v_contador          int := 0;
+    v_contador          BIGINT := 0;
     --
     --Obtiene el valor de la secuencia para la insecion de subcuentas
     --
     c_sec_sbcu CURSOR FOR
     SELECT nextval('co_tsbcu_sbcu_sbcu_seq');
     --
-    v_sbcu_sbcu     INTEGER := 0;        --Id de la futura subcuenta
+    v_sbcu_sbcu     BIGINT := 0;        --Id de la futura subcuenta
     --
     --Cursor en el cual obtengo el nombre de la sede teniendo como base el nombre de la sede
     --
@@ -112,7 +112,8 @@ CREATE OR REPLACE FUNCTION FA_VAL_CON_FACTU (
     c_obtiene_codsbcu CURSOR(vc_sbcu VARCHAR) FOR
     SELECT substring(vc_sbcu from (select length(vc_sbcu))-1 for (select length(vc_sbcu)));
     --
-    v_codigo_subcuenta          varchar(50):= '';
+    v_codigo_subcuenta          varchar(500):= '';
+    --
     BEGIN
     --
     --Valido si la sede puede facturar

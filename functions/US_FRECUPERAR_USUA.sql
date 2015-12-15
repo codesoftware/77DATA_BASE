@@ -2,7 +2,7 @@
 -- Funcion utilizada para recuperar el usuario por medio del correo
 --
 CREATE OR REPLACE FUNCTION US_FRECUPERAR_USUA   (  
-                                                    p_email      varchar(50)
+                                                    p_email      varchar(500)
                                                 ) RETURNS VARCHAR AS $$
    DECLARE
       

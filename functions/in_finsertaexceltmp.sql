@@ -3,8 +3,8 @@ RETURNS character varying AS
 $BODY$
 DECLARE 
     rta                  varchar(1000) := 'error';
-    contador             int         :=0;
-    idCategoria          int         :=0; 
+    contador             bigint         :=0;
+    idCategoria          bigint         :=0; 
     --
     --Cursor que consulta los datos de las categorias de la tabla temporal de excel para insertarlas
     --

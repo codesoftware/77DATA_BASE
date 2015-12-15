@@ -2,11 +2,11 @@
 -- Funcion con la cual cambiare los productos de una sede a otra
 --
 CREATE OR REPLACE FUNCTION IN_CAMBIOSEDE_PROD(   
-                                            p_sede_destin       INT,
-                                            p_sede_origen       INT,
-                                            p_cantidad          INT,
-                                            p_dska_dska         INT,
-                                            p_tius_tius         INT
+                                            p_sede_destin       BIGINT,
+                                            p_sede_origen       BIGINT,
+                                            p_cantidad          BIGINT,
+                                            p_dska_dska         BIGINT,
+                                            p_tius_tius         BIGINT
                                             ) RETURNS VARCHAR AS $$
     DECLARE
     --
@@ -48,9 +48,9 @@ CREATE OR REPLACE FUNCTION IN_CAMBIOSEDE_PROD(
        AND kapr_dska = p_dska_dska
        ;
     --
-    v_exist_org         NUMERIC(15,6) := 0;
-    v_exist_des         NUMERIC(15,6) := 0;
-    v_aux               NUMERIC(15,6) := 0;
+    v_exist_org         NUMERIC(1000,10) := 0;
+    v_exist_des         NUMERIC(1000,10) := 0;
+    v_aux               NUMERIC(1000,10) := 0;
     --
     --
     --Cursor el cual obtiene el movimiento de inventario de ingreso
@@ -71,8 +71,8 @@ CREATE OR REPLACE FUNCTION IN_CAMBIOSEDE_PROD(
     --
     --Variables utilizadas para los movimientos de inventario implicados
     --
-    v_mvin_egr      int   := 0;
-    v_mvin_ing      int   := 0;
+    v_mvin_egr      bigint   := 0;
+    v_mvin_ing      bigint   := 0;
     --
     v_rta_ing       varchar(600) := '';
     v_rta_egr       varchar(600) := '';
@@ -83,8 +83,8 @@ CREATE OR REPLACE FUNCTION IN_CAMBIOSEDE_PROD(
      WHERE kapr_kapr = (SELECT max(kapr_kapr) FROM in_tkapr WHERE kapr_dska = p_dska_dska)
      ;
     --
-    v_prom_pond        NUMERIC(15,6) := 0;
-    v_costo_total      NUMERIC(15,6) := 0;
+    v_prom_pond        NUMERIC(1000,10) := 0;
+    v_costo_total      NUMERIC(1000,10) := 0;
     --
     BEGIN
     --

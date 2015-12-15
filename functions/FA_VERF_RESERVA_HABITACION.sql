@@ -1,8 +1,8 @@
 CREATE OR REPLACE FUNCTION FA_VERF_RESERVA_HABITACION (  
-                                       p_tius           INT,
+                                       p_tius           BIGINT,
                                        p_fecha_ini      DATE,          
-                                       p_num_dias       int,
-                                       p_dsha_dsha      INT
+                                       p_num_dias       BIGINT,
+                                       p_dsha_dsha      BIGINT
                                       ) RETURNS VARCHAR AS $$
     DECLARE
     
@@ -16,9 +16,9 @@ CREATE OR REPLACE FUNCTION FA_VERF_RESERVA_HABITACION (
        AND rvha_estado = 'R'
     ;
     
-    v_count         INTEGER := 0;
+    v_count         BIGINT := 0;
     v_fecha_aux     DATE;
-    v_count_rsv     INTEGER := 0;    
+    v_count_rsv     BIGINT := 0;    
     
     BEGIN
     

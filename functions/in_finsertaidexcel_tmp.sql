@@ -21,11 +21,11 @@ DECLARE
     ;
     --
     v_rta                 varchar(1000) :='error';
-    v_idCate              int :=0;
-    v_idRefe              int :=0;
-    v_idMarca             int :=0;
-    v_dska_dska           int :=0;
-    v_idTabla             int :=0; 
+    v_idCate              bigint :=0;
+    v_idRefe              bigint :=0;
+    v_idMarca             bigint :=0;
+    v_dska_dska           bigint :=0;
+    v_idTabla             bigint :=0; 
   --
   --Cursor que consulta los datos de la tabla inicial del excel 
   --
@@ -60,12 +60,13 @@ DECLARE
   --
   --Variable para la evaluacion de la creacion del producto
   --
-  v_ins_prod             varchar(2000) := '';
+  v_ins_prod                varchar(2000) := '';
   --
-  v_sec_cont                int := 0;
+  v_sec_cont                bigint := 0;
   v_rta_ingExt              varchar(2000) := '';
   --
   v_excepcion               varchar(2000) := '';
+  --
     BEGIN
     --
         FOR datos IN c_consultadatosexcel LOOP

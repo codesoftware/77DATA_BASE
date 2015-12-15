@@ -46,17 +46,17 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
         v_sec_cont      INT :=0;
         v_valRegistro   varchar(200) := '';  
         --
-        v_precio        NUMERIC(50,6) := 0;
+        v_precio        NUMERIC(1000,10) := 0;
         --
-        v_modulo        NUMERIC(50,6) := 0;
+        v_modulo        NUMERIC(1000,10) := 0;
         --
-        v_faltante      NUMERIC(50,6) := 0;
+        v_faltante      NUMERIC(1000,10) := 0;
         --
-        v_valorMvto     NUMERIC(50,6) := 0;
+        v_valorMvto     NUMERIC(1000,10) := 0;
         --
-        v_costo_total   NUMERIC(15,6) := 0;
+        v_costo_total   NUMERIC(1000,10) := 0;
         --
-        v_porc_precio   numeric(15,6) := 0;
+        v_porc_precio   numeric(1000,10) := 0;
         --
         c_iva_precio CURSOR IS
         SELECT cast(para_valor as numeric)
@@ -64,15 +64,16 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
          WHERE para_clave = 'IVAPRVENTA'
         ;
         --
-        v_iva_precio                NUMERIC(50,6) := 0;
+        v_iva_precio                NUMERIC(1000,10) := 0;
         --
-        v_auxiliar                  NUMERIC(50,6) := 100.00;
+        v_auxiliar                  NUMERIC(1000,10) := 100.00;
         --
-        v_unidad                    numeric(50,6) := 0;
-        v_centenas                  numeric(50,6) := 0;
-        v_millar                    numeric(50,6) := 0;
+        v_unidad                    numeric(1000,10) := 0;
+        v_centenas                  numeric(1000,10) := 0;
+        v_millar                    numeric(1000,10) := 0;
         --
-        v_modulo_pre_mayor          NUMERIC(50,6) := 0;
+        v_modulo_pre_mayor          NUMERIC(1000,10) := 0;
+        --
     BEGIN
         --
         FOR dato IN c_datosExcel LOOP

@@ -1,26 +1,26 @@
 -- Funcion encargada de insertar en la base de datos un producto por primera vez
 
-CREATE OR REPLACE FUNCTION US_FINSERT_NUEVO_PROD (    p_ref        INT          ,       -- Referencia del producto
-                                                      p_cod        VARCHAR(10)  ,       -- Codigo Unico que identificara el producto para la empresa
-                                                      p_nom_prod   VARCHAR(50)  ,       -- Nombre del producto
-                                                      p_desc       VARCHAR(50)  ,       -- Pequeña descripción del producto
-                                                      p_iva        VARCHAR(1)   ,       -- Identifica si el producto es gravado con iva
-                                                      p_porc_iva   INTEGER      ,       -- Porcentaje con el cual se gravara el producto
-                                                      p_marca      INTEGER      ,       -- Marca del producto el cual se 
-                                                      p_cant       INTEGER      ,       -- Cantidad de productos que se desean inventariar
-                                                      p_cost       NUMERIC(1000,10),       -- Costo del producto por unidad
-                                                      p_usua       VARCHAR(50)  ,       -- Usuario el cual registra el inventario
-                                                      p_sede       INTEGER      ,       -- Sede a la cual ingresa el producto al sitema
-                                                      p_cate       INTEGER      ,       -- Categoria a la cual pertenece el producto
-                                                      p_runic      VARCHAR(200) ,       -- Valor el cual es un registro unico para los productos si aplica
-                                                      p_fecVen     DATE         ,       -- Fecha de vencimiento del producto si aplica
-                                                      p_idTrans    INTEGER      ,       -- Id Utilizado para las transacciones de movimientos contables
-                                                      p_prov       INTEGER              -- Id del proveedor con el cual se adquirio el producto
+CREATE OR REPLACE FUNCTION US_FINSERT_NUEVO_PROD (    p_ref        INT              ,       -- Referencia del producto
+                                                      p_cod        VARCHAR(10)      ,       -- Codigo Unico que identificara el producto para la empresa
+                                                      p_nom_prod   VARCHAR(50)      ,       -- Nombre del producto
+                                                      p_desc       VARCHAR(50)      ,       -- Pequeña descripción del producto
+                                                      p_iva        VARCHAR(1)       ,       -- Identifica si el producto es gravado con iva
+                                                      p_porc_iva   BIGINT           ,       -- Porcentaje con el cual se gravara el producto
+                                                      p_marca      BIGINT           ,       -- Marca del producto el cual se 
+                                                      p_cant       BIGINT           ,       -- Cantidad de productos que se desean inventariar
+                                                      p_cost       NUMERIC(1000,10) ,       -- Costo del producto por unidad
+                                                      p_usua       VARCHAR(50)      ,       -- Usuario el cual registra el inventario
+                                                      p_sede       BIGINT           ,       -- Sede a la cual ingresa el producto al sitema
+                                                      p_cate       BIGINT           ,       -- Categoria a la cual pertenece el producto
+                                                      p_runic      VARCHAR(200)     ,       -- Valor el cual es un registro unico para los productos si aplica
+                                                      p_fecVen     DATE             ,       -- Fecha de vencimiento del producto si aplica
+                                                      p_idTrans    BIGINT           ,       -- Id Utilizado para las transacciones de movimientos contables
+                                                      p_prov       BIGINT              -- Id del proveedor con el cual se adquirio el producto
                                     ) RETURNS VARCHAR AS $$
       DECLARE 
       
          v_cod_prod     varchar(1);
-         v_tius_tius    integer;
+         v_tius_tius    bigint;
          rta            varchar(500) := 'Err';
          v_cost_tot     Numeric(1000,10) := 0;         
          
@@ -99,7 +99,7 @@ CREATE OR REPLACE FUNCTION US_FINSERT_NUEVO_PROD (    p_ref        INT          
         v_debitos           numeric(1000,10) := 0;
         v_cre_usu           numeric(1000,10) := 0;
         v_deb_usu           numeric(1000,10) := 0;
-        v_tipoDocumento     integer := 0;
+        v_tipoDocumento     bigint := 0;
         --
         --Obtiene debtitos parametrizados en el sistema
         --

@@ -2,10 +2,10 @@
 -- Funcion encargada de realizar toda la facturacion del sistema
 --
 CREATE OR REPLACE FUNCTION SIMULACION_MVTO_CONTABLES (  
-                                                        p_idTrans               INT,                                                        
-                                                        p_sede                  INT,
+                                                        p_idTrans               BIGINT,                                                        
+                                                        p_sede                  BIGINT,
                                                         p_tipoPago              VARCHAR,
-                                                        p_valrTarjeta           NUMERIC(15,6)
+                                                        p_valrTarjeta           NUMERIC(1000,10)
                                                     ) RETURNS VARCHAR  AS $$
     DECLARE
     --
@@ -53,17 +53,17 @@ CREATE OR REPLACE FUNCTION SIMULACION_MVTO_CONTABLES (
      ;
     --
     v_sbcu_cod_pgtj         varchar(10);
-    v_vlr_total_fact_co     NUMERIC(15,6) := 0;
+    v_vlr_total_fact_co     NUMERIC(1000,10) := 0;
     --
-    v_valor_real_apagar         NUMERIC(15,6) := 0;
-    v_valor_pago_efectivo       NUMERIC(15,6) := 0;
+    v_valor_real_apagar         NUMERIC(1000,10) := 0;
+    v_valor_pago_efectivo       NUMERIC(1000,10) := 0;
     --
     --Variables necesarias para la validacion de subcuentas
     --
-    v_val_iva_generado          int :=0;
-    v_val_costo_ventas          int :=0;
-    v_val_mercancias_mm         int :=0;
-    v_val_descuentos            int :=0;
+    v_val_iva_generado          bigint :=0;
+    v_val_costo_ventas          bigint :=0;
+    v_val_mercancias_mm         bigint :=0;
+    v_val_descuentos            bigint :=0;
     --
     --
     --Logica para validaciones previas a la facturacion
@@ -105,7 +105,7 @@ CREATE OR REPLACE FUNCTION SIMULACION_MVTO_CONTABLES (
     SELECT nextval('co_temp_sim_movi_transcontable') 
     ;
     --
-    v_idTrans_con           INT:= 0;
+    v_idTrans_con           BIGINT:= 0;
     --
     --
     --Cursor el cual obtiene todos los productos que fueron facturados teniendo en cuenta el id de transaccion
@@ -125,22 +125,22 @@ CREATE OR REPLACE FUNCTION SIMULACION_MVTO_CONTABLES (
      WHERE kapr_kapr = (select max(kapr_kapr) from in_tkapr where kapr_dska = vc_dska_dska)
     ;
     --
-    v_vlr_prom_pond        NUMERIC(15,6) := 0;
-    v_precio_prod          NUMERIC(15,6) := 0;
-    v_diferencia_precio    NUMERIC(15,6) := 0;
-    v_vlr_tot_fact_iva     NUMERIC(15,6) := 0;
-    v_vlr_total_fact       NUMERIC(15,6) := 0;
-    v_vlr_iva_tot          NUMERIC(15,6) := 0;
+    v_vlr_prom_pond        NUMERIC(1000,10) := 0;
+    v_precio_prod          NUMERIC(1000,10) := 0;
+    v_diferencia_precio    NUMERIC(1000,10) := 0;
+    v_vlr_tot_fact_iva     NUMERIC(1000,10) := 0;
+    v_vlr_total_fact       NUMERIC(1000,10) := 0;
+    v_vlr_iva_tot          NUMERIC(1000,10) := 0;
     --
     --Variables necesarias para la contabilizacion
     --
-    v_iva_mvco              NUMERIC(15,6):=0;
-    v_sum_deb               NUMERIC(15,6):=0;
-    v_sum_cre               NUMERIC(15,6):=0;
-    v_sbcu_sbcu             INT := 0;
-    v_vlr_dscto_fact        NUMERIC(15,6) := 0;
+    v_iva_mvco              NUMERIC(1000,10):=0;
+    v_sum_deb               NUMERIC(1000,10):=0;
+    v_sum_cre               NUMERIC(1000,10):=0;
+    v_sbcu_sbcu             BIGINT := 0;
+    v_vlr_dscto_fact        NUMERIC(1000,10) := 0;
     --
-    v_vlr_total_factura     NUMERIC(15,6) := 0;
+    v_vlr_total_factura     NUMERIC(1000,10) := 0;
     --
     --Cursor en el cual obtengo el valor parametrizado para el  producto en la sede en la cual fue comprado
     --

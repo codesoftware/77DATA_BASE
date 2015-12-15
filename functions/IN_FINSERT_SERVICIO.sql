@@ -1,14 +1,14 @@
 -- Función con la cual se realizara la inserccion de un cliente
 
 CREATE OR REPLACE FUNCTION IN_FINSERT_SERVICIO (    
-                                            p_numHab                integer, 
-                                            p_num_max_pers          integer, 
-                                            p_num_min_pers          integer, 
-                                            p_iva                   integer,
+                                            p_numHab                bigint, 
+                                            p_num_max_pers          bigint, 
+                                            p_num_min_pers          bigint, 
+                                            p_iva                   bigint,
                                             p_bano                  varchar(1), 
                                             p_televison             varchar(1), 
                                             p_cable                 varchar(1), 
-                                            p_num_camas             integer,
+                                            p_num_camas             bigint,
                                             p_cama_aux              varchar(1)
                                             ) RETURNS varchar AS $$
     DECLARE  

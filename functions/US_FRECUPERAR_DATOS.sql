@@ -3,7 +3,7 @@
 --
 
 CREATE OR REPLACE FUNCTION US_FRECUPERAR_DATOS (  
-                                                   p_user      varchar(50)
+                                                   p_user      varchar(500)
                                                 ) RETURNS return_usuario AS $$
    DECLARE
    

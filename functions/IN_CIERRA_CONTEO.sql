@@ -4,7 +4,7 @@
 --
 
 CREATE OR REPLACE FUNCTION IN_CIERRA_CONTEO(  
-                                                p_copr_copr         INT                                                        
+                                                p_copr_copr         BIGINT                                                        
                                            ) RETURNS VARCHAR  AS $$
     DECLARE
         --
@@ -22,9 +22,9 @@ CREATE OR REPLACE FUNCTION IN_CIERRA_CONTEO(
            and ecop_copr = p_copr_copr
            ;
         --
-        v_ecop_ecop             int := 0;
-        v_ecop_valor            int := 0;
-        v_exist_prod            numeric(15,5) := 0;
+        v_ecop_ecop             BIGINT := 0;
+        v_ecop_valor            BIGINT := 0;
+        v_exist_prod            numeric(1000,10) := 0;
         --
         --Cursor utilizado para saber sobre que sede se esta realizando el conteo
         --
@@ -34,8 +34,8 @@ CREATE OR REPLACE FUNCTION IN_CIERRA_CONTEO(
          WHERE copr_copr = p_copr_copr
           ;
         --
-        v_sede_sede         int := 0;
-        v_diferencia        NUMERIC(15,6) := 0;
+        v_sede_sede         BIGINT := 0;
+        v_diferencia        NUMERIC(1000,10) := 0;
         --
     BEGIN
         --
