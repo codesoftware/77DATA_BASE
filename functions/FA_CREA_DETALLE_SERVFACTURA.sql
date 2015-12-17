@@ -1,10 +1,10 @@
 CREATE OR REPLACE 
 FUNCTION FA_CREA_DETALLE_SERVFACTURA (  
-                            ptius           INT,
+                            ptius           BIGINT,
                             p_fecha_ini     DATE,          
-                            p_num_dias      INT,
-                            p_dsha_dsha     INT,
-                            p_fact_fact     INT
+                            p_num_dias      BIGINT,
+                            p_dsha_dsha     BIGINT,
+                            p_fact_fact     BIGINT
                          ) RETURNS VARCHAR  AS $$
                          
                          
@@ -16,7 +16,7 @@ FUNCTION FA_CREA_DETALLE_SERVFACTURA (
     --
     -- Variable encargada de obtener el id del cliente al cual se le facturara
     --
-    v_clien                 INT;
+    v_clien                 BIGINT;
     --
     -- Cursor el cual identifica si la factura si existe
     --
@@ -39,11 +39,11 @@ FUNCTION FA_CREA_DETALLE_SERVFACTURA (
     --
     --
     --
-    v_valor_reservacion       NUMERIC(50,6) := 0; 
-    v_precioHabitacion        NUMERIC(50,6) := 0; 
-    v_porcIva                 NUMERIC(50,6) := 0;
-    v_valorIva                NUMERIC(50,6) := 0;
-    v_valorTotal              NUMERIC(50,6) := 0;
+    v_valor_reservacion       NUMERIC(1000,10) := 0; 
+    v_precioHabitacion        NUMERIC(1000,10) := 0; 
+    v_porcIva                 NUMERIC(1000,10) := 0;
+    v_valorIva                NUMERIC(1000,10) := 0;
+    v_valorTotal              NUMERIC(1000,10) := 0;
     --
     BEGIN
     

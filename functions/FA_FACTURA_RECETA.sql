@@ -2,12 +2,12 @@
 -- Funcion encargada de realizar la facturacion de una receta en particular
 --
 CREATE OR REPLACE FUNCTION FA_FACTURA_RECETA(  
-                                                p_tius              INT,        --Id del usuario que esta registrando la venta del producto
-                                                p_rece              INT,        --Id de la receta que se esta vendiendo
-                                                p_sede              INT,        --Sede en la cual se esta vendiendo el producto
-                                                p_cantidad          INT,        --Cantidad de productos que se vendieron
-                                                p_idmvco            INT,        --Id de los movimientos contables que generar la transaccion
-                                                p_fact              INT         --Id de facturacion    
+                                                p_tius              BIGINT,        --Id del usuario que esta registrando la venta del producto
+                                                p_rece              BIGINT,        --Id de la receta que se esta vendiendo
+                                                p_sede              BIGINT,        --Sede en la cual se esta vendiendo el producto
+                                                p_cantidad          BIGINT,        --Cantidad de productos que se vendieron
+                                                p_idmvco            BIGINT,        --Id de los movimientos contables que generar la transaccion
+                                                p_fact              BIGINT         --Id de facturacion    
                                             ) RETURNS VARCHAR  AS $$
     DECLARE
         --
@@ -16,7 +16,7 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_RECETA(
         FROM FA_TDTRE
         ;
         --
-        v_dtre_dtre         INT :=  0;
+        v_dtre_dtre         BIGINT :=  0;
         --
         c_precio_receta CURSOR FOR
         SELECT prre_precio
@@ -40,19 +40,19 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_RECETA(
          WHERE RECE_RECE = p_rece
         ;
         --
-        v_iva_total         NUMERIC := 0;
-        v_iva_unidad        NUMERIC := 0;
+        v_iva_total         NUMERIC(1000,10) := 0;
+        v_iva_unidad        NUMERIC(1000,10) := 0;
         --
-        v_precio_unidad     NUMERIC := 0;
-        v_precio_total      NUMERIC := 0;
+        v_precio_unidad     NUMERIC(1000,10) := 0;
+        v_precio_total      NUMERIC(1000,10) := 0;
         --
-        v_venta_total       NUMERIC := 0;
-        v_venta_unidad      NUMERIC := 0;
+        v_venta_total       NUMERIC(1000,10) := 0;
+        v_venta_unidad      NUMERIC(1000,10) := 0;
         --
-        v_utilidad          NUMERIC := 0;
+        v_utilidad          NUMERIC(1000,10) := 0;
         --
-        v_costo_rece        NUMERIC := 0;
-        v_costo_tot_rece    NUMERIC := 0;
+        v_costo_rece        NUMERIC(1000,10) := 0;
+        v_costo_tot_rece    NUMERIC(1000,10) := 0;
         --
         --Facturacion de los productos de la receta
         --
@@ -73,8 +73,8 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_RECETA(
          WHERE mvin_venta = 'S'
          ;
         --
-        v_mvin_mvin             INT :=0;
-        v_val_mvin_fact         INT := 0;
+        v_mvin_mvin             BIGINT :=0;
+        v_val_mvin_fact         BIGINT := 0;
         v_sbcu_cod_prod         varchar(100) := '';
         --
         --Obtengo los productos asociados a la receta
@@ -85,8 +85,8 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_RECETA(
          WHERE repr_rece = p_rece
         ;
         --
-        v_total_productos       INT := 0;
-        v_prom_pond_prod        NUMERIC := 0;
+        v_total_productos       BIGINT := 0;
+        v_prom_pond_prod        NUMERIC(1000,10) := 0;
         --
         --Cursor con el cual obtengo el valor del promedio pornderado del producto
         --
@@ -117,7 +117,7 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_RECETA(
                offset 1) as tabla
         ;
         --
-        v_kapr_kapr     NUMERIC  :=0;
+        v_kapr_kapr     NUMERIC(1000,10)  :=0;
         --
     BEGIN
         --raise exception 'parametro %, %, %, %, %, %',p_tius,p_rece,p_sede,p_cantidad,p_idmvco,p_fact;

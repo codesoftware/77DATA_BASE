@@ -1,23 +1,22 @@
 CREATE OR REPLACE FUNCTION FA_RESERVA_HABITACION (  
-                                       p_tius           INT,
+                                       p_tius           BIGINT,
                                        p_fecha_ini      DATE,          
-                                       p_num_dias       int,
-                                       p_dsha_dsha      INT,
-                                       p_clien          INT
+                                       p_num_dias       BIGINT,
+                                       p_dsha_dsha      BIGINT,
+                                       p_clien          BIGINT
                                       ) RETURNS VARCHAR AS $$
     DECLARE
     --Variable con la cual sabre si la habitacion esta disponible o no
     v_verf_reservacion      VARCHAR;
-    
-    v_rvha_rvha    INT  := 0;
-    
+    --
+    v_rvha_rvha    BIGINT  := 0;
+    --
     c_rvha CURSOR FOR
     SELECT max(rvha_rvha)
       FROM in_trvha
      WHERE rvha_dsha = p_dsha_dsha
      ;
-    
-    
+    --
     BEGIN
     
     v_verf_reservacion  := FA_VERF_RESERVA_HABITACION(
@@ -56,5 +55,3 @@ CREATE OR REPLACE FUNCTION FA_RESERVA_HABITACION (
         
  END;
 $$ LANGUAGE 'plpgsql';
-    
-    

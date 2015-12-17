@@ -2,17 +2,17 @@
 
 -- DROP FUNCTION in_finsert_cierre_diario(date, integer, integer);
 
-CREATE OR REPLACE FUNCTION in_finsert_cierre_diario(p_cfecha date, p_usuar integer, p_sede integer)
+CREATE OR REPLACE FUNCTION in_finsert_cierre_diario(p_cfecha date, p_usuar bigint, p_sede bigint)
   RETURNS character varying AS
-$BODY$
+    $$
                                                     
     DECLARE 
         --
-        rta                 varchar(10) := 'Err';
-        vlr_iva             NUMERIC(15,5) := 0;
-        vrl_tot             NUMERIC(15,5) := 0;
-        vlr_cie             NUMERIC(15,5) := 0;
-        v_cierre_cierre     INT           := 0;
+        rta                 varchar(900) := 'Err';
+        vlr_iva             NUMERIC(1000,10) := 0;
+        vrl_tot             NUMERIC(1000,10) := 0;
+        vlr_cie             NUMERIC(1000,10) := 0;
+        v_cierre_cierre     BIGINT           := 0;
         --
         --Cursor que me verifica si el cierre ya se hizo en esa fecha
         --
@@ -97,9 +97,4 @@ $BODY$
     EXCEPTION WHEN OTHERS THEN
                RETURN 'ERROR IN_FINSERT_CIERRE_DIARIO ' || SQLERRM;        
 END;
-$BODY$
-  LANGUAGE plpgsql VOLATILE
-  COST 100;
-ALTER FUNCTION in_finsert_cierre_diario(date, integer, integer)
-  OWNER TO postgres;
-
+$$ LANGUAGE 'plpgsql';

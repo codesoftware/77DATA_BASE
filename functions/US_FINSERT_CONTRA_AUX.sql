@@ -1,7 +1,7 @@
 -- Funcion con la cual realizara el update sobre la tabla us_ttius para poder ingresar
 -- con la clave auxiliar cuando el ususario a olvidado su clave
 
-CREATE OR REPLACE FUNCTION US_FINSERT_CONTRA_AUX (   p_user      varchar(50), 
+CREATE OR REPLACE FUNCTION US_FINSERT_CONTRA_AUX (   p_user      varchar(500), 
                                           p_contra    varchar(50)) RETURNS varchar AS $$
     BEGIN
     

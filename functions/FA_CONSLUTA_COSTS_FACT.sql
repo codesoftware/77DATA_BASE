@@ -1,8 +1,8 @@
 CREATE OR REPLACE 
 FUNCTION FA_CONSLUTA_COSTS_FACT (  
-                            p_fact_fact     INT,
-                            p_tipo          INT, -- (1) SERVICIO (2) PRODUCTO (3) PRODUCTOS + SERVICIOS (4) RECETAS
-                            p_accion        INT  -- (1) VALOR TOTAL(IVA +VALOR) (2) VALOR DE LOS SERVICIOS O PRODUCTOS (3) VALOR IVA (4) DESCUENTOS
+                            p_fact_fact     BIGINT,
+                            p_tipo          BIGINT, -- (1) SERVICIO (2) PRODUCTO (3) PRODUCTOS + SERVICIOS (4) RECETAS
+                            p_accion        BIGINT  -- (1) VALOR TOTAL(IVA +VALOR) (2) VALOR DE LOS SERVICIOS O PRODUCTOS (3) VALOR IVA (4) DESCUENTOS
                          ) RETURNS NUMERIC  AS $$
     DECLARE
         --
@@ -97,27 +97,27 @@ FUNCTION FA_CONSLUTA_COSTS_FACT (
            AND UPPER(dtre_estado) = 'A'
          ;
         --
-        v_valor     NUMERIC := 0;
+        v_valor     NUMERIC(1000,10) := 0;
         --
         --Variables para el calculo total de toda la factura
         --
-        v_total_servicios       NUMERIC := 0;
-        v_total_productos       NUMERIC := 0;
-        v_total_recetas         NUMERIC := 0;
+        v_total_servicios       NUMERIC(1000,10) := 0;
+        v_total_productos       NUMERIC(1000,10) := 0;
+        v_total_recetas         NUMERIC(1000,10) := 0;
         --
-        v_iva_servicios         NUMERIC := 0;
-        v_iva_productos         NUMERIC := 0;
-        v_iva_recetas           NUMERIC := 0;
+        v_iva_servicios         NUMERIC(1000,10) := 0;
+        v_iva_productos         NUMERIC(1000,10) := 0;
+        v_iva_recetas           NUMERIC(1000,10) := 0;
         --
-        v_dcto_productos        NUMERIC := 0;
-        v_dcto_recetas          NUMERIC := 0;
+        v_dcto_productos        NUMERIC(1000,10) := 0;
+        v_dcto_recetas          NUMERIC(1000,10) := 0;
         --
         --Valor a pagar discriminado
         --
-        v_total_pag_servicio    NUMERIC := 0;
-        v_total_pag_producto    NUMERIC := 0;
-        v_total_pag_receta    NUMERIC := 0;
-        
+        v_total_pag_servicio    NUMERIC(1000,10) := 0;
+        v_total_pag_producto    NUMERIC(1000,10) := 0;
+        v_total_pag_receta      NUMERIC(1000,10) := 0;
+        --
     BEGIN
     
         IF p_tipo = 1 THEN

@@ -1,8 +1,8 @@
 -- Funcion con la cual realizara el cambio de contraseña principasl
 -- con el usuario y la clave
 
-CREATE OR REPLACE FUNCTION US_FCAMBIO_CLAVE (   p_user      varchar(50), 
-                                     p_contra    varchar(50)) RETURNS varchar AS $$
+CREATE OR REPLACE FUNCTION US_FCAMBIO_CLAVE (   p_user      varchar(500), 
+                                                p_contra    varchar(500)) RETURNS varchar AS $$
     BEGIN
     
     UPDATE us_ttius

@@ -1,9 +1,9 @@
 CREATE FUNCTION US_FVERIFICA_USUARIO(  
-                                       p_usuario      varchar(50)
+                                       p_usuario      varchar(200)
                                     ) RETURNS VARCHAR AS'
    DECLARE
    
-   v_num_usuario    int := 0;
+   v_num_usuario    bigint := 0;
    
    c_usuario CURSOR FOR 
       SELECT count(*)

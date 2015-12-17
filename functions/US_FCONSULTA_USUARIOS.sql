@@ -1,13 +1,13 @@
-CREATE OR REPLACE FUNCTION US_FCONSULTA_USUARIOS (  p_usuario       varchar(50),
-                                         p_nombre       varchar(50),
-                                         p_cedula       varchar(50),
-                                         p_apellido     varchar(50)
+CREATE OR REPLACE FUNCTION US_FCONSULTA_USUARIOS (  p_usuario       varchar(500),
+                                         p_nombre       varchar(500),
+                                         p_cedula       varchar(500),
+                                         p_apellido     varchar(500)
                                       ) RETURNS return_usua_com[] AS $$
    DECLARE
    
    rtafinal          return_usua_com[];
    rta               return_usua_com;
-   v_iterator        int := 0;
+   v_iterator        bigint := 0;
    v_nulo            varchar(8) := 'SIN DATO';
    
    c_usuario CURSOR FOR 

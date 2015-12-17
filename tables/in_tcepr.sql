@@ -4,10 +4,10 @@
 --DROP TABLE IF EXISTS in_tcopr
 
 CREATE TABLE in_tcepr(
-    cepr_cepr               SERIAL          , 
-    cepr_dska               INT             ,
-    cepr_existencia         INT             ,
-    cepr_promedio_uni       NUMERIC(50,6)   ,
-    cepr_promedio_total     NUMERIC(50,6)   ,     
+    cepr_cepr               BIGSERIAL          , 
+    cepr_dska               BIGINT             ,
+    cepr_existencia         BIGINT             ,
+    cepr_promedio_uni       NUMERIC(1000,10)   ,
+    cepr_promedio_total     NUMERIC(1000,10)   ,     
 PRIMARY KEY (cepr_cepr)
 );

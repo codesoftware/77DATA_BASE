@@ -9,9 +9,9 @@ CREATE OR REPLACE FUNCTION FA_ELIMINA_PRODUCTOSXDTPR(
     DECLARE    
     
     v_rta_kardex      varchar(500) := '';
-    v_cont_fact       INTEGER;
+    v_cont_fact       bigint;
     v_vetor_rta       text[];
-    v_kapr_kapr       INTEGER :=0;
+    v_kapr_kapr       bigint :=0;
     --
     --Cursor el cual verifica si la factura existe    
     --
@@ -21,7 +21,7 @@ CREATE OR REPLACE FUNCTION FA_ELIMINA_PRODUCTOSXDTPR(
      WHERE fact_fact = p_fact_fact
      ;
     
-    v_mov_inv_dev_clie    INTEGER := 1; --Movimento de inventario el cual referencia devolucion de un cliente
+    v_mov_inv_dev_clie    BIGINT := 1; --Movimento de inventario el cual referencia devolucion de un cliente
     
     --
     -- Cursor el cual obtiene los datos del movimiento de inventario que implico la venta del producto
@@ -34,11 +34,11 @@ CREATE OR REPLACE FUNCTION FA_ELIMINA_PRODUCTOSXDTPR(
         
      ;
     --Costo que le costo a la empresa la venta
-    v_cost_movInventario    NUMERIC;
+    v_cost_movInventario    NUMERIC(1000,10);
     --Identificador del producto con el cual se creo la compra
-    v_dska_dska             INT;
+    v_dska_dska             BIGINT;
     --Cantidad de productos del inventario
-    v_cant_prod             INT;
+    v_cant_prod             BIGINT;
     
     BEGIN
     

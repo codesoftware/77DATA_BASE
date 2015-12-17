@@ -2,13 +2,13 @@
 -- Funcion encargada de realizar toda la facturacion del sistema
 --
 CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(  
-                                                p_tius          INT,        --Id del usuario que esta registrando la venta del producto
-                                                p_dska          INT,        --Id del producto que se esta vendiendo
-                                                p_sede          INT,        --Sede en la cual se esta vendiendo el producto
-                                                p_cantidad      INT,        --Cantidad de productos que se vendieron
-                                                p_idmvco        INT,        --Id de los movimientos contables que generar la transaccion
-                                                p_fact          INT,        --Id de facturacion 
-                                                p_precio        NUMERIC
+                                                p_tius          BIGINT,        --Id del usuario que esta registrando la venta del producto
+                                                p_dska          BIGINT,        --Id del producto que se esta vendiendo
+                                                p_sede          BIGINT,        --Sede en la cual se esta vendiendo el producto
+                                                p_cantidad      BIGINT,        --Cantidad de productos que se vendieron
+                                                p_idmvco        BIGINT,        --Id de los movimientos contables que generar la transaccion
+                                                p_fact          BIGINT,        --Id de facturacion 
+                                                p_precio        NUMERIC(1000,10)
                                             ) RETURNS VARCHAR  AS $$
     DECLARE
     --
@@ -21,17 +21,17 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(
     v_mvin_mvin             INT :=0;
     v_val_mvin_fact         INT := 0;
     --
-    v_vlr_prom_pond         NUMERIC(15,6)   := 0;
-    v_precio_prod           NUMERIC(15,6)   := 0;
-    v_utilidad_prod         NUMERIC(15,6)   := 0;
-    v_dtpr_dtpr             NUMERIC;
-    v_vlr_total_fact        NUMERIC(15,6)   :=0;
-    v_vlr_iva_tot           NUMERIC(15,6)   :=0;
-    v_vlr_iva_uni           NUMERIC(15,6)   :=0;
-    v_vlr_tot_fact_iva      NUMERIC(15,6)   :=0;
-    v_vlr_uni_fact_iva      NUMERIC(15,6)   :=0;
+    v_vlr_prom_pond         NUMERIC(1000,10)   := 0;
+    v_precio_prod           NUMERIC(1000,10)   := 0;
+    v_utilidad_prod         NUMERIC(1000,10)   := 0;
+    v_dtpr_dtpr             NUMERIC(1000,10);
+    v_vlr_total_fact        NUMERIC(1000,10)   :=0;
+    v_vlr_iva_tot           NUMERIC(1000,10)   :=0;
+    v_vlr_iva_uni           NUMERIC(1000,10)   :=0;
+    v_vlr_tot_fact_iva      NUMERIC(1000,10)   :=0;
+    v_vlr_uni_fact_iva      NUMERIC(1000,10)   :=0;
     --
-    v_kapr_kapr     NUMERIC  :=0;
+    v_kapr_kapr     NUMERIC(1000,10)  :=0;
     --
     --Moviento de inventario parametrizado para la venta de productos
     --
@@ -102,13 +102,13 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(
     --
     v_sbcu_cod_prod         varchar(100) := '';
     --
-    v_vlr_prom_pond_tot     NUMERIC := 0;
+    v_vlr_prom_pond_tot     NUMERIC(1000,10) := 0;
     --
-    v_prom_pond             NUMERIC := 0;
-    v_prom_pond_tot         NUMERIC := 0;
+    v_prom_pond             NUMERIC(1000,10) := 0;
+    v_prom_pond_tot         NUMERIC(1000,10) := 0;
     --
-    v_aplica_desc               VARCHAR(2):= 0;
-    v_valor_descuento           NUMERIC(15,6):= 0;
+    v_aplica_desc           VARCHAR(2):= 0;
+    v_valor_descuento       NUMERIC(1000,10):= 0;
     --
     --Cursor con el cual obtengo las existencias de la sede
     --
@@ -119,7 +119,7 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(
        AND eprs_sede = p_sede
        ;
     --
-    v_existencias           NUMERIC(15,6) := 0;
+    v_existencias           NUMERIC(1000,10) := 0;
     --
     --Cursor con el cual obtengo las existencias totales de un producto
     --
@@ -129,7 +129,7 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(
      WHERE cepr_dska = p_dska
      ;
     --
-    v_exis_total            NUMERIC(15,6) := 0;
+    v_exis_total            NUMERIC(1000,10) := 0;
     --
     BEGIN
     --

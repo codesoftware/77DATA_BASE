@@ -5,19 +5,19 @@
 --DROP TABLE IF EXISTS em_tpara;
 
 CREATE TABLE in_trmce(
-   rmce_rmce                SERIAL              NOT NULL    ,
+   rmce_rmce                BIGSERIAL           NOT NULL    ,
    rmce_refe                int                 NOT NULL    ,
    rmce_imei                VARCHAR(150)        NOT NULL    ,
    rmce_iccid               VARCHAR(150)        NOT NULL    ,
-   rmce_valor               NUMERIC(50,6)       NOT NULL    ,
-   rmce_comision            NUMERIC(50,6)                   ,
+   rmce_valor               NUMERIC(1000,10)    NOT NULL    ,
+   rmce_comision            NUMERIC(1000,10)                ,
    rmce_tppl                VARCHAR(2)          NOT NULL    ,
    rmce_fcve                date                NOT NULL    ,
    rmce_fcsl                date                            ,
    rmce_fcen                date default NOW()              ,
    rmce_tius_ent            int                 NOT NULL    ,
    rmce_tius_sal            int                             ,
-   rmce_codigo              VARCHAR(25)     	NOT NULL    ,
+   rmce_codigo              VARCHAR(25)         NOT NULL    ,
    rmce_sede                int                 NOT NULL    ,
    rmce_estado              VARCHAR(2)          NOT NULL  DEFAULT 'E' ,
    rmce_pagado              VARCHAR(2)          NOT NULL  DEFAULT 'N' ,

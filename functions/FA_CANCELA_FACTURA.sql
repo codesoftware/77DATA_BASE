@@ -3,9 +3,9 @@
 --
 
 CREATE OR REPLACE FUNCTION FA_CANCELA_FACTURA (  
-                                p_tius              int,
-                                p_fact              int,
-                            out p_fact_new          int,
+                                p_tius              BIGINT,
+                                p_fact              BIGINT,
+                            out p_fact_new          BIGINT,
                             out p_respuesta         varchar,
                             out p_excepcion         varchar
                          )AS $$

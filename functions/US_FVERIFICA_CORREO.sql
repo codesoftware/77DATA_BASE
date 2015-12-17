@@ -1,9 +1,9 @@
 CREATE FUNCTION US_FVERIFICA_CORREO(  
-                                       p_correo      varchar(50)
+                                       p_correo      varchar(200)
                                     ) RETURNS VARCHAR AS'
    DECLARE
    
-   v_num_correo    int := 0;
+   v_num_correo    bigint := 0;
    
    c_correo CURSOR FOR 
       SELECT count(*)

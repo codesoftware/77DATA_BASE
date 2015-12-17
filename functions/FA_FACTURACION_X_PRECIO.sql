@@ -2,36 +2,36 @@
 -- Funcion con la cual se validan las precondiciones necesarias para facturar como lo son 
 --
 CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (  
-                                p_tius                  INT,
-                                p_clien                 INT,
-                                p_idTrans               INT,
-                                p_sede                  INT, 
+                                p_tius                  BIGINT,
+                                p_clien                 BIGINT,
+                                p_idTrans               BIGINT,
+                                p_sede                  BIGINT, 
                                 p_tipoPago              VARCHAR,
-                                p_idVaucher             int,
-                                p_valrTarjeta           int,
-                                p_idPedido              INT
+                                p_idVaucher             BIGINT,
+                                p_valrTarjeta           BIGINT,
+                                p_idPedido              BIGINT
                          )RETURNS VARCHAR AS $$
     DECLARE
     --
     --Logica para validaciones previas a la facturacion
     --
     --
-    v_vlr_total_fact_co     NUMERIC(15,6) := 0;
+    v_vlr_total_fact_co     NUMERIC(1000,10) := 0;
     --
     --Variables utilizadas para los valores principales de facturacion
     --
-    v_vlr_total     NUMERIC  :=0;
-    v_vlr_iva       NUMERIC  :=0;
+    v_vlr_total     NUMERIC(1000,10)  :=0;
+    v_vlr_iva       NUMERIC(1000,10)  :=0;
     --
     --Variables necesarias para la validacion de subcuentas
     --
-    v_val_iva_generado          int :=0;
-    v_val_costo_ventas          int :=0;
-    v_val_mercancias_mm         int :=0;
-    v_val_descuentos            int :=0;
-    v_val_caja_menor            int :=0;
+    v_val_iva_generado          bigint :=0;
+    v_val_costo_ventas          bigint :=0;
+    v_val_mercancias_mm         bigint :=0;
+    v_val_descuentos            bigint :=0;
+    v_val_caja_menor            bigint :=0;
     --
-    v_fact_fact     NUMERIC  :=0;
+    v_fact_fact     NUMERIC(1000,10)  :=0;
     --
     --Cursor utilizado para generar el id de la factura
     --    
@@ -60,7 +60,7 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
     --
     v_rta_fact_prod             varchar(500):= '';
     v_rta_fact_rece             varchar(500):= '';  
-    v_precio_prod               numeric(15,6):= 0;
+    v_precio_prod               numeric(1000,5):= 0;
     --
     --Cursor el cual sirve para obtener el id temporal de transaccion para la tabla temporal
     --de movimientos contables
@@ -85,9 +85,9 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
        AND tem_mvco_trans = vc_temIdTrans
        ;
     --
-    v_sum_deb               NUMERIC(15,6):=0;
-    v_sum_cre               NUMERIC(15,6):=0;
-    v_sbcu_sbcu             INT := 0;
+    v_sum_deb               NUMERIC(1000,10):=0;
+    v_sum_cre               NUMERIC(1000,10):=0;
+    v_sbcu_sbcu             BIGINT := 0;
     --
     --Obtiene el id de una subcuenta basandose en el codigo de la misma
     --
@@ -127,9 +127,9 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
      WHERE fact_fact = vc_fact_fact
      ;
     --
-    v_valor_iva_fact        NUMERIC(15,6) := 0;
-    v_vlr_total_factura     NUMERIC(15,6) := 0;
-    v_idTrans_con           INT := 0;
+    v_valor_iva_fact        NUMERIC(1000,10) := 0;
+    v_vlr_total_factura     NUMERIC(1000,10) := 0;
+    v_idTrans_con           BIGINT := 0;
     --
     v_valida_basica         varchar(4000)   := '';
     --
@@ -138,7 +138,7 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
       from in_tpedi
      where pedi_pedi = p_idPedido
      ;
-    v_valida_pedido         INT:=0;
+    v_valida_pedido         BIGINT:=0;
     --
     --Cursor con el cual se obtiene el id de la subcuenta de la caja menor
     --
@@ -151,16 +151,16 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
     --
     v_sbcu_caja_cod     varchar(10):= '';
     --
-	--Cursor con el cual se obtiene el valor del descuento de la factura
-	--
-	c_valor_dcto CURSOR(vc_fact_fact INT) FOR
-	SELECT fact_vlr_dcto
-	  FROM fa_tfact
-	 WHERE fact_fact = vc_fact_fact
-	  ;
-	--
-	v_vlr_dsc 		NUMERIC(15,6) := 0;
-	--
+    --Cursor con el cual se obtiene el valor del descuento de la factura
+    --
+    c_valor_dcto CURSOR(vc_fact_fact INT) FOR
+    SELECT fact_vlr_dcto
+      FROM fa_tfact
+     WHERE fact_fact = vc_fact_fact
+      ;
+    --
+    v_vlr_dsc         NUMERIC(1000,6) := 0;
+    --
     BEGIN
     --
     v_valida_basica := FA_VAL_CON_FACTU(p_sede);
@@ -284,15 +284,15 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
     INSERT INTO co_ttem_mvco(
             tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
     VALUES (v_idTrans_con, '413535' , v_vlr_total_factura , 'C');
-	--
-	OPEN c_valor_dcto(v_fact_fact);
-	FETCH c_valor_dcto INTO v_vlr_dsc;
-	CLOSE c_valor_dcto;
     --
-	--v_vlr_dsc := FA_CONSLUTA_COSTS_FACT(new.dtpr_fact,3,4);
-	--raise exception 'Descuento % ', v_vlr_dsc;
-	--
-	--
+    OPEN c_valor_dcto(v_fact_fact);
+    FETCH c_valor_dcto INTO v_vlr_dsc;
+    CLOSE c_valor_dcto;
+    --
+    --v_vlr_dsc := FA_CONSLUTA_COSTS_FACT(new.dtpr_fact,3,4);
+    --raise exception 'Descuento % ', v_vlr_dsc;
+    --
+    --
     --Obtengo el valor total de la factura
     --
     OPEN c_vlr_total_fact(v_fact_fact);

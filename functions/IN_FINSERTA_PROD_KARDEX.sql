@@ -1,26 +1,26 @@
 -- Funcion la cual se encargara de ingresar los detalles del inventario de cada producto
 
 CREATE OR REPLACE FUNCTION IN_FINSERTA_PROD_KARDEX (  
-                                                    p_id_producto     INTEGER ,         -- Identificador unico del producto (DSKA_DSKA) al cual se le realizara el movimiento de inventario
-                                                    p_id_moviInv      INTEGER ,         -- Identificador unico del movimiento de inventario
-                                                    p_id_tius         INTEGER ,         -- Identificador del usuario que esta realizando la insercion
-                                                    p_numProd         INTEGER ,         -- Numero de productos que van a ingresar al inventario
-                                                    p_costoTotal      NUMERIC(50,6),     -- Costo total de todos los productos que ingresaron al inventario
-                                                    p_sede            INTEGER
+                                                    p_id_producto     bigint ,         -- Identificador unico del producto (DSKA_DSKA) al cual se le realizara el movimiento de inventario
+                                                    p_id_moviInv      bigint ,         -- Identificador unico del movimiento de inventario
+                                                    p_id_tius         bigint ,         -- Identificador del usuario que esta realizando la insercion
+                                                    p_numProd         bigint ,         -- Numero de productos que van a ingresar al inventario
+                                                    p_costoTotal      NUMERIC(1000,10),     -- Costo total de todos los productos que ingresaron al inventario
+                                                    p_sede            bigint
                                     ) RETURNS VARCHAR AS $$
       DECLARE 
       
       v_natMov              varchar(1) := '';    -- Naturaleza del movimiento que se va ha realizar
-      v_valorUnitario       NUMERIC(50,6) := 0;  -- Valor unitario del producto antes del movimiento
-      v_costTotProdOld      NUMERIC(50,6) := 0;  -- Costo total de todos los productos existentes en el inventario antes del inventario
-      v_costTotProdNew      NUMERIC(50,6) := 0;  -- Costo total de todos los productos existentes en el inventario despues del inventario
-      v_consecutivo         INTEGER := 0;        -- Nuevo consecutivo del movimiento de inventario
-      v_cantSaldoAnt        INTEGER := 0;        -- Cantidad de unidades antes del movimiento de inventario
-      v_cantSaldoSig        INTEGER := 0;        -- Cantidad de unidades despues del movimiento
-      v_uniPonderado        NUMERIC(50,6) := 0;  --Valor ponderado del producto respecto a los anteriores movimientos de inventario
+      v_valorUnitario       NUMERIC(1000,10) := 0;  -- Valor unitario del producto antes del movimiento
+      v_costTotProdOld      NUMERIC(1000,10) := 0;  -- Costo total de todos los productos existentes en el inventario antes del inventario
+      v_costTotProdNew      NUMERIC(1000,10) := 0;  -- Costo total de todos los productos existentes en el inventario despues del inventario
+      v_consecutivo         bigint := 0;        -- Nuevo consecutivo del movimiento de inventario
+      v_cantSaldoAnt        bigint := 0;        -- Cantidad de unidades antes del movimiento de inventario
+      v_cantSaldoSig        bigint := 0;        -- Cantidad de unidades despues del movimiento
+      v_uniPonderado        NUMERIC(1000,10) := 0;  --Valor ponderado del producto respecto a los anteriores movimientos de inventario
       
-      v_costUniSalAnt       NUMERIC(50,6) := 0;  -- Costo promedio de la unidad antes del movimiento
-      v_costoTotalMovi      NUMERIC(50,6) := 0;  -- Costo total del egreso calculado con el costo de las
+      v_costUniSalAnt       NUMERIC(1000,10) := 0;  -- Costo promedio de la unidad antes del movimiento
+      v_costoTotalMovi      NUMERIC(1000,10) := 0;  -- Costo total del egreso calculado con el costo de las
       
       c_movInv_nat CURSOR FOR
       SELECT mvin_natu
@@ -48,9 +48,9 @@ CREATE OR REPLACE FUNCTION IN_FINSERTA_PROD_KARDEX (
        SELECT coalesce(max(kapr_kapr),0)+ 1 as kapr_kapr
          FROM in_tkapr
          ;
-       
-       v_kapr_kapr          INTEGER:=0;
-      
+        --
+        v_kapr_kapr          bigint:=0;
+        --
       BEGIN
       
       OPEN c_movInv_nat;

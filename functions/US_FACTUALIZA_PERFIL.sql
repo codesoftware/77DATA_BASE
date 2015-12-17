@@ -1,8 +1,8 @@
 CREATE OR REPLACE FUNCTION US_FACTUALIZA_PERFIL (   
-                                            p_nombre      varchar(50), 
-                                            p_descri      varchar(50),
+                                            p_nombre      varchar(500), 
+                                            p_descri      varchar(500),
                                             p_estado      varchar(1),
-                                            p_id          int
+                                            p_id          bigint
                                             ) RETURNS VARCHAR AS $$
     BEGIN
     

@@ -1,18 +1,18 @@
 -- Funcion encargada de
 
 CREATE OR REPLACE FUNCTION US_FAUTENTICAR_USUA (  
-                                       p_user      varchar(50),
-                                       p_contra    varchar(50)
+                                       p_user      varchar(500),
+                                       p_contra    varchar(500)
                                      ) RETURNS return_rta AS $$
     DECLARE
     
-      v_acceso_aux           VARCHAR(2);
+      v_acceso_aux          VARCHAR(2);
       v_tipo_usua           VARCHAR(2);
       v_tipo_usua_aux       VARCHAR(2);
       
       v_cambio_contra       VARCHAR(1);
       
-      v_contador            int := 0;
+      v_contador            bigint := 0;
       
       rta          return_rta;  
       

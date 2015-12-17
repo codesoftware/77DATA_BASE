@@ -4,9 +4,8 @@
 --DROP TABLE IF EXISTS ad_tpara
 
 CREATE TABLE ad_tpara(
-para_para             SERIAL                ,
-para_nombre           varchar(200)          ,
-para_estado           varchar(2)default 'A' ,
+para_para             BIGSERIAL                     ,
+para_nombre           VARCHAR(500)                  ,
+para_estado           varchar(2)   DEFAULT 'A'      ,
 PRIMARY KEY (para_para)
-
 );

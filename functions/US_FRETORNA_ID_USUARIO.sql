@@ -1,9 +1,9 @@
 -- Funcion encargada de retornar el id del usuario por medio del usuario
 
-CREATE OR REPLACE FUNCTION US_FRETORNA_ID_USUARIO (    p_usuario        VARCHAR(50) ) RETURNS INTEGER AS $$
+CREATE OR REPLACE FUNCTION US_FRETORNA_ID_USUARIO (    p_usuario        VARCHAR(500) ) RETURNS INTEGER AS $$
       DECLARE 
       
-         v_tius         integer := 0;         
+         v_tius         bigint := 0;         
          
          c_usuario CURSOR FOR
          SELECT tius_tius

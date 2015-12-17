@@ -2,10 +2,10 @@
 -- Funcion con la cual obtengo el registro 
 --
 CREATE OR REPLACE FUNCTION IN_REGISTRA_PRODUCTO (    
-                                        p_refe_refe         INT, 
+                                        p_refe_refe         BIGINT, 
                                         p_descripcion       VARCHAR(100),  --Este campo es la descripcion que da el usuario es el que quiera el usuario (El nombre es la referencia)
-                                        p_marca             INT, 
-                                        p_categoria         INT
+                                        p_marca             BIGINT, 
+                                        p_categoria         BIGINT
                                             ) RETURNS varchar AS $$
     DECLARE
     --
@@ -46,12 +46,12 @@ CREATE OR REPLACE FUNCTION IN_REGISTRA_PRODUCTO (
        AND dska_cate = p_categoria
        ;
     --
-    v_valCate       INT := 0;
-    v_valRefe       INT := 0;
-    v_valMarca      INT := 0;
-    v_valRep        INT := 0;
+    v_valCate       BIGINT := 0;
+    v_valRefe       BIGINT := 0;
+    v_valMarca      BIGINT := 0;
+    v_valRep        BIGINT := 0;
     --
-    v_codRep        varchar(200) := '';
+    v_codRep        varchar(500) := '';
     --
     --Obtencion del id del producto
     --
@@ -67,9 +67,9 @@ CREATE OR REPLACE FUNCTION IN_REGISTRA_PRODUCTO (
       FROM in_tdska 
       ;
     --
-    v_dska_dska         INTEGER := 0;
-    v_codigo            VARCHAR(100) := '';
-    v_cod_prod          VARCHAR(100) := '';
+    v_dska_dska         BIGINT := 0;
+    v_codigo            VARCHAR(500) := '';
+    v_cod_prod          VARCHAR(500) := '';
     --
     --
     --Cursor con el cual obtengo el valor de la subcuenta de la categoria
@@ -81,11 +81,11 @@ CREATE OR REPLACE FUNCTION IN_REGISTRA_PRODUCTO (
        AND cate_estado = 'A'
      ;
     --
-    v_cate_cate             int := 0;
-    v_cate_sbcu             int := 0;
-    v_cate_desc             varchar(100):= '';
+    v_cate_cate             bigint := 0;
+    v_cate_sbcu             bigint := 0;
+    v_cate_desc             varchar(500):= '';
     --
-    v_codigosbcu            varchar(50) :='';
+    v_codigosbcu            varchar(500) :='';
     --
     --
     --Obtiene el valor de la secuencia para la insecion de subcuentas

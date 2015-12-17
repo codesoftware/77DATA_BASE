@@ -4,8 +4,8 @@
 --
 
 CREATE OR REPLACE FUNCTION IN_OBTIENEEXIS_PROD_SEDE(  
-                                                p_sede_sede         int,                                                        
-                                                p_dska_dska         int
+                                                p_sede_sede         bigint,                                                        
+                                                p_dska_dska         bigint
                                            ) RETURNS NUMERIC  AS $$
     DECLARE
         --
@@ -33,9 +33,9 @@ CREATE OR REPLACE FUNCTION IN_OBTIENEEXIS_PROD_SEDE(
         --
         --Variables utilizadas para los ingresos y los egresos
         --
-        v_ingresos          numeric(15,6):=0; 
-        v_egresos           numeric(15,6):=0;
-        v_total             numeric(15,6):=0;
+        v_ingresos          numeric(1000,10):=0; 
+        v_egresos           numeric(1000,10):=0;
+        v_total             numeric(1000,10):=0;
         --
     BEGIN
         --

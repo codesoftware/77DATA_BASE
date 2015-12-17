@@ -2,18 +2,18 @@
 -- Funcion con la cual apruebo la creacion de una factura
 --
 CREATE OR REPLACE FUNCTION FA_CONFIRMA_FACTURA(   
-                                            p_fact_fact     INT
+                                            p_fact_fact     BIGINT
                                             ) RETURNS VARCHAR AS $$
     DECLARE
-        
+        --
         c_existe_Fact cursor for
         select count(*)
         from fa_tfact
         where fact_fact = p_fact_fact
         ;
-        
-        v_cont_exp          int := 0;
-       
+        --
+        v_cont_exp          BIGINT := 0;
+        --
     BEGIN
     
     OPEN c_existe_Fact;

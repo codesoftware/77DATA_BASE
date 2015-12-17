@@ -1,5 +1,5 @@
 CREATE FUNCTION US_FCAMBIA_ESTADO_USUARIO (  
-                                       p_usuario       varchar(50)
+                                       p_usuario       varchar(500)
                                       ) RETURNS VARCHAR AS $$
    DECLARE
    
@@ -15,7 +15,7 @@ CREATE FUNCTION US_FCAMBIA_ESTADO_USUARIO (
        WHERE UPPER(tius_usuario) = UPPER(p_usuario)
       ;
        
-   v_usua_exist     int := 0;
+   v_usua_exist     bigint := 0;
    v_estado         varchar(1);
    v_rta            varchar := '';
        

@@ -1,9 +1,9 @@
 CREATE FUNCTION US_FVERIFICA_CEDULA(  
-                                       p_cedula      varchar(50)
+                                       p_cedula      varchar(500)
                                     ) RETURNS VARCHAR AS'
    DECLARE
    
-   v_num_cedula    int := 0;
+   v_num_cedula    bigint := 0;
    
    c_cedula CURSOR FOR 
       SELECT count(*)

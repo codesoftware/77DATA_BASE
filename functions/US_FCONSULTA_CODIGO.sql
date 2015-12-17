@@ -6,7 +6,7 @@ CREATE FUNCTION US_FCONSULTA_CODIGO (
    DECLARE
    
    v_rta             varchar[];
-   v_iterator        int := 0;
+   v_iterator        bigint := 0;
    v_rtaAux          varchar; 
    
    c_codigo CURSOR FOR

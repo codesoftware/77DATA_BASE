@@ -2,12 +2,12 @@
 -- Funcion encargada de realizar el ingreso al inventario y la contabilizacion de los productos ya existentes en el sistema
 --
 CREATE OR REPLACE FUNCTION IN_ADICIONA_PROD_EXIS (  
-                                                        p_dska_dska         INT,
-                                                        p_cantidad          INT,
-                                                        p_costo             NUMERIC(15,6),
-                                                        p_sede              INT,
-                                                        p_tius_tius         INT,
-                                                        p_idTrans           INT
+                                                        p_dska_dska         BIGINT,
+                                                        p_cantidad          BIGINT,
+                                                        p_costo             NUMERIC(1000,10),
+                                                        p_sede              BIGINT,
+                                                        p_tius_tius         BIGINT,
+                                                        p_idTrans           BIGINT
                                                     ) RETURNS VARCHAR  AS $$
     DECLARE
     
@@ -18,14 +18,14 @@ CREATE OR REPLACE FUNCTION IN_ADICIONA_PROD_EXIS (
       FROM in_tmvin
      WHERE mvin_compra = 'S'
      ;
-    v_mvin_mvin            INT;
-    v_valor_iva            NUMERIC(15,6) :=0;
-    v_creditos             NUMERIC(15,6) :=0;
-    v_debitos              NUMERIC(15,6) :=0;
-    v_cred_usu             NUMERIC(15,6) :=0;
-    v_debi_usu             NUMERIC(15,6) :=0;
-    v_debi_para            NUMERIC(15,6) :=0;
-    v_cred_para            NUMERIC(15,6) :=0;
+    v_mvin_mvin            BIGINT;
+    v_valor_iva            NUMERIC(1000,10) :=0;
+    v_creditos             NUMERIC(1000,10) :=0;
+    v_debitos              NUMERIC(1000,10) :=0;
+    v_cred_usu             NUMERIC(1000,10) :=0;
+    v_debi_usu             NUMERIC(1000,10) :=0;
+    v_debi_para            NUMERIC(1000,10) :=0;
+    v_cred_para            NUMERIC(1000,10) :=0;
     --
     --Cursor en el cual se obtiene el valor de todos los porcentajes calculados y el valor de estos
     --
@@ -72,8 +72,8 @@ CREATE OR REPLACE FUNCTION IN_ADICIONA_PROD_EXIS (
        AND dska_dska = p_dska_dska
        ;
      --
-     v_sbcu_prod        VARCHAR(50)     := '';
-     v_iva              NUMERIC(15,5)   := 0;
+     v_sbcu_prod        VARCHAR(500)     := '';
+     v_iva              NUMERIC(1000,10)   := 0;
      --
      -- Obtiene el identificador del tipo de documento 
      --
@@ -83,9 +83,9 @@ CREATE OR REPLACE FUNCTION IN_ADICIONA_PROD_EXIS (
       WHERE upper(tido_nombre) = 'FACTCOMPRA'
      ; 
      --
-     v_tipoDocumento     integer := 0;
+     v_tipoDocumento     BIGINT := 0;
      --
-     v_kapr_kapr         integer := 0;
+     v_kapr_kapr         BIGINT := 0;
      --
      -- Cursor con el cual encuentro el id del movimiento de inventario
      --
@@ -114,7 +114,7 @@ CREATE OR REPLACE FUNCTION IN_ADICIONA_PROD_EXIS (
        AND sbft_tido = 1
        ;
     --
-    v_iva_compra            NUMERIC(15,6) :=0;
+    v_iva_compra            NUMERIC(1000,10) :=0;
     --
     BEGIN
         --

@@ -5,10 +5,10 @@
 --DROP TABLE IF EXISTS em_tsede;
 
 CREATE TABLE in_tmarca(
-   marca_marca                     SERIAL                       ,  
-   marca_nombre                    varchar(200)                 , 
-   marca_descr                     varchar(200)                 , 
-   marca_estado                    varchar(2) default   'A'     ,
-   PRIMARY KEY (marca_marca)	
+   marca_marca                     BIGSERIAL                        ,  
+   marca_nombre                    varchar(500)                     , 
+   marca_descr                     varchar(500)                     , 
+   marca_estado                    varchar(2) default   'A'         ,
+   PRIMARY KEY (marca_marca)
 ); 
 

@@ -2,13 +2,13 @@
 -- Funcion encargada de realizar toda la facturacion del sistema
 --
 CREATE OR REPLACE FUNCTION FA_FACTURACION   (  
-                                                p_tius          INT,
-                                                p_clien         INT,
-                                                p_idTrans       INT,
-                                                p_sede          INT,
+                                                p_tius          BIGINT,
+                                                p_clien         BIGINT,
+                                                p_idTrans       BIGINT,
+                                                p_sede          BIGINT,
                                                 p_tipoPago      varchar,
-                                                p_idVoucher     NUMERIC(15,6),
-                                                p_valrTarjeta   NUMERIC(15,6)
+                                                p_idVoucher     NUMERIC(1000,10),
+                                                p_valrTarjeta   NUMERIC(1000,10)
                                             ) RETURNS VARCHAR  AS $$
     DECLARE
     --
@@ -55,22 +55,22 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION   (
      WHERE sbcu_codigo = '530535'
       ;
     --
-    v_vlr_total_fact_co     NUMERIC(15,6) := 0;
+    v_vlr_total_fact_co     NUMERIC(1000,10) := 0;
     --
     --Variables utilizadas para los valores principales de facturacion
     --
-    v_vlr_total     NUMERIC  :=0;
-    v_vlr_iva       NUMERIC  :=0;
+    v_vlr_total     NUMERIC(1000,10)  :=0;
+    v_vlr_iva       NUMERIC(1000,10)  :=0;
     --
     --Variables necesarias para la validacion de subcuentas
     --
-    v_val_iva_generado          int :=0;
-    v_val_costo_ventas          int :=0;
-    v_val_mercancias_mm         int :=0;
-    v_val_descuentos            int :=0;
-    v_val_caja_menor            int :=0;
+    v_val_iva_generado          bigint :=0;
+    v_val_costo_ventas          bigint :=0;
+    v_val_mercancias_mm         bigint :=0;
+    v_val_descuentos            bigint :=0;
+    v_val_caja_menor            bigint :=0;
     --
-    v_fact_fact     NUMERIC  :=0;
+    v_fact_fact     NUMERIC(1000,10)  :=0;
     --
     --Cursor utilizado para generar el id de la factura
     --    
@@ -123,9 +123,9 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION   (
        AND tem_mvco_trans = vc_temIdTrans
        ;
     --
-    v_sum_deb               NUMERIC(15,6):=0;
-    v_sum_cre               NUMERIC(15,6):=0;
-    v_sbcu_sbcu             INT := 0;
+    v_sum_deb               NUMERIC(1000,10):=0;
+    v_sum_cre               NUMERIC(1000,10):=0;
+    v_sbcu_sbcu             BIGINT := 0;
     --
     --Obtiene el id de una subcuenta basandose en el codigo de la misma
     --
@@ -165,9 +165,9 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION   (
      WHERE fact_fact = vc_fact_fact
      ;
     --
-    v_valor_iva_fact        NUMERIC(15,6) := 0;
-    v_vlr_total_factura     NUMERIC(15,6) := 0;
-    v_idTrans_con           INT := 0;
+    v_valor_iva_fact        NUMERIC(1000,10) := 0;
+    v_vlr_total_factura     NUMERIC(1000,10) := 0;
+    v_idTrans_con           BIGINT := 0;
     --
     BEGIN
     --

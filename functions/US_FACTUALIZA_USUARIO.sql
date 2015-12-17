@@ -1,13 +1,13 @@
 CREATE OR REPLACE FUNCTION US_FACTUALIZA_USUARIO (   
-                                            p_nombre      varchar(50), 
-                                            p_apellido    varchar(50),
-                                            p_cedula      varchar(50),
+                                            p_nombre      varchar(500), 
+                                            p_apellido    varchar(500),
+                                            p_cedula      varchar(500),
                                             p_correo      varchar(1),
                                             p_fecha_nac   date,
-                                            p_perf_id     int,
+                                            p_perf_id     bigint,
                                             p_estado      varchar(50),
                                             p_usuario     varchar(50),
-                                            p_sede        int
+                                            p_sede        bigint
                                             ) RETURNS VARCHAR AS $$
     DECLARE 
     
@@ -18,7 +18,7 @@ CREATE OR REPLACE FUNCTION US_FACTUALIZA_USUARIO (
     and upper(tius_usuario) = upper(p_usuario)
     ;
     
-    v_pers_pers    int;
+    v_pers_pers    bigint;
                                             
     BEGIN
     

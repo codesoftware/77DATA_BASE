@@ -2,13 +2,13 @@
 -- Funcion encargada de realizar toda la facturacion del sistema
 --
 CREATE OR REPLACE FUNCTION FA_CREA_FACTURA_COMPLETO (  
-                                                        p_tius          INT,
-                                                        p_clien         INT,
-                                                        p_idTrans       INT,
-                                                        p_sede          INT,
+                                                        p_tius          BIGINT,
+                                                        p_clien         BIGINT,
+                                                        p_idTrans       BIGINT,
+                                                        p_sede          BIGINT,
                                                         p_tipoPago      varchar,
-                                                        p_idVoucher     NUMERIC(15,6),
-                                                        p_valrTarjeta   NUMERIC(15,6)
+                                                        p_idVoucher     NUMERIC(1000,10),
+                                                        p_valrTarjeta   NUMERIC(1000,10)
                                                     ) RETURNS VARCHAR  AS $$
     DECLARE
     --
@@ -49,10 +49,10 @@ CREATE OR REPLACE FUNCTION FA_CREA_FACTURA_COMPLETO (
     --
     --Variables necesarias para la validacion de subcuentas
     --
-    v_val_iva_generado          int :=0;
-    v_val_costo_ventas          int :=0;
-    v_val_mercancias_mm         int :=0;
-    v_val_descuentos            int :=0;
+    v_val_iva_generado          bigint :=0;
+    v_val_costo_ventas          bigint :=0;
+    v_val_mercancias_mm         bigint :=0;
+    v_val_descuentos            bigint :=0;
     --
     --Valida si el movimiento de inventario para facturacion esta parametrizado
     --
@@ -62,7 +62,7 @@ CREATE OR REPLACE FUNCTION FA_CREA_FACTURA_COMPLETO (
      WHERE mvin_venta = 'S'
      ;
     --
-    v_val_mvin_fact             int := 0;
+    v_val_mvin_fact             bigint := 0;
     --
     --Moviento de inventario parametrizado para la venta de productos
     --
@@ -72,7 +72,7 @@ CREATE OR REPLACE FUNCTION FA_CREA_FACTURA_COMPLETO (
      WHERE mvin_venta = 'S'
      ;
     --
-    v_mvin_mvin             INT :=0;
+    v_mvin_mvin             BIGINT :=0;
     --
     --Cursor utilizado para generar el id de la factura
     --    
@@ -81,13 +81,13 @@ CREATE OR REPLACE FUNCTION FA_CREA_FACTURA_COMPLETO (
       from fa_tfact     
     ;
     --Variables utilizadas para los valores principales de facturacion
-    v_vlr_total     NUMERIC  :=0;
-    v_vlr_iva       NUMERIC  :=0;
+    v_vlr_total     NUMERIC(1000,10)  :=0;
+    v_vlr_iva       NUMERIC(1000,10)  :=0;
     --
     --Identificador primario de la tabla fa_tfact
     --
-    v_fact_fact     NUMERIC  :=0;
-    v_kapr_kapr     NUMERIC  :=0;
+    v_fact_fact     NUMERIC(1000,10)  :=0;
+    v_kapr_kapr     NUMERIC(1000,10)  :=0;
     --
     --Cursor el cual obtiene todos los productos que fueron facturados teniendo en cuenta el id de transaccion
     --
@@ -129,18 +129,18 @@ CREATE OR REPLACE FUNCTION FA_CREA_FACTURA_COMPLETO (
      WHERE fact_fact = vc_fact_fact
      ;
     --
-    v_idTrans_con           INT:= 0;
+    v_idTrans_con           BIGINT:= 0;
     --
     --Variable para el precio del producto
     --
-    v_precio_prod           NUMERIC(15,6):=0;
-    v_dtpr_dtpr             NUMERIC;
-    v_vlr_total_fact        NUMERIC(15,6):=0;
-    v_vlr_uni_fact          NUMERIC(15,6):=0;
-    v_vlr_uni_fact_iva      NUMERIC(15,6):=0;
-    v_vlr_tot_fact_iva      NUMERIC(15,6):=0;
-    v_vlr_iva_uni           NUMERIC(15,6):=0;
-    v_vlr_iva_tot           NUMERIC(15,6):=0;
+    v_precio_prod           NUMERIC(1000,10):=0;
+    v_dtpr_dtpr             NUMERIC(1000,10):=0;
+    v_vlr_total_fact        NUMERIC(1000,10):=0;
+    v_vlr_uni_fact          NUMERIC(1000,10):=0;
+    v_vlr_uni_fact_iva      NUMERIC(1000,10):=0;
+    v_vlr_tot_fact_iva      NUMERIC(1000,10):=0;
+    v_vlr_iva_uni           NUMERIC(1000,10):=0;
+    v_vlr_iva_tot           NUMERIC(1000,10):=0;
     --
     v_aplica_descuento      VARCHAR(2);
     --
@@ -166,10 +166,10 @@ CREATE OR REPLACE FUNCTION FA_CREA_FACTURA_COMPLETO (
     --
     --Variables necesarias para la contabilizacion
     --
-    v_iva_mvco              NUMERIC(15,6):=0;
-    v_sum_deb               NUMERIC(15,6):=0;
-    v_sum_cre               NUMERIC(15,6):=0;
-    v_sbcu_sbcu             INT := 0;
+    v_iva_mvco              NUMERIC(1000,10):=0;
+    v_sum_deb               NUMERIC(1000,10):=0;
+    v_sum_cre               NUMERIC(1000,10):=0;
+    v_sbcu_sbcu             BIGINT := 0;
     --
     --Obtiene el codico de la subcuenta para un producto
     --
@@ -182,8 +182,8 @@ CREATE OR REPLACE FUNCTION FA_CREA_FACTURA_COMPLETO (
     --
     --
     v_sbcu_cod_prod         varchar(100) := '';
-    v_vlr_total_fact_co     NUMERIC(15,6) := 0;
-    v_vlr_dscto_fact        NUMERIC(15,6) := 0;
+    v_vlr_total_fact_co     NUMERIC(1000,10) := 0;
+    v_vlr_dscto_fact        NUMERIC(1000,10) := 0;
     --
     --
     --Cursor con el cual obtengo el valor del promedio pornderado del producto
@@ -194,11 +194,11 @@ CREATE OR REPLACE FUNCTION FA_CREA_FACTURA_COMPLETO (
      WHERE kapr_kapr = (select max(kapr_kapr) from in_tkapr where kapr_dska = vc_dska_dska)
     ;
     --
-    v_vlr_prom_pond        NUMERIC(15,6) := 0;
+    v_vlr_prom_pond        NUMERIC(1000,10) := 0;
     --
-    v_vlr_total_factura     NUMERIC(15,6) := 0;
+    v_vlr_total_factura     NUMERIC(1000,10) := 0;
     --
-    v_sbcu_cod_pgtj         varchar(10);
+    v_sbcu_cod_pgtj         varchar(100);
     --
     --
     --Cursor el cual encuentra la subcuenta parametrizada en 
@@ -236,8 +236,8 @@ CREATE OR REPLACE FUNCTION FA_CREA_FACTURA_COMPLETO (
            offset 1) as tabla
     ;
     --
-    v_valor_real_apagar         NUMERIC(15,6) := 0;
-    v_valor_pago_efectivo       NUMERIC(15,6) := 0;
+    v_valor_real_apagar         NUMERIC(1000,10) := 0;
+    v_valor_pago_efectivo       NUMERIC(1000,10) := 0;
     --
     BEGIN
     --

@@ -2,8 +2,8 @@
 -- Funcion con la cual desactivo una servicio y su reservacion
 --
 CREATE OR REPLACE FUNCTION FA_ELIMINA_SERVICIOSXDTSV(   
-                                            p_fact_fact     INT,
-                                            p_dtsv_dtsv     INT
+                                            p_fact_fact     BIGINT,
+                                            p_dtsv_dtsv     BIGINT
                                             ) RETURNS VARCHAR AS $$
     DECLARE
     --

@@ -2,10 +2,10 @@
 -- Funcion con la cual se corregira el ingreso de productos por error humano
 --
 CREATE OR REPLACE FUNCTION IN_CORRIGEING_PROD(   
-                                            p_sede              INT,
-                                            p_dska_dska         INT,
-                                            p_cantidad          INT,
-                                            p_tius_tius         INT
+                                            p_sede              BIGINT,
+                                            p_dska_dska         BIGINT,
+                                            p_cantidad          BIGINT,
+                                            p_tius_tius         BIGINT
                                             ) RETURNS VARCHAR AS $$
     DECLARE
     --
@@ -29,8 +29,8 @@ CREATE OR REPLACE FUNCTION IN_CORRIGEING_PROD(
        AND kapr_dska = p_dska_dska
        ;
     --
-    v_existencias        NUMERIC(15,6) := 0;
-    v_aux                NUMERIC(15,6) := 0;    
+    v_existencias        NUMERIC(1000,10) := 0;
+    v_aux                NUMERIC(1000,10) := 0;    
     --
     --Cursor el cual obtiene el movimiento de inventario de egreso
     -- 
@@ -42,7 +42,7 @@ CREATE OR REPLACE FUNCTION IN_CORRIGEING_PROD(
     --
     --Variables utilizadas para los movimientos de inventario implicados
     --
-    v_mvin_egr      int   := 0;
+    v_mvin_egr      bigint   := 0;
     --
     v_rta_egr       varchar(600) := '';
     --
@@ -52,18 +52,18 @@ CREATE OR REPLACE FUNCTION IN_CORRIGEING_PROD(
      WHERE kapr_kapr = (SELECT max(kapr_kapr) FROM in_tkapr WHERE kapr_dska = p_dska_dska)
      ;
     --
-    v_prom_pond        NUMERIC(15,6) := 0;
-    v_costo_total      NUMERIC(15,6) := 0;
+    v_prom_pond        NUMERIC(1000,10) := 0;
+    v_costo_total      NUMERIC(1000,10) := 0;
     --
-    v_iva              NUMERIC(15,6) := 0;
+    v_iva              NUMERIC(1000,10) := 0;
     --
-    v_total            NUMERIC(15,6) := 0;
+    v_total            NUMERIC(1000,10) := 0;
     --
     c_sec_tem_mvco CURSOR FOR
     SELECT nextval('co_temp_movi_contables') 
     ;
     --
-    v_sec_cont          int := 0;
+    v_sec_cont          bigint := 0;
     --
     --Subcuentas utilizadas para la contabilizacion de la correccion
     --
@@ -75,9 +75,9 @@ CREATE OR REPLACE FUNCTION IN_CORRIGEING_PROD(
      WHERE dska_dska = p_dska_dska
      ;
     --
-    v_sbcu_prod             INT := 0;
-    v_sbcu_iva              INT := 0;
-    v_sbcu_caja             INT := 0;
+    v_sbcu_prod             BIGINT := 0;
+    v_sbcu_iva              BIGINT := 0;
+    v_sbcu_caja             BIGINT := 0;
     --
     --Cursor el cual obtiene el id para el tipo de documento para correcciones de Ingreso de Productos
     --
@@ -87,9 +87,9 @@ CREATE OR REPLACE FUNCTION IN_CORRIGEING_PROD(
      WHERE UPPER(tido_nombre) = 'CORRING' 
     ;
     --
-    v_tido_tido             int := 0;
+    v_tido_tido             BIGINT := 0;
     --
-    v_kapr_kapr             int := 0;
+    v_kapr_kapr             BIGINT := 0;
     --
     --Cursor con el cual obtengo el id del kardex del producto
     --
