@@ -263,7 +263,7 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
     WHERE tem_fact_trans = p_idTrans
     ;
     --
-    OPEN c_vlr_iva_fact(v_fact_fact);
+    OPEN c_vlr_iva_fact(cast(v_fact_fact as int));
     FETCH c_vlr_iva_fact INTO v_valor_iva_fact;  
     CLOSE c_vlr_iva_fact;
     --
@@ -275,7 +275,7 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
     --
     --
     --
-    OPEN c_vlr_total_fact_sin_iva(v_fact_fact);
+    OPEN c_vlr_total_fact_sin_iva(cast(v_fact_fact as int));
     FETCH c_vlr_total_fact_sin_iva INTO v_vlr_total_factura;
     CLOSE c_vlr_total_fact_sin_iva;
     --
@@ -285,7 +285,7 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
             tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
     VALUES (v_idTrans_con, '413535' , v_vlr_total_factura , 'C');
     --
-    OPEN c_valor_dcto(v_fact_fact);
+    OPEN c_valor_dcto(cast(v_fact_fact as int));
     FETCH c_valor_dcto INTO v_vlr_dsc;
     CLOSE c_valor_dcto;
     --
@@ -295,7 +295,7 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
     --
     --Obtengo el valor total de la factura
     --
-    OPEN c_vlr_total_fact(v_fact_fact);
+    OPEN c_vlr_total_fact(cast(v_fact_fact as int));
     FETCH c_vlr_total_fact INTO v_vlr_total_fact_co;
     CLOSE c_vlr_total_fact;
     --
