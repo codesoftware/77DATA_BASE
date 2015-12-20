@@ -65,7 +65,12 @@ CREATE OR REPLACE FUNCTION US_FAUTENTICAR_USUA (
                 rta.tipo_usu := 'AD';
                 
             ELSE
-            
+				--
+				UPDATE US_TTIUS
+                   SET tius_ultimo_ingreso =  now()
+                 WHERE upper(tius_usuario) = upper(p_user)
+                 ;
+				--
                 OPEN c_usuario;
                 FETCH c_usuario INTO v_tipo_usua, v_cambio_contra;
                 CLOSE c_usuario;
@@ -81,18 +86,17 @@ CREATE OR REPLACE FUNCTION US_FAUTENTICAR_USUA (
                     ELSE
                     
                         UPDATE US_TTIUS
-                        set tius_cambio_contra = 'N'
-                        where upper(tius_usuario) = upper(p_user)
-                        ;
+                           SET tius_cambio_contra  = 'N',
+						       tius_ultimo_ingreso =  now()
+                         WHERE upper(tius_usuario) = upper(p_user)
+                         ;
                     
                         rta.msn_rta  := 'OK';
                         rta.cod_rta  := 'Acceso_aprobado';
                         rta.tipo_usu := v_tipo_usua;
                     
                     END IF;
-                        
-                    
-                
+					
                     
                 ELSE
                     
