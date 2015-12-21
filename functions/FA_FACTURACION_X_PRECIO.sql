@@ -362,7 +362,7 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
      WHERE pedi_pedi = p_idPedido
     ;
     --
-    RETURN 'Ok-'||v_fact_fact;
+    RETURN 'Ok-'||cast(v_fact_fact as BIGINT);
     -- 
     EXCEPTION WHEN OTHERS THEN
          RETURN 'Error FA_FACTURACION_X_PRECIO '|| sqlerrm;
