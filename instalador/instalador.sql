@@ -254,6 +254,7 @@
 \i /77DATA_BASE/functions/FA_FACTURA_PRODUCTO.sql;
 \i /77DATA_BASE/functions/FA_FACTURA_RECETA.sql;
 \i /77DATA_BASE/functions/cambio_nombre_prod.sql;
+\i /77DATA_BASE/functions/cambio_nombre_prod_dska.sql;
 \i /77DATA_BASE/functions/FA_CANCELA_FACTURA.sql;
 \i /77DATA_BASE/functions/in_finsertaexceltmp.sql;
 \i /77DATA_BASE/functions/in_finsertaidexcel_tmp.sql;

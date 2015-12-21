@@ -119,11 +119,7 @@ DECLARE
     --
     v_valida_inProd := in_finsertaidexcel_tmp();
     --
-    IF UPPER(v_valida_inProd) like '%OK%' THEN
-        --
-        v_valida_inProd := cambio_nombre_prod();
-        --
-    ELSE
+    IF UPPER(v_valida_inProd) not like '%OK%' THEN
         --
         RAISE EXCEPTION 'Error in_finsertaexceltmp % ', v_valida_inProd; 
         --
