@@ -101,7 +101,9 @@ DECLARE
                                                 v_idRefe,
                                                 datos.tmprefe_descrip,
                                                 v_idMarca,
-                                                v_idCate
+                                                v_idCate,
+												datos.tmprefe_codexte,
+												datos.tmprefe_ubicaci
                                                 );
             --
             IF UPPER(TRIM(v_ins_prod)) NOT LIKE UPPER('%OK%') THEN
@@ -115,14 +117,6 @@ DECLARE
                 OPEN c_formato_dska(v_ins_prod);
                 FETCH c_formato_dska INTO v_dska_dska;
                 CLOSE c_formato_dska;
-                --
-                --Actualiza la tabla de productos con la ubicacion y el codigo externo
-                --
-                UPDATE in_tdska
-                   SET dska_ubicacion = datos.tmprefe_ubicaci,
-                dska_cod_ext = datos.tmprefe_codexte
-                WHERE dska_dska = v_dska_dska
-                ;
                 --
                 --RAISE exception 'Para hacer el update idtabla(%) y el del dska (%)', v_idTabla,v_dska_dska ;
                 --

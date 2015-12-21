@@ -5,7 +5,9 @@ CREATE OR REPLACE FUNCTION IN_REGISTRA_PRODUCTO (
                                         p_refe_refe         BIGINT, 
                                         p_descripcion       VARCHAR(100),  --Este campo es la descripcion que da el usuario es el que quiera el usuario (El nombre es la referencia)
                                         p_marca             BIGINT, 
-                                        p_categoria         BIGINT
+                                        p_categoria         BIGINT,
+										p_codExterno 		varchar(100),
+										p_ubicacion			varchar(100)
                                             ) RETURNS varchar AS $$
     DECLARE
     --
@@ -166,8 +168,8 @@ CREATE OR REPLACE FUNCTION IN_REGISTRA_PRODUCTO (
     --    --
     --END IF;
     --
-    INSERT INTO in_tdska(dska_dska,DSKA_REFE,DSKA_COD, DSKA_NOM_PROD, DSKA_DESC, DSKA_IVA, DSKA_PORC_IVA, DSKA_MARCA,DSKA_CATE,DSKA_PROV)
-                  VALUES(v_dska_dska,p_refe_refe,v_codigo,'Por asignar',upper(p_descripcion),'N',0,p_marca,p_categoria,1);
+    INSERT INTO in_tdska(dska_dska,DSKA_REFE,DSKA_COD, DSKA_NOM_PROD, DSKA_DESC, DSKA_IVA, DSKA_PORC_IVA, DSKA_MARCA,DSKA_CATE,DSKA_PROV,DSKA_UBICACION,DSKA_COD_EXT)
+                  VALUES(v_dska_dska,p_refe_refe,v_codigo,'Por asignar',upper(p_descripcion),'N',0,p_marca,p_categoria,1,p_ubicacion,p_codExterno);
     --
     --Creacion de la subcuenta por categoria
     --
