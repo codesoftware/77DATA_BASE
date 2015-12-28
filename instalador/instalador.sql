@@ -264,6 +264,7 @@
 \i /77DATA_BASE/functions/FA_FACTURACION_X_PRECIO.sql;
 \i /77DATA_BASE/functions/f_cargacliente.sql;
 \i /77DATA_BASE/functions/IN_CAMBIA_PANEL_PEDIDOS.sql;
+\i /77DATA_BASE/functions/IN_PARA_PRECIO_PROD_PORCE.sql;
 --
 -- Triggers
 --

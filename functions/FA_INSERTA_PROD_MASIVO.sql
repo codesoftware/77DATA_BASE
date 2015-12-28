@@ -74,6 +74,8 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
         --
         v_modulo_pre_mayor          NUMERIC(1000,10) := 0;
         --
+        v_valida                    varchar(4000):= '';
+        --
     BEGIN
         --
         FOR dato IN c_datosExcel LOOP
@@ -99,138 +101,24 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
             --
             v_valRegistro := IN_ADICIONA_PROD_EXIS(dato.tmpidexc_dska, cast(dato.tmpidexc_existencia as INT) , v_costo_total ,dato.sede,1,v_sec_cont);
             --
+            DELETE FROM co_ttem_mvco
+            WHERE tem_mvco_trans = v_sec_cont
+            ;
+            --
             IF UPPER(TRIM(v_valRegistro)) NOT LIKE '%OK%' THEN
                 --
                 RAISE EXCEPTION 'Error al realizar el ingreso de existencias masivas %', v_valRegistro;
                 --
             ELSE
                 --
-                --Calculo de precios para cada producto
-                --                
-                UPDATE in_tprpr
-                   SET prpr_estado = 'I'
-                 WHERE prpr_sede = dato.sede
-                   AND prpr_dska = dato.tmpidexc_dska
-                   ;
+                v_valida := IN_PARA_PRECIO_PROD_PORCE(1,dato.sede,dato.tmpidexc_dska, 0);
                 --
-                v_precio := ((dato.tmpidexc_costo*v_porc_precio)/100) + dato.tmpidexc_costo;
-                --
-                --
-                v_precio := round(v_precio);
-                --
-                IF v_precio < 50 THEN
+                IF upper(v_valida) NOT LIKE '%OK%' THEN
                     --
-                    v_precio := 50;
-                    --
-                ELSIF v_precio between 50 and 100 THEN
-                    --
-                    v_precio := 100;
-                    --
-                ELSIF v_precio between 100 and 10000 THEN
-                    --
-                    v_modulo := v_precio % 100;
-                    v_faltante := 100 - v_modulo;
-                    v_precio := v_precio + v_faltante;
-                    v_precio := round(v_precio);
-                    --
-                ELSE
-                    --
-                    v_modulo := v_precio % 1000;
-                    v_faltante := 1000 - v_modulo;
-                    v_precio := v_precio + v_faltante;
-                    v_precio := round(v_precio);
+                    RAISE EXCEPTION ' % ',v_valida;
                     --
                 END IF;
-                --
-                OPEN c_iva_precio;
-                FETCH c_iva_precio INTO v_iva_precio;
-                CLOSE c_iva_precio;
-                --
-                --Calculos de precios auxiliares discriminados por categorias
-                --
-                OPEN c_tipo_cate(dato.tmpidexc_dska);
-                FETCH c_tipo_cate INTO v_desc_cat;
-                CLOSE c_tipo_cate;
-                --
-                IF v_desc_cat = 'TORNILLOS' THEN
-                    --
-                    v_auxiliar := 100.00;
-                    --
-                    v_auxiliar :=  (v_iva_precio / v_auxiliar)+1;
-                    --
-                    v_precio :=  v_precio /v_auxiliar;
-                    --
-                    v_millar := 0;
-                    v_centenas := 0;
-                    v_unidad := 0;
-                    --
-                    --Calculos para los precios por unidad, centena y millar
-                    --
-                    v_millar := ((dato.tmpidexc_costo * 20.00 )/100.00) + dato.tmpidexc_costo;
-                    --
-                    v_centenas := ((dato.tmpidexc_costo * 25.00 )/100.00) + dato.tmpidexc_costo;
-                    --
-                    v_unidad := ((dato.tmpidexc_costo * 30.00 )/100.00) + dato.tmpidexc_costo;
-                    --
-                    v_millar := (( v_millar * v_iva_precio )/100.00) + v_millar;
-                    --
-                    v_centenas := (( v_centenas * v_iva_precio )/100.00) + v_centenas;
-                    --
-                    v_unidad := (( v_unidad * v_iva_precio )/100.00) + v_unidad;
-                    --
-                ELSE
-                    --
-                    v_auxiliar := 100.00;
-                    --
-                    v_auxiliar :=  (v_iva_precio / v_auxiliar)+1;
-                    --
-                    v_precio :=  v_precio /v_auxiliar;
-                    --
-                    v_millar := 0;
-                    v_centenas := 0;
-                    v_unidad := 0;
-                    --
-                    --Calculos para los precios por unidad, centena y millar
-                    --
-                    v_millar := ((dato.tmpidexc_costo * 18.00 )/100.00) + dato.tmpidexc_costo;
-                    --
-                    v_centenas := ((dato.tmpidexc_costo * 28.00 )/100.00) + dato.tmpidexc_costo;
-                    --
-                    v_unidad := ((dato.tmpidexc_costo * 35.00 )/100.00) + dato.tmpidexc_costo;
-                    --
-                    v_millar := (( v_millar * v_iva_precio )/100.00) + v_millar;
-                    --
-                    v_centenas := (( v_centenas * v_iva_precio )/100.00) + v_centenas;
-                    --
-                    v_unidad := (( v_unidad * v_iva_precio )/100.00) + v_unidad;
-                    --
-                    v_modulo_pre_mayor := v_unidad % 100;
-                    v_faltante :=  100 -  v_modulo_pre_mayor;
-                    v_unidad := v_unidad + v_faltante;
-                    --
-                    v_modulo_pre_mayor := v_centenas % 100;
-                    v_faltante :=  100 -  v_modulo_pre_mayor;
-                    v_centenas := v_centenas + v_faltante;
-                    --
-                    v_modulo_pre_mayor := v_millar % 100;
-                    v_faltante :=  100 -  v_modulo_pre_mayor;
-                    v_millar := v_millar + v_faltante;
-                    --
-                END IF;
-                --
-                --Insercion del precio
-                --
-                INSERT INTO in_tprpr(
-                            prpr_dska, prpr_precio, prpr_tius_crea, prpr_tius_update, 
-                            prpr_estado, prpr_sede, prpr_preu,prpr_prec,prpr_prem)
-                    VALUES (dato.tmpidexc_dska, v_precio , 1, 1, 
-                            'A', 2,v_unidad,v_centenas,v_millar);
-            --
             END IF;
-            --
-            DELETE FROM co_ttem_mvco
-            WHERE tem_mvco_trans = v_sec_cont
-            ;
         --
         END LOOP;
         --
