@@ -147,12 +147,6 @@ CREATE OR REPLACE FUNCTION IN_PARA_PRECIO_PROD_PORCE(
             --
         ELSE
             --
-            v_auxiliar := 100.00;
-            --
-            v_auxiliar :=  (v_iva_precio / v_auxiliar)+1;
-            --
-            v_precio :=  v_precio /v_auxiliar;
-            --
             v_millar := 0;
             v_centenas := 0;
             v_unidad := 0;
@@ -211,7 +205,7 @@ CREATE OR REPLACE FUNCTION IN_PARA_PRECIO_PROD_PORCE(
         INSERT INTO in_tprpr(
                     prpr_dska, prpr_precio, prpr_tius_crea, prpr_tius_update, 
                     prpr_estado, prpr_sede, prpr_preu,prpr_prec,prpr_prem)
-            VALUES (p_dska, v_precio , p_user , p_user, 
+            VALUES (p_dska, v_precio , p_user , p_user,
                     'A', p_sede,v_unidad,v_centenas,v_millar);
         --
         RETURN 'Ok';
