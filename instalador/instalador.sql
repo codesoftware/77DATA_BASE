@@ -265,6 +265,8 @@
 \i /77DATA_BASE/functions/f_cargacliente.sql;
 \i /77DATA_BASE/functions/IN_CAMBIA_PANEL_PEDIDOS.sql;
 \i /77DATA_BASE/functions/IN_PARA_PRECIO_PROD_PORCE.sql;
+\i /77DATA_BASE/functions/IN_VALIDACONTEO.sql;
+\i /77DATA_BASE/functions/IN_ACTUALIZACONTEO.sql;
 --
 -- Triggers
 --
