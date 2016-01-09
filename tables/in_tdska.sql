@@ -19,5 +19,6 @@ CREATE TABLE IN_TDSKA(
     DSKA_PROV                   BIGINT                  NOT NULL                 ,
     DSKA_UBICACION              VARCHAR(500)            NOT NULL   DEFAULT 'N/A' ,
     DSKA_COD_EXT                VARCHAR(500)            NOT NULL   DEFAULT 'N/A' ,
+	DSKA_BARCOD					VARCHAR(500)            						 ,   
 PRIMARY KEY (DSKA_DSKA)
 );

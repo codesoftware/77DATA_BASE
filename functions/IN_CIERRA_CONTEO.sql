@@ -12,7 +12,8 @@ CREATE OR REPLACE FUNCTION IN_CIERRA_CONTEO(
         --
         c_productos CURSOR FOR
         SELECT dska_dska
-          FROM in_tdska
+          FROM in_tdska,in_tecop
+	     WHERE ecop_dska = dska_dska
           ;
         --
         c_conteo CURSOR (vc_dska_dska int) IS
