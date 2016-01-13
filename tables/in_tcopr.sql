@@ -10,5 +10,6 @@ CREATE TABLE IN_TCOPR(
     COPR_FEC_INI                TIMESTAMP                                      ,
     COPR_FEC_FIN                TIMESTAMP                                      ,
     COPR_DESC                   VARCHAR(500)        NOT NULL                   ,
+    COPR_AJUST                  VARCHAR(5)          NOT NULL DEFAULT('N')      ,
 PRIMARY KEY (COPR_COPR)
 );

@@ -201,6 +201,7 @@
 \i /77DATA_BASE/foreignKey/fk_in_tpedprod.sql;
 \i /77DATA_BASE/foreignKey/fk_in_teprs.sql;
 \i /77DATA_BASE/foreignKey/fk_in_tprpd.sql;
+\i /77DATA_BASE/foreignKey/fk_in_tajic.sql;
 --
 --Vistas
 --
@@ -271,6 +272,7 @@
 \i /77DATA_BASE/functions/IN_PARA_PRECIO_PROD_PORCE.sql;
 \i /77DATA_BASE/functions/IN_VALIDACONTEO.sql;
 \i /77DATA_BASE/functions/IN_ACTUALIZACONTEO.sql;
+\i /77DATA_BASE/functions/FA_VAL_AJU_AUTO_IN.sql;
 --
 -- Triggers
 --
