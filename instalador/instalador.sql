@@ -57,6 +57,7 @@
 \i /77DATA_BASE/tables/ub_tciud.sql;
 \i /77DATA_BASE/tables/fa_tprodhome.sql;
 \i /77DATA_BASE/tables/in_tprpd.sql;
+\i /77DATA_BASE/tables/in_tajic.sql;
 --
 --Alters
 --
@@ -86,6 +87,7 @@
 \i /77DATA_BASE/checks/in_tppfa_chks.sql;
 \i /77DATA_BASE/checks/in_tcate_chks.sql;
 \i /77DATA_BASE/checks/in_tpedi_chks.sql;
+\i /77DATA_BASE/checks/in_tajic_chks.sql;
 --
 -- Uniques Constrains
 --
@@ -110,6 +112,7 @@
 \i /77DATA_BASE/uniques/US_TCLIEN_UNIQUES.sql;
 \i /77DATA_BASE/uniques/IN_TEPRS_UNIQUES.sql;
 \i /77DATA_BASE/uniques/IN_TSEDE_UNIQUES.sql;
+\i /77DATA_BASE/uniques/IN_TAJIC_UNIQUES.sql;
 --
 -- Comentarios de las tablas
 --
@@ -165,6 +168,7 @@
 \i /77DATA_BASE/comments/ub_tciud_com.sql;
 \i /77DATA_BASE/comments/in_teprs_com.sql;
 \i /77DATA_BASE/comments/in_tprpd_com.sql;
+\i /77DATA_BASE/comments/in_tajic_com.sql;
 --
 -- Llaves foraneas
 --

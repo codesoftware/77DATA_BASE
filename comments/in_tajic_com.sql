@@ -1,0 +1,10 @@
+COMMENT ON TABLE  IN_TAJIC              IS 'Tabla en la cual se almacenan los datos del ajuste de inventario por medio de conteos';
+COMMENT ON COLUMN IN_TAJIC.AJIC_AJIC    IS 'Identificador primario de la tabla ';
+COMMENT ON COLUMN IN_TAJIC.AJIC_COPR    IS 'Llave con la cual se relaciona con el conteo';
+COMMENT ON COLUMN IN_TAJIC.AJIC_FECH    IS 'Fecha en la cual se realiza el cuadre del inventario';
+COMMENT ON COLUMN IN_TAJIC.AJIC_USUA    IS 'Usuario que realiza el ajuste de inventario';
+COMMENT ON COLUMN IN_TAJIC.AJIC_DSKA    IS 'Producto que se ajusta';
+COMMENT ON COLUMN IN_TAJIC.AJIC_PREX    IS 'Numero de productos existentes antes del ajuste automatico';
+COMMENT ON COLUMN IN_TAJIC.AJIC_PRAJ    IS 'Numero de productos ajustados en el sistema';
+COMMENT ON COLUMN IN_TAJIC.AJIC_SEDE    IS 'Sede en la cual se realizo el ajuste';
+COMMENT ON COLUMN IN_TAJIC.AJIC_ESTA    IS 'Estado en el cual se encuetra el ajuste ANALIZADO(AN) y AJUSTADO(AJ)';
