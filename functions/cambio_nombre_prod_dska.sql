@@ -2,7 +2,7 @@
 
 -- DROP FUNCTION cambio_nombre_prod();
 
-CREATE OR REPLACE FUNCTION cambio_nombre_prod_dska(p_dska_dska 				bigint)
+CREATE OR REPLACE FUNCTION cambio_nombre_prod_dska(p_dska_dska      bigint)
   RETURNS character varying AS
 $BODY$
    DECLARE 

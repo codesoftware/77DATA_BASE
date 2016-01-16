@@ -36,7 +36,7 @@ values('Correccion de ingreso de Productos','E','N','N','N','N','S','COIP')
 ;
 --
 insert into IN_TMVIN (MVIN_DESCR, MVIN_NATU, MVIN_USIM, MVIN_VENTA, MVIN_INICIAL,MVIN_REVFACT, MVIN_CORRIGE_ING,MVIN_CODIGO)
-values('Ajuste de inventario automatico Egreso','E','N','N','N','N','N', 'AAII')
+values('Ajuste de inventario automatico Egreso','E','N','N','N','N','N', 'AAIE')
 ;
 --
 insert into IN_TMVIN (MVIN_DESCR, MVIN_NATU, MVIN_USIM, MVIN_VENTA, MVIN_INICIAL,MVIN_REVFACT, MVIN_CORRIGE_ING,MVIN_CODIGO)
