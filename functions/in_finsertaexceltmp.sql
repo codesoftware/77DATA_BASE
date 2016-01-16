@@ -69,12 +69,12 @@ DECLARE
             IF upper(nombreCategoria.nombreCate) = 'TORNILLOS' THEN 
             --
                 INSERT INTO in_tcate (cate_cate,cate_desc,cate_estado,cate_runic,cate_feven,cate_porcentaje)
-                VALUES ((SELECT COALESCE(MAX(cate_cate),0)+1 from in_tcate),nombreCategoria.nombreCate,'A','','', 40); 
+                VALUES ((SELECT COALESCE(MAX(cate_cate),0)+1 from in_tcate),nombreCategoria.nombreCate,'A','','', 60); 
             --
             ELSE
             --
                 INSERT INTO in_tcate (cate_cate,cate_desc,cate_estado,cate_runic,cate_feven, cate_porcentaje)
-                VALUES ((SELECT COALESCE(MAX(cate_cate),0)+1 from in_tcate),nombreCategoria.nombreCate,'A','','', 45); 
+                VALUES ((SELECT COALESCE(MAX(cate_cate),0)+1 from in_tcate),nombreCategoria.nombreCate,'A','','', 60); 
             --
             END IF;
             

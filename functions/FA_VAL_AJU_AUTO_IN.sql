@@ -2,7 +2,7 @@
 -- Funcion con la cual se valida si el inventario si puede ser ajustado o no
 --
 CREATE OR REPLACE FUNCTION FA_VAL_AJU_AUTO_IN (  
-                                p_copr              BIGINT,
+                                p_copr              BIGINT
                                             ) RETURNS VARCHAR  AS $$
     DECLARE
     --
@@ -28,7 +28,8 @@ CREATE OR REPLACE FUNCTION FA_VAL_AJU_AUTO_IN (
         --
     END IF;
     --
-    EXCEPTION WHEN OTHERS THEN
-         p_excepcion := 'Error FA_VAL_AJU_AUTO_IN '|| sqlerrm;
+    EXCEPTION 
+        WHEN OTHERS THEN
+         RETURN 'Error FA_VAL_AJU_AUTO_IN '|| sqlerrm;
     END;
 $$ LANGUAGE 'plpgsql';

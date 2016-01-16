@@ -80,44 +80,48 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
         --
         FOR dato IN c_datosExcel LOOP
         --  
-            OPEN c_porcentaje_precio(dato.tmpidexc_dska);
-            FETCH c_porcentaje_precio INTO v_porc_precio;
-            CLOSE c_porcentaje_precio;
-            --
-            v_costo_total := dato.tmpidexc_costo * cast(dato.tmpidexc_existencia as INT);
-            --
-            OPEN c_sec_contabilidad;
-            FETCH c_sec_contabilidad INTO v_sec_cont;
-            CLOSE c_sec_contabilidad;
-            --
-            OPEN c_valorMvtocont(v_costo_total);
-            FETCH c_valorMvtocont INTO v_valorMvto;
-            CLOSE c_valorMvtocont;
-            --
-            --
-            INSERT INTO co_ttem_mvco(
-                            tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
-                VALUES (v_sec_cont, '110501', v_valorMvto ,'C');
-            --
-            v_valRegistro := IN_ADICIONA_PROD_EXIS(dato.tmpidexc_dska, cast(dato.tmpidexc_existencia as INT) , v_costo_total ,dato.sede,1,v_sec_cont);
-            --
-            DELETE FROM co_ttem_mvco
-            WHERE tem_mvco_trans = v_sec_cont
-            ;
-            --
-            IF UPPER(TRIM(v_valRegistro)) NOT LIKE '%OK%' THEN
+            IF dato.tmpidexc_existencia <> 0 THEN
+                OPEN c_porcentaje_precio(dato.tmpidexc_dska);
+                FETCH c_porcentaje_precio INTO v_porc_precio;
+                CLOSE c_porcentaje_precio;
                 --
-                RAISE EXCEPTION 'Error al realizar el ingreso de existencias masivas %', v_valRegistro;
+                v_costo_total := dato.tmpidexc_costo * cast(dato.tmpidexc_existencia as INT);
                 --
-            ELSE
+                OPEN c_sec_contabilidad;
+                FETCH c_sec_contabilidad INTO v_sec_cont;
+                CLOSE c_sec_contabilidad;
                 --
-                v_valida := IN_PARA_PRECIO_PROD_PORCE(1,dato.sede,dato.tmpidexc_dska, 0);
+                OPEN c_valorMvtocont(v_costo_total);
+                FETCH c_valorMvtocont INTO v_valorMvto;
+                CLOSE c_valorMvtocont;
                 --
-                IF upper(v_valida) NOT LIKE '%OK%' THEN
+                --
+                INSERT INTO co_ttem_mvco(
+                                tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
+                    VALUES (v_sec_cont, '110501', v_valorMvto ,'C');
+                --
+                v_valRegistro := IN_ADICIONA_PROD_EXIS(dato.tmpidexc_dska, cast(dato.tmpidexc_existencia as INT) , v_costo_total ,dato.sede,1,v_sec_cont);
+                --
+                DELETE FROM co_ttem_mvco
+                WHERE tem_mvco_trans = v_sec_cont
+                ;
+                --
+                IF UPPER(TRIM(v_valRegistro)) NOT LIKE '%OK%' THEN
                     --
-                    RAISE EXCEPTION ' % ',v_valida;
+                    RAISE EXCEPTION 'Error al realizar el ingreso de existencias masivas %', v_valRegistro;
+                    --
+                ELSE
+                    --
+                    v_valida := IN_PARA_PRECIO_PROD_PORCE(1,dato.sede,dato.tmpidexc_dska, 0);
+                    --
+                    IF upper(v_valida) NOT LIKE '%OK%' THEN
+                        --
+                        RAISE EXCEPTION ' % ',v_valida;
+                        --
+                    END IF;
                     --
                 END IF;
+                --
             END IF;
         --
         END LOOP;
