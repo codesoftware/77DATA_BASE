@@ -1,0 +1,12 @@
+COMMENT ON TABLE in_tpops                       IS 'Tabla en la cual se almacenara la informacion necesaria para los parametros de los porcentajes ';
+COMMENT ON COLUMN in_tpops.pops_pops            IS 'Identificador primario de la tabla';
+COMMENT ON COLUMN in_tpops.pops_fecha           IS 'Fecha en la cual se creo la parametrizacion';
+COMMENT ON COLUMN in_tpops.pops_cate            IS 'Llave foranea con la categoria que se quiere parametrizar';
+COMMENT ON COLUMN in_tpops.pops_refe            IS 'Llave foranea con la tabla referencia o subcategorias ';
+COMMENT ON COLUMN in_tpops.pops_marca           IS 'Llave foranea con la tabla marca';
+COMMENT ON COLUMN in_tpops.pops_tius            IS 'Usuario que creo la parametrizacion';
+COMMENT ON COLUMN in_tpops.pops_estado          IS 'Estado en el cual se crea la parametrizacion';
+COMMENT ON COLUMN in_tpops.pops_porc_base       IS 'Porcentaje base para los precios que se dentro de esos parametros';
+COMMENT ON COLUMN in_tpops.pops_porc_uni        IS 'Porcentaje por unidad para los precios que se dentro de esos parametros';
+COMMENT ON COLUMN in_tpops.pops_porc_cent       IS 'Porcentaje por centena para los precios que se dentro de esos parametros';
+COMMENT ON COLUMN in_tpops.pops_porc_mill       IS 'Porcentaje por millar para los precios que se dentro de esos parametros';

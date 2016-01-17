@@ -58,6 +58,7 @@
 \i /77DATA_BASE/tables/fa_tprodhome.sql;
 \i /77DATA_BASE/tables/in_tprpd.sql;
 \i /77DATA_BASE/tables/in_tajic.sql;
+\i /77DATA_BASE/tables/in_tpops.sql;
 --
 --Alters
 --
@@ -169,6 +170,7 @@
 \i /77DATA_BASE/comments/in_teprs_com.sql;
 \i /77DATA_BASE/comments/in_tprpd_com.sql;
 \i /77DATA_BASE/comments/in_tajic_com.sql;
+\i /77DATA_BASE/comments/in_tpops_com.sql;
 --
 -- Llaves foraneas
 --
@@ -202,6 +204,7 @@
 \i /77DATA_BASE/foreignKey/fk_in_teprs.sql;
 \i /77DATA_BASE/foreignKey/fk_in_tprpd.sql;
 \i /77DATA_BASE/foreignKey/fk_in_tajic.sql;
+\i /77DATA_BASE/foreignKey/fk_in_tpops.sql;
 --
 --Vistas
 --

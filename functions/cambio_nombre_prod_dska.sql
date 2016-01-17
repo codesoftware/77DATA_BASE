@@ -15,18 +15,19 @@ $BODY$
       and refe_refe = dska_refe
 	  and dska_dska = p_dska_dska
     ;
-   
+   --
+   v_nombre         varchar(2000):= '';
+   --
    BEGIN
    
-      FOR nombre in c_prod
-        LOOP
+        open c_prod;
+        fetch c_prod into v_nombre;
+        close c_prod;
         
         update in_tdska
-        set dska_nom_prod = nombre.nombreProd
-        --dska_desc = nombre.nombreProd
-        where dska_dska = nombre.dska_dska
+        set dska_nom_prod = v_nombre
+        where dska_dska = p_dska_dska
         ;
-      END LOOP;
       
       return 'Ok';
       EXCEPTION WHEN OTHERS THEN
