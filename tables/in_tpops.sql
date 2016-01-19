@@ -7,6 +7,7 @@
 CREATE TABLE in_tpops(
    pops_pops                BIGSERIAL                           ,  
    pops_fecha               TIMESTAMP        DEFAULT NOW()      , 
+   pops_sede                BIGINT                              , 
    pops_cate                BIGINT                              , 
    pops_refe                BIGINT                              , 
    pops_marca               BIGINT                              ,

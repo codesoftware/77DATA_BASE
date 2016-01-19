@@ -276,6 +276,7 @@
 \i /77DATA_BASE/functions/IN_VALIDACONTEO.sql;
 \i /77DATA_BASE/functions/IN_ACTUALIZACONTEO.sql;
 \i /77DATA_BASE/functions/FA_VAL_AJU_AUTO_IN.sql;
+\i /77DATA_BASE/functions/IN_PARA_PORC_PRECIOS.sql;
 --
 -- Triggers
 --
