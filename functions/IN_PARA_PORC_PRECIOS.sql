@@ -10,7 +10,7 @@ CREATE OR REPLACE FUNCTION IN_PARA_PORC_PRECIOS (
                                     p_porcBase          BIGINT,
                                     p_porcUnid          BIGINT,
                                     p_porcDece          BIGINT,
-                                    p_porcMill          BIGINT,
+                                    p_porcMill          BIGINT
                                             ) RETURNS VARCHAR  AS $$
     DECLARE
     --
@@ -63,6 +63,8 @@ CREATE OR REPLACE FUNCTION IN_PARA_PORC_PRECIOS (
         END LOOP;
         --
     END LOOP;
+    --
+    RETURN 'Ok';
     --
     EXCEPTION 
         WHEN OTHERS THEN
