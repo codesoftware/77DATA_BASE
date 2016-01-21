@@ -1,16 +1,12 @@
 --
 -- Funcion con la cual se parametrizan los porcentajes de precios dependiendo la parametrizacion del sistema
 --
-CREATE OR REPLACE FUNCTION IN_PARA_PORC_PRECIOS (  
+CREATE OR REPLACE FUNCTION IN_EJECUTA_PROC_PRECIOS (  
                                     p_sede              BIGINT,
                                     p_tius              BIGINT,
                                     p_cate              BIGINT,
                                     p_refe              BIGINT,
-                                    p_marca             BIGINT,
-                                    p_porcBase          BIGINT,
-                                    p_porcUnid          BIGINT,
-                                    p_porcDece          BIGINT,
-                                    p_porcMill          BIGINT
+                                    p_marca             BIGINT
                                             ) RETURNS VARCHAR  AS $$
     DECLARE
     --
