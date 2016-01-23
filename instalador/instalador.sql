@@ -59,6 +59,12 @@
 \i /77DATA_BASE/tables/in_tprpd.sql;
 \i /77DATA_BASE/tables/in_tajic.sql;
 \i /77DATA_BASE/tables/in_tpops.sql;
+\i /77DATA_BASE/tables/co_tretde.sql;
+\i /77DATA_BASE/tables/co_tveret.sql;
+\i /77DATA_BASE/tables/fa_tfacom.sql;
+\i /77DATA_BASE/tables/fa_tfcprd.sql;
+\i /77DATA_BASE/tables/fa_tfpago.sql;
+
 --
 --Alters
 --
@@ -205,6 +211,12 @@
 \i /77DATA_BASE/foreignKey/fk_in_tprpd.sql;
 \i /77DATA_BASE/foreignKey/fk_in_tajic.sql;
 \i /77DATA_BASE/foreignKey/fk_in_tpops.sql;
+\i /77DATA_BASE/foreignKey/fk_tfacom.sql;
+\i /77DATA_BASE/foreignKey/fk_tfcprd.sql;
+\i /77DATA_BASE/foreignKey/fk_tfpago.sql;
+\i /77DATA_BASE/foreignKey/fk_tretde.sql;
+\i /77DATA_BASE/foreignKey/fk_in_tprov.sql;
+
 --
 --Vistas
 --

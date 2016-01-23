@@ -13,5 +13,8 @@ PROV_TELEFONO             VARCHAR(20)    NOT NULL     ,
 PROV_DIRECCION            VARCHAR(50)    NOT NULL     ,
 PROV_CELULAR              VARCHAR(15)    NOT NULL     ,
 PROV_ESTADO               VARCHAR(2)     DEFAULT ('A'),
+prov_corre                VARCHAR(50),
+prov_retde                BIGSERIAL,
+prov_gcron                VARCHAR(2),        
 PRIMARY KEY (PROV_PROV)
 );
