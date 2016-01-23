@@ -9,6 +9,7 @@ CREATE OR REPLACE FUNCTION IN_PARA_PRECIO_PROD_PORCE(
                                                  )RETURNS VARCHAR  AS $$
     DECLARE
     --    
+    v_porc_precio           NUMERIC(1000,10) := 0;
     v_precio                NUMERIC(1000,10) := 0;
     v_prom_pod              NUMERIC(1000,10) := 0;
     v_iva_precio            NUMERIC(1000,10) := 0;
@@ -20,10 +21,14 @@ CREATE OR REPLACE FUNCTION IN_PARA_PRECIO_PROD_PORCE(
     v_centenas              NUMERIC(1000,10) := 0;
     v_millar                NUMERIC(1000,10) := 0;
     --
-    v_porcBase              NUMERIC(1000,10) := 0;
-    v_porcUnid              NUMERIC(1000,10) := 0;
-    v_porcCent              NUMERIC(1000,10) := 0;
-    v_porcMill              NUMERIC(1000,10) := 0;    
+    --Cursor con el cual obtengo el porcentaje para calcular el precio dependiendo su categoria
+    --
+    c_porcentaje_precio CURSOR IS
+    select cate_porcentaje
+      from in_tdska, in_tcate
+     where dska_cate = cate_cate
+       and dska_dska = p_dska
+       ;
     --
     --Cursor con el cual obtengo el promedio ponderado del producto
     --
@@ -52,46 +57,11 @@ CREATE OR REPLACE FUNCTION IN_PARA_PRECIO_PROD_PORCE(
     --
     v_desc_cat      varchar(500) := '';
     --
-    --Cursor con el cual obtengo los porcentajes para realizar la parametrizacion del precio del producto
-    --
-    c_porcentajes_dska CURSOR IS
-    SELECT pops_porc_base, pops_porc_uni, pops_porc_cent, pops_porc_mill
-      FROM IN_TDSKA, IN_TPOPS
-     WHERE DSKA_DSKA = p_dska
-       AND DSKA_CATE = POPS_CATE
-       AND DSKA_REFE = POPS_REFE
-       AND DSKA_MARCA = POPS_MARCA
-       and pops_estado = 'A'
-       and pops_sede = p_sede
-     ORDER BY pops_fecha DESC
-    ;
-    --
-    --Codigo externo, y nombre de producto
-    --
-    c_datos_prod CURSOR IS
-    SELECT dska_nom_prod, dska_cod_ext
-      FROM in_tdska
-     WHERE dska_dska = p_dska
-      ;
-    --
-    v_nombre            varchar(4000) := '';
-    v_codigoExt         varchar(4000) := '';
-    --
     BEGIN
         --
-        OPEN c_porcentajes_dska;
-        FETCH c_porcentajes_dska INTO v_porcBase,v_porcUnid,v_porcCent,v_porcMill;
-        CLOSE c_porcentajes_dska;
-        --
-        IF v_porcBase is null THEN
-            --
-            OPEN c_datos_prod;
-            FETCH c_datos_prod INTO v_nombre,v_codigoExt;
-            CLOSE c_datos_prod;
-            --
-            RAISE EXCEPTION 'El producto con el nombre % y el codigo % no tiene ningun porcentaje parametrizado', v_nombre,v_codigoExt;
-            --
-        END IF;
+        OPEN c_porcentaje_precio;
+        FETCH c_porcentaje_precio INTO v_porc_precio;
+        CLOSE c_porcentaje_precio;
         --
         OPEN c_prom_pod;
         FETCH c_prom_pod INTO v_prom_pod;
@@ -110,7 +80,7 @@ CREATE OR REPLACE FUNCTION IN_PARA_PRECIO_PROD_PORCE(
         --Le sumo el porcentaje parametrizado para la categoria que tiene el producto
         --
         --
-        v_precio := ((v_prom_pod*v_porcBase)/100.0000) + v_prom_pod;
+        v_precio := ((v_prom_pod*v_porc_precio)/100.0000) + v_prom_pod;
         --
         --Sumo el iva
         --
@@ -119,29 +89,29 @@ CREATE OR REPLACE FUNCTION IN_PARA_PRECIO_PROD_PORCE(
         --
         --Redondeo el precio
         --
-        --IF v_precio < 50 THEN
-        --    --
-        --    v_precio := 50;
-        --    --
-        --ELSIF v_precio between 50 and 100 THEN
-        --    --
-        --    v_precio := 100;
-        --    --
-        --ELSIF v_precio between 100 and 10000 THEN
-        --    --
-        --    v_modulo := v_precio % 100;
-        --    v_faltante := 100 - v_modulo;
-        --    v_precio := v_precio + v_faltante;
-        --    v_precio := round(v_precio);
-        --    --
-        --ELSE
-        --    --
-        --    v_modulo := v_precio % 1000;
-        --    v_faltante := 1000 - v_modulo;
-        --    v_precio := v_precio + v_faltante;
-        --    v_precio := round(v_precio);
-        --    --
-        --END IF;
+        IF v_precio < 50 THEN
+            --
+            v_precio := 50;
+            --
+        ELSIF v_precio between 50 and 100 THEN
+            --
+            v_precio := 100;
+            --
+        ELSIF v_precio between 100 and 10000 THEN
+            --
+            v_modulo := v_precio % 100;
+            v_faltante := 100 - v_modulo;
+            v_precio := v_precio + v_faltante;
+            v_precio := round(v_precio);
+            --
+        ELSE
+            --
+            v_modulo := v_precio % 1000;
+            v_faltante := 1000 - v_modulo;
+            v_precio := v_precio + v_faltante;
+            v_precio := round(v_precio);
+            --
+        END IF;
         --Saco la base del iva
         v_auxiliar := 100.00;
         --
@@ -149,23 +119,65 @@ CREATE OR REPLACE FUNCTION IN_PARA_PRECIO_PROD_PORCE(
         --
         v_precio :=  v_precio /v_auxiliar;
         --
-        v_millar := 0;
-        v_centenas := 0;
-        v_unidad := 0;
+        --Calculos para precios por unidad, centena y millar
         --
-        --Calculos para los precios por unidad, centena y millar
+        OPEN c_tipo_cate;
+        FETCH c_tipo_cate INTO v_desc_cat;
+        CLOSE c_tipo_cate;
         --
-        v_millar := ((v_prom_pod * v_porcMill )/100.00) + v_prom_pod;
-        --
-        v_centenas := ((v_prom_pod * v_porcCent )/100.00) + v_prom_pod;
-        --
-        v_unidad := ((v_prom_pod * v_porcUnid )/100.00) + v_prom_pod;
-        --
-        v_millar := (( v_millar * v_iva_precio )/100.00) + v_millar;
-        --
-        v_centenas := (( v_centenas * v_iva_precio )/100.00) + v_centenas;
-        --
-        v_unidad := (( v_unidad * v_iva_precio )/100.00) + v_unidad;
+        IF v_desc_cat = 'TORNILLOS' THEN
+            --
+            v_millar := 0;
+            v_centenas := 0;
+            v_unidad := 0;
+            --
+            --Calculos para los precios por unidad, centena y millar
+            --
+            v_millar := ((v_prom_pod * 20.00 )/100.00) + v_prom_pod;
+            --
+            v_centenas := ((v_prom_pod * 25.00 )/100.00) + v_prom_pod;
+            --
+            v_unidad := ((v_prom_pod * 30.00 )/100.00) + v_prom_pod;
+            --
+            v_millar := (( v_millar * v_iva_precio )/100.00) + v_millar;
+            --
+            v_centenas := (( v_centenas * v_iva_precio )/100.00) + v_centenas;
+            --
+            v_unidad := (( v_unidad * v_iva_precio )/100.00) + v_unidad;
+            --
+        ELSE
+            --
+            v_millar := 0;
+            v_centenas := 0;
+            v_unidad := 0;
+            --
+            --Calculos para los precios por unidad, centena y millar
+            --
+            v_millar := ((v_prom_pod * 18.00 )/100.00) + v_prom_pod;
+            --
+            v_centenas := ((v_prom_pod * 28.00 )/100.00) + v_prom_pod;
+            --
+            v_unidad := ((v_prom_pod * 35.00 )/100.00) + v_prom_pod;
+            --
+            v_millar := (( v_millar * v_iva_precio )/100.00) + v_millar;
+            --
+            v_centenas := (( v_centenas * v_iva_precio )/100.00) + v_centenas;
+            --
+            v_unidad := (( v_unidad * v_iva_precio )/100.00) + v_unidad;
+            --
+            v_modulo_pre_mayor := v_unidad % 100;
+            v_faltante :=  100 -  v_modulo_pre_mayor;
+            v_unidad := v_unidad + v_faltante;
+            --
+            v_modulo_pre_mayor := v_centenas % 100;
+            v_faltante :=  100 -  v_modulo_pre_mayor;
+            v_centenas := v_centenas + v_faltante;
+            --
+            v_modulo_pre_mayor := v_millar % 100;
+            v_faltante :=  100 -  v_modulo_pre_mayor;
+            v_millar := v_millar + v_faltante;
+            --
+        END IF;
         --
         --Evaluo si le envio un precio diferente de cero esto quiere decir que no utilizara el calculo sobre el costo para el precio base
         --

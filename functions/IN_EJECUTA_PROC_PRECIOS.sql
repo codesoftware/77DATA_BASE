@@ -31,6 +31,12 @@ CREATE OR REPLACE FUNCTION IN_EJECUTA_PROC_PRECIOS (
     --
     BEGIN
     --
+    IF p_sede = -1 THEN
+        --
+        raise exception 'Debe seleccionar una sede para poder parametrizar los porcentajes '; 
+        --
+    END IF;
+    --
     FOR cate IN c_categoria LOOP
         --
         FOR refe IN c_subCate LOOP

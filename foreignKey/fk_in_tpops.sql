@@ -19,3 +19,10 @@ ALTER TABLE in_tpops
 ADD FOREIGN KEY (pops_marca)
 REFERENCES in_tmarca(marca_marca)
 ;
+--
+--Referencia con la tabla sede
+--
+ALTER TABLE in_tpops
+ADD FOREIGN KEY (pops_sede)
+REFERENCES em_tsede(sede_sede)
+;

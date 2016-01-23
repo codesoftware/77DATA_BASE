@@ -12,10 +12,10 @@ CREATE TABLE in_tpops(
    pops_refe                BIGINT                              , 
    pops_marca               BIGINT                              ,
    pops_tius                BIGINT                              ,
-   pops_estado              varchar(2)       DEFAULT   'A'      ,
-   pops_porc_base           numeric(1000,10) DEFAULT    60      ,
-   pops_porc_uni            numeric(1000,10) DEFAULT    50      ,
-   pops_porc_cent           numeric(1000,10) DEFAULT    40      ,
-   pops_porc_mill           numeric(1000,10) DEFAULT    30      ,
+   pops_estado              varchar(2)                      DEFAULT   'A'      ,
+   pops_porc_base           numeric(1000,10)    not null    DEFAULT    60      ,
+   pops_porc_uni            numeric(1000,10)    not null    DEFAULT    50      ,
+   pops_porc_cent           numeric(1000,10)    not null    DEFAULT    40      ,
+   pops_porc_mill           numeric(1000,10)    not null    DEFAULT    30      ,
    PRIMARY KEY (pops_pops)
 ); 
