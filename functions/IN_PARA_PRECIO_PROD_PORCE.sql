@@ -5,7 +5,11 @@ CREATE OR REPLACE FUNCTION IN_PARA_PRECIO_PROD_PORCE(
                                                     p_user          BIGINT,
                                                     p_sede          BIGINT,
                                                     p_dska          BIGINT,
-                                                    p_precio        NUMERIC(1000,10)
+                                                    p_precio        NUMERIC(1000,10),
+                                                    p_estatic       VARCHAR(2)          default 'N',
+                                                    p_unid          NUMERIC(1000,10)    default 0 ,
+                                                    p_dece          NUMERIC(1000,10)    default 0 ,
+                                                    p_millar        NUMERIC(1000,10)    default 0 
                                                  )RETURNS VARCHAR  AS $$
     DECLARE
     --    
@@ -78,6 +82,16 @@ CREATE OR REPLACE FUNCTION IN_PARA_PRECIO_PROD_PORCE(
     v_codigoExt         varchar(4000) := '';
     --
     BEGIN
+        --
+        IF p_estatic <> 'N' THEN
+            --
+            IF p_unid = 0 or p_dece = 0 or p_millar = 0 THEN
+                --
+                RAISE EXCEPTION 'Cuando el precio es estatico se deben enviar los parametros unidad, decena y millar diferentes de cero.';                --
+                --
+            END IF;
+            --
+        END IF;
         --
         OPEN c_porcentajes_dska;
         FETCH c_porcentajes_dska INTO v_porcBase,v_porcUnid,v_porcCent,v_porcMill;
@@ -190,12 +204,25 @@ CREATE OR REPLACE FUNCTION IN_PARA_PRECIO_PROD_PORCE(
         --
         --Insercion del precio
         --
-        INSERT INTO in_tprpr(
-                    prpr_dska, prpr_precio, prpr_tius_crea, prpr_tius_update, 
-                    prpr_estado, prpr_sede, prpr_preu,prpr_prec,prpr_prem)
-            VALUES (p_dska, v_precio , p_user , p_user,
-                    'A', p_sede,v_unidad,v_centenas,v_millar);
-        --
+        IF p_estatic = 'N' THEN
+            --
+            INSERT INTO in_tprpr(
+                        prpr_dska, prpr_precio, prpr_tius_crea, prpr_tius_update, 
+                        prpr_estado, prpr_sede, prpr_preu,prpr_prec,prpr_prem)
+                VALUES (p_dska, v_precio , p_user , p_user,
+                        'A', p_sede,v_unidad,v_centenas,v_millar);
+            --
+        ELSE
+            --
+            --
+            INSERT INTO in_tprpr(
+                        prpr_dska, prpr_precio, prpr_tius_crea, prpr_tius_update, 
+                        prpr_estado, prpr_sede, prpr_preu,prpr_prec,prpr_prem,prpr_estatic)
+                VALUES (p_dska, v_precio , p_user , p_user,
+                        'A', p_sede,p_unid,p_dece,p_millar,p_estatic);
+            --
+            --
+        END IF;
         RETURN 'Ok';
         --
     EXCEPTION WHEN OTHERS THEN
