@@ -14,5 +14,6 @@ CREATE TABLE in_tprpr(
     prpr_preu           numeric(1000,10)                   DEFAULT 0           ,
     prpr_prec           numeric(1000,10)                   DEFAULT 0           ,
     prpr_prem           numeric(1000,10)                   DEFAULT 0           ,
+    prpr_estatic        VARCHAR(1)              NOT NULL   DEFAULT 'N'         ,
 PRIMARY KEY (prpr_prpr)
 );
