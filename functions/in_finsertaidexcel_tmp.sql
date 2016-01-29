@@ -102,8 +102,9 @@ DECLARE
                                                 datos.tmprefe_descrip,
                                                 v_idMarca,
                                                 v_idCate,
-												datos.tmprefe_codexte,
-												datos.tmprefe_ubicaci
+                                                datos.tmprefe_codexte,
+                                                datos.tmprefe_ubicaci,
+                                                'S'
                                                 );
             --
             IF UPPER(TRIM(v_ins_prod)) NOT LIKE UPPER('%OK%') THEN
