@@ -7,6 +7,5 @@ fpago_valor				NUMERIC(1000,6),
 fpago_tsbcu             BIGSERIAL,
 fpago_fecha             TIMESTAMP DEFAULT NOW(),
 fpago_estad             VARCHAR(2),
-fa_dpago		INT,
 PRIMARY KEY (fpago_fpago)
 );
