@@ -27,10 +27,11 @@ CREATE OR REPLACE FUNCTION IN_PARA_PORC_PRECIOS (
        AND refe_cate = CASE WHEN - 1 = p_cate THEN refe_cate ELSE p_cate END
      ;
     --
-    c_marca CURSOR FOR
+    c_marca CURSOR(vc_cate      bigint, vc_refe     bigint) FOR
     SELECT distinct marca_marca
       FROM in_tmarca
      WHERE marca_marca = CASE WHEN - 1 = p_marca THEN marca_marca ELSE p_marca END
+       and marca_marca in (select distinct dska_marca from in_tdska where dska_refe = vc_refe and dska_cate = vc_cate)
       ;
     --
     BEGIN
@@ -39,7 +40,7 @@ CREATE OR REPLACE FUNCTION IN_PARA_PORC_PRECIOS (
         --
         FOR refe IN c_subCate LOOP
             --
-            FOR marca IN c_marca LOOP
+            FOR marca IN c_marca(cate.cate_cate,refe.refe_refe) LOOP
             --
             UPDATE in_tpops
                SET pops_estado ='I'

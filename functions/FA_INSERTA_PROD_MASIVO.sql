@@ -124,6 +124,8 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
                 --
             END IF;
         --
+        commit;
+        --
         END LOOP;
         --
         RETURN 'OK';
