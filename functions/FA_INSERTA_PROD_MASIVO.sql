@@ -8,9 +8,12 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
        --Cursor con el cual obtengo los datos que deseo ingresar las existencias
        --
        c_datosExcel CURSOR FOR 
-       SELECT tmpidexc_dska, 2 sede, tmpidexc_costo, tmpidexc_existencia
+       SELECT tmpidexc_dska, 2 sede, tmpidexc_costo, tmpidexc_existencia,tmpidexc_tmpidexc
          FROM in_tmpidexc
-         ;
+     ORDER BY tmpidexc_tmpidexc 
+       offset 0
+        limit 100
+        ;
         --
         --Cursor con el cual calculo el valor del movimiento contable que se va ha realizar
         --
@@ -81,6 +84,7 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
         FOR dato IN c_datosExcel LOOP
         --  
             IF dato.tmpidexc_existencia <> 0 THEN
+                --
                 OPEN c_porcentaje_precio(dato.tmpidexc_dska);
                 FETCH c_porcentaje_precio INTO v_porc_precio;
                 CLOSE c_porcentaje_precio;
@@ -124,7 +128,9 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
                 --
             END IF;
         --
-        commit;
+        DELETE FROM in_tmpidexc
+        WHERE tmpidexc_tmpidexc = dato.tmpidexc_tmpidexc
+        ;
         --
         END LOOP;
         --

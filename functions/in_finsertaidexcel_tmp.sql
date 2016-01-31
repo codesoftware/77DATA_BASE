@@ -69,6 +69,8 @@ DECLARE
   --
     BEGIN
     --
+        DELETE FROM in_tmpidexc;
+        --
         FOR datos IN c_consultadatosexcel LOOP
         --
              v_excepcion := datos.tmprefe_codexte;
