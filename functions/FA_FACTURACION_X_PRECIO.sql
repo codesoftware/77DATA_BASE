@@ -9,9 +9,24 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
                                 p_tipoPago              VARCHAR,
                                 p_idVaucher             BIGINT,
                                 p_valrTarjeta           BIGINT,
-                                p_idPedido              BIGINT
+                                p_idPedido              BIGINT,
+                                p_retefuente            VARCHAR
                          )RETURNS VARCHAR AS $$
     DECLARE
+    --
+    --Cursor que obtiene el iva parametrizado
+    --
+    c_iva_precio CURSOR IS
+    SELECT cast(para_valor as numeric)
+      FROM em_tpara
+     WHERE para_clave = 'IVAPRVENTA'
+    ;
+    --
+    v_aux_porc          numeric(1000,10) := 100.00;
+    v_vlr_fin_tot       numeric(1000,10) := 0;
+    v_iva_precio        NUMERIC(1000,10) := 0;
+    v_auxiliar          NUMERIC(1000,10) := 0;
+    v_precio_base       NUMERIC(1000,10) := 0;
     --
     --Logica para validaciones previas a la facturacion
     --
@@ -22,6 +37,7 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
     --
     v_vlr_total     NUMERIC(1000,10)  :=0;
     v_vlr_iva       NUMERIC(1000,10)  :=0;
+    v_vlr_retfuente NUMERIC(1000,10)  :=0;
     --
     --Variables necesarias para la validacion de subcuentas
     --
@@ -305,9 +321,46 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
     FETCH c_sbcu_caja INTO v_sbcu_caja_cod;
     CLOSE c_sbcu_caja;
     --
+    --Logica para la retencion en la fuente
+    --
+    IF p_retefuente = 'S' THEN
+        --
+        OPEN c_iva_precio;
+        FETCH c_iva_precio INTO v_iva_precio;
+        CLOSE c_iva_precio;
+        --
+        --Saco la base del iva
+        v_auxiliar := 100.00;
+        --
+        v_auxiliar :=  (v_iva_precio / v_auxiliar)+1;
+        --
+        v_precio_base :=  (v_vlr_total_fact_co - v_vlr_dsc) /v_auxiliar;
+        --
+        v_vlr_retfuente := v_precio_base;
+        v_vlr_retfuente := (v_vlr_retfuente * 2.5)/v_aux_porc;
+        v_vlr_fin_tot := (v_vlr_total_fact_co - v_vlr_dsc) - v_vlr_retfuente;
+        --
+        --Inserto el valor de la retencion en la fuente
+        --
+        INSERT INTO co_ttem_mvco(
+            tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
+                     VALUES (v_idTrans_con, '135515' , v_vlr_retfuente, 'D');
+        --
+        UPDATE FA_TFACT
+           SET FACT_RETEFUN = 'S',
+           FACT_VLRRTFU = v_vlr_retfuente
+         WHERE fact_fact = v_fact_fact
+         ;
+        --
+    ELSE 
+        --
+        v_vlr_fin_tot := v_vlr_total_fact_co - v_vlr_dsc;
+        --
+    END IF;
+    --
     INSERT INTO co_ttem_mvco(
             tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
-                     VALUES (v_idTrans_con, v_sbcu_caja_cod , v_vlr_total_fact_co - v_vlr_dsc, 'D');
+                     VALUES (v_idTrans_con, v_sbcu_caja_cod , v_vlr_fin_tot, 'D');
     --
     UPDATE fa_tfact
     SET fact_vlr_efectivo = v_vlr_total_fact_co
@@ -341,7 +394,7 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
                          v_sbcu_sbcu , movi.tem_mvco_naturaleza, 
                          2, cast(movi.tem_mvco_valor as NUMERIC),
                          'fact', v_fact_fact,
-                         1, p_clien );
+                         p_clien, p_clien );
             
         END LOOP;
         --

@@ -18,3 +18,5 @@ COMMENT ON COLUMN FA_TFACT.FACT_VLR_TARJETA         IS          'Indica el valor
 COMMENT ON COLUMN FA_TFACT.FACT_CIERRE              IS          'Referencia el id del cierre en el cual fue realizado la factura';
 COMMENT ON COLUMN FA_TFACT.FACT_SEDE                IS          'Referencia el id de la sede en la cual fue realizada la factura';
 COMMENT ON COLUMN FA_TFACT.FACT_PEDI                IS          'Referencia el id de la tabla de pedidos en el caso en el que el campo sea cero quiere decir que no tiene un pedido asociado';
+COMMENT ON COLUMN FA_TFACT.FACT_RETEFUN             IS          'Indica si a la factura se le aplico retencion en la fuente Si(S) o No(N)';
+COMMENT ON COLUMN FA_TFACT.FACT_VLRRTFU             IS          'Indica el valor de la retencion en la fuente en caso de que no halla sera cero';

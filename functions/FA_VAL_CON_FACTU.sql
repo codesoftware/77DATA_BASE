@@ -40,12 +40,21 @@ CREATE OR REPLACE FUNCTION FA_VAL_CON_FACTU (
      WHERE sbcu_codigo = '530535'
       ;
     --
+    --Cursor el cual verifica si existe la subcuenta para los las retenciones en la fuente
+    --
+    c_retefuente CURSOR FOR
+    SELECT count(*)
+      FROM co_tsbcu
+     WHERE sbcu_codigo = '135515'
+      ;
+    --
     --Variables necesarias para la validacion de subcuentas
     --
     v_val_iva_generado          BIGINT :=0;
     v_val_costo_ventas          BIGINT :=0;
     v_val_mercancias_mm         BIGINT :=0;
     v_val_descuentos            BIGINT :=0;
+    v_val_retefuente            BIGINT :=0;
     --
     --Cursor con el cual evaluo si la sede puede facturar osea que no esta marcada como bodega
     --
@@ -147,6 +156,10 @@ CREATE OR REPLACE FUNCTION FA_VAL_CON_FACTU (
     FETCH c_descuentos INTO v_val_descuentos;
     CLOSE c_descuentos;
     --
+    OPEN c_retefuente;
+    FETCH c_retefuente INTO v_val_retefuente;
+    CLOSE c_retefuente;
+    --
     IF v_val_iva_generado <> 1 THEN
         --
         RAISE EXCEPTION 'Error cuenta de iva generado 240802 no se encuentra parametrizada por favor comunicarse con el administrador del sistema ';
@@ -168,6 +181,12 @@ CREATE OR REPLACE FUNCTION FA_VAL_CON_FACTU (
     IF v_val_descuentos <> 1 THEN
         --
         RAISE EXCEPTION 'Error cuenta de descuentos por ventas 530535 no se encuentra parametrizada por favor comunicarse con el administrador del sistema ';
+        --
+    END IF;
+    --
+    IF v_val_retefuente <> 1 THEN
+        --
+        RAISE EXCEPTION 'Error cuenta de retenciones en la fuente o anticipos de impuestos 135515 no se encuentra parametrizada por favor comunicarse con el administrador del sistema ';
         --
     END IF;
     --
