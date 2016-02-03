@@ -8,7 +8,7 @@ INSERT INTO ub_tdepa(depa_depa ,depa_pais ,depa_nombre ,depa_descripcion ,depa_d
 INSERT INTO ub_tdepa(depa_depa ,depa_pais ,depa_nombre ,depa_descripcion ,depa_default,depa_codigo)values (8,1,'CAUCA', 'CAUCA', 'S','19');
 INSERT INTO ub_tdepa(depa_depa ,depa_pais ,depa_nombre ,depa_descripcion ,depa_default,depa_codigo)values (9,1,'CESAR', 'CESAR', 'S','20');
 INSERT INTO ub_tdepa(depa_depa ,depa_pais ,depa_nombre ,depa_descripcion ,depa_default,depa_codigo)values (10 ,1,'CORDOBA', 'CORDOBA', 'S','23');
-INSERT INTO ub_tdepa(depa_depa ,depa_pais ,depa_nombre ,depa_descripcion ,depa_default,depa_codigo)values (11 ,1,'CUNDINAMARCA' , 'CUNDINAMARCA' , 'S','25');
+INSERT INTO ub_tdepa(depa_depa ,depa_pais ,depa_nombre ,depa_descripcion ,depa_default,depa_codigo)values (11 ,1,'CUND.' , 'CUND.' , 'S','25');
 INSERT INTO ub_tdepa(depa_depa ,depa_pais ,depa_nombre ,depa_descripcion ,depa_default,depa_codigo)values (12 ,1,'CHOCO', 'CHOCO', 'S','27');
 INSERT INTO ub_tdepa(depa_depa ,depa_pais ,depa_nombre ,depa_descripcion ,depa_default,depa_codigo)values (13 ,1,'HUILA', 'HUILA', 'S','41');
 INSERT INTO ub_tdepa(depa_depa ,depa_pais ,depa_nombre ,depa_descripcion ,depa_default,depa_codigo)values (14 ,1,'LAGUAJIRA', 'LAGUAJIRA', 'S','44');
