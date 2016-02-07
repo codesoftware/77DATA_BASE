@@ -293,6 +293,7 @@
 \i /77DATA_BASE/functions/IN_PARA_PORC_PRECIOS.sql;
 \i /77DATA_BASE/functions/IN_EJECUTA_PROC_PRECIOS.sql;
 \i /77DATA_BASE/functions/IN_EJECUTA_MASIVOS.sql;
+\i /77DATA_BASE/functions/FA_REGISTRA_FACT_COMPRA.sql;
 --
 -- Triggers
 --
@@ -308,7 +309,7 @@
 \i /77DATA_BASE/triggers/fa_dtpr_before_insert_or_update.sql;
 \i /77DATA_BASE/triggers/em_tpara_before_insert_or_update.sql;
 \i /77DATA_BASE/triggers/in_tpedi_before_insert.sql;
-\i /77DATA_BASE/triggers/in_tpedprod_after_insert_or_update;
+\i /77DATA_BASE/triggers/in_tpedprod_after_insert_or_update.sql;
 --
 --SECUENCIAS
 --
