@@ -64,7 +64,6 @@
 \i /77DATA_BASE/tables/fa_tfacom.sql;
 \i /77DATA_BASE/tables/fa_tfcprd.sql;
 \i /77DATA_BASE/tables/fa_tfpago.sql;
-\i /77DATA_BASE/tables/fa_timfac.sql;
 
 --
 --Alters
@@ -217,7 +216,6 @@
 \i /77DATA_BASE/foreignKey/fk_tfpago.sql;
 \i /77DATA_BASE/foreignKey/fk_tretde.sql;
 \i /77DATA_BASE/foreignKey/fk_in_tprov.sql;
-\i /77DATA_BASE/foreignKey/fk_fa_timfac.sql;	
 
 --
 --Vistas
