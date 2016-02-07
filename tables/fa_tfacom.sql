@@ -10,6 +10,7 @@ facom_rtimg				VARCHAR(1000) NOT NULL,
 facom_tprov             BIGSERIAL,
 facom_estad             VARCHAR(2),
 facom_tius				BIGSERIAL,
+facom_sede				BIGSERIAL,
 facom_fecre				TIMESTAMP NOT NULL,
  PRIMARY KEY(facom_facom)
 );
