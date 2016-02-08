@@ -38,6 +38,27 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA (
            AND dska_dska = vc_dska_dska
            ;
         --
+        v_vlr_subtotal          numeric(1000,10) := 0;
+        --
+        --Cursor con el cual obtengo los pagos que realizo el cliente para pagar su factura
+        --
+        c_creditos  CURSOR FOR
+        SELECT sbcu_codigo, fpago_valor
+          FROM FA_TFPAGO, co_tsbcu
+         WHERE fpago_facom = p_facom_facom
+           AND fpago_tsbcu = sbcu_sbcu
+           ;
+        --
+        --Cursor en el cual obtengo la retencion en la fuente de 
+        --
+        c_retefuente CURSOR FOR
+        select facom_vlret
+          from fa_tfacom
+         where facom_facom = p_facom_facom
+         ;
+        --
+        v_vlr_retefuente            numeric(1000,10) := 0;
+        --
     BEGIN
         --
         OPEN c_sec_contabilidad;
@@ -49,6 +70,8 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA (
         FOR prod IN c_facCom LOOP
             --
             v_vlr_iva_total := v_vlr_iva_total + ((prod.fcprd_piva*(prod.fcprd_subt*prod.fcprd_cant))/v_aux);
+            --
+            v_vlr_subtotal := v_vlr_subtotal + prod.fcprd_subt;
             --
             OPEN c_sbcu_prod(prod.fcprd_dska);
             FETCH c_sbcu_prod INTO v_sbcu_prod;
@@ -63,21 +86,53 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA (
                                     tem_mvco_naturaleza)
             VALUES (v_sec_cont,
                     v_sbcu_prod, 
-                    prod.fcprd_subt, 
+                    (prod.fcprd_subt*prod.fcprd_cant), 
                     'D')
                     ;
             
         END LOOP;
         --
-        INSERT INTO co_ttem_mvco(
+        FOR pagos IN c_creditos LOOP
+            --
+            INSERT INTO co_ttem_mvco(
                                             tem_mvco_trans, 
                                             tem_mvco_sbcu, 
                                             tem_mvco_valor, 
                                             tem_mvco_naturaleza)
                     VALUES (v_sec_cont,
+                            pagos.sbcu_codigo, 
+                            pagos.fpago_valor, 
+                            'C');
+            --
+        END LOOP;
+        --
+        open c_retefuente;
+        fetch c_retefuente into v_vlr_retefuente;
+        close c_retefuente;
+        --
+        INSERT INTO co_ttem_mvco(
+                                tem_mvco_trans, 
+                                tem_mvco_sbcu, 
+                                tem_mvco_valor, 
+                                tem_mvco_naturaleza)
+                    VALUES (v_sec_cont,
+                            '236501', 
+                            v_vlr_retefuente, 
+                            'C');
+        --
+        INSERT INTO co_ttem_mvco(
+                                tem_mvco_trans, 
+                                tem_mvco_sbcu, 
+                                tem_mvco_valor, 
+                                tem_mvco_naturaleza)
+                    VALUES (v_sec_cont,
                             '240801', 
                             v_vlr_iva_total, 
                             'D');
+        --
+        
+        --DELETE FROM co_ttem_mvco
+        --WHERE tem_mvco_trans = v_sec_cont;
         --
         RETURN 'Ok';
         --
