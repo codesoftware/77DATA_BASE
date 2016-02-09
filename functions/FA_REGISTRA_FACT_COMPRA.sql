@@ -22,6 +22,14 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA (
            and facom_facom = p_facom_facom
            ;
         --
+        c_estado CURSOR IS
+        select upper(facom_estad)
+          from fa_tfacom
+         where facom_facom = p_facom_facom
+         ;
+        --
+        v_estado                        varchar(10):= '';
+        --
         v_proveedor                     bigint:=0;
         v_vlr_iva_total                 NUMERIC(1000,10):= 0;
         v_aux                           NUMERIC(1000,10):= 0;
@@ -111,7 +119,35 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA (
         --
         v_tipoDocumento     BIGINT := 0;
         --
+        c_valida_rtfte CURSOR FOR
+        SELECT count(*)
+          FROM co_tsbcu
+         WHERE sbcu_codigo = '236501'
+         ;
+        --
+        v_valida_rtft   bigint:= 0;
+        --
     BEGIN
+        --
+        OPEN c_estado;
+        FETCH c_estado INTO v_estado;
+        CLOSE c_estado;
+        --
+        IF v_estado = 'F' THEN
+            --
+            raise exception 'La factura que intenta ingresar ya ha sido ingresada anteriormente ingrese por favor realice el ingreso desde NSIGEMCO ';
+            --
+        END IF;
+        --
+        OPEN c_valida_rtfte;
+        FETCH c_valida_rtfte INTO v_valida_rtft;
+        CLOSE c_valida_rtfte;
+        --
+        IF v_valida_rtft = 0 THEN
+            --
+            RAISE EXCEPTION ' POR FAVOR INGRESE LA SUBCUENTA 236501 ENCARGADA DE ALMACENAR LA RETENCION EN LA FUENTE E INTENTE DE NUEVO';
+            --
+        END IF;
         --
         open c_mvin;
         fetch c_mvin into v_mvin_mvin;
@@ -184,17 +220,17 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA (
         fetch c_retefuente into v_vlr_retefuente;
         close c_retefuente;
         --
-        IF v_vlr_retefuente <> 0 THEN
-            --
-            INSERT INTO co_ttem_mvco(
+        INSERT INTO co_ttem_mvco(
                                 tem_mvco_trans, 
                                 tem_mvco_sbcu, 
                                 tem_mvco_valor, 
                                 tem_mvco_naturaleza)
                     VALUES (v_sec_cont,
                             '240801', 
-                            v_vlr_iva_total - v_vlr_retefuente, 
+                            v_vlr_iva_total, 
                             'D');
+        --
+        IF v_vlr_retefuente <> 0 THEN
             --
             INSERT INTO co_ttem_mvco(
                                 tem_mvco_trans, 
@@ -205,18 +241,6 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA (
                             '236501', 
                             v_vlr_retefuente, 
                             'C');
-            --
-        ELSE 
-            --
-            INSERT INTO co_ttem_mvco(
-                                tem_mvco_trans, 
-                                tem_mvco_sbcu, 
-                                tem_mvco_valor, 
-                                tem_mvco_naturaleza)
-                    VALUES (v_sec_cont,
-                            '240801', 
-                            v_vlr_iva_total, 
-                            'D');
             --
         END IF;
         --
@@ -260,6 +284,11 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA (
         --        
         DELETE FROM co_ttem_mvco
         WHERE tem_mvco_trans = v_sec_cont;
+        --
+        UPDATE fa_tfacom
+           SET facom_estad = 'F'
+         WHERE facom_facom = p_facom_facom
+         ;
         --
         RETURN 'Ok';
         --
