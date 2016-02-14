@@ -294,6 +294,7 @@
 \i /77DATA_BASE/functions/IN_EJECUTA_PROC_PRECIOS.sql;
 \i /77DATA_BASE/functions/IN_EJECUTA_MASIVOS.sql;
 \i /77DATA_BASE/functions/FA_REGISTRA_FACT_COMPRA.sql;
+\i /77DATA_BASE/functions/FX_VALIDA_PROMEDIO_PONDERADO.sql;
 --
 -- Triggers
 --
