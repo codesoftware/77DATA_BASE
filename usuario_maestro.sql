@@ -38,7 +38,7 @@ insert into em_tsede (sede_nombre,sede_direccion, sede_telefono)
 --
 --Usuario administrador
 --
-select US_FINSERTA_USUA('aministrador','sistema','1234','administrdor',to_date('14/01/1991','dd/mm/yyyy'),'admin','admin',1,1);
+select US_FINSERTA_USUA('administrador','sistema','1234','administrdor',to_date('14/01/1991','dd/mm/yyyy'),'admin','admin',1,1);
 --
 --Categoria inicial del sistema
 --
@@ -101,6 +101,14 @@ INSERT INTO co_tsbcu(
             sbcu_codigo, sbcu_descripcion, sbcu_naturaleza)
     VALUES (221, 4, 27, 'A',  'MERCNCIAS AL POR MAYOR Y AL POR MENOR', 
             '35',  'MERCNCIAS AL POR MAYOR Y AL POR MENOR', 'C');
+--
+--Insercion de subcuentas 
+--
+INSERT INTO co_tsbcu(
+            sbcu_cuen, sbcu_clas, sbcu_grup, sbcu_estado, sbcu_nombre, 
+            sbcu_codigo, sbcu_descripcion, sbcu_naturaleza)
+    VALUES (131, 2, 12, 'A',  'RETENCION EN LA FUENTE', 
+            '01', 'RETENCION EN LA FUENTE', 'C');
 --
 --PARAMETRIZACIONES DE IVA DE VENTA Y COMPRA DE PRODUCTOS
 --
