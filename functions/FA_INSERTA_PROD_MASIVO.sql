@@ -46,7 +46,7 @@ CREATE OR REPLACE FUNCTION FA_INSERTA_PROD_MASIVO()RETURNS VARCHAR  AS $$
         --
         v_desc_cat      varchar(500) := '';
         --
-        v_sec_cont      INT :=0;
+        v_sec_cont      BIGINT :=0;
         v_valRegistro   varchar(200) := '';  
         --
         v_precio        NUMERIC(1000,10) := 0;
