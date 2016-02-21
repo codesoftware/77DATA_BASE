@@ -48,11 +48,16 @@ CREATE OR REPLACE FUNCTION FX_VALIDA_PROMEDIO_PONDERADO(
         --
         v_precio_base :=  (p_vlrPrd) /v_auxiliar;
         --
-        if v_prom_pond >= v_precio_base then
-        RETURN 'Error : el precio que esta parametrizando es menor que el promedio ponderado del producto, revise en la consulta de productos';
+        IF v_prom_pond >= v_precio_base THEN
+            --
+            RETURN 'Error : el precio que esta parametrizando es menor que el promedio ponderado del producto, revise en la consulta de productos';
+            --
         ELSE
-        RETURN "OK";
-        end if;
+            --
+            RETURN "OK";
+            --
+        END IF;
+        --
         raise exception 'El precio que se le dara al producto es inferior al promedio ponderado del mismo operacion no permitida';
     END;
 $$ LANGUAGE 'plpgsql';
