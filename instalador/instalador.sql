@@ -311,6 +311,7 @@
 \i /77DATA_BASE/triggers/em_tpara_before_insert_or_update.sql;
 \i /77DATA_BASE/triggers/in_tpedi_before_insert.sql;
 \i /77DATA_BASE/triggers/in_tpedprod_after_insert_or_update.sql;
+\i /77DATA_BASE/triggers/in_tcopr_after_insert_or_update.sql;
 --
 --SECUENCIAS
 --
@@ -339,3 +340,7 @@
 --Inserta las subcategorias del home en pedidos
 --
 \i /77DATA_BASE/inserts/ins_paramhome.sql;
+--
+--Alters
+--
+\i /77DATA_BASE/alters/24_02_2016_001.sql;
