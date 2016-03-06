@@ -153,6 +153,11 @@ CREATE OR REPLACE FUNCTION IN_CAMBIOSEDE_PROD(
                                             v_costo_total,
                                             p_sede_destin                                                   
                                             );
+        IF UPPER(v_rta_egr) like '%OK%' THEN
+        --
+            RAISE EXCEPTION 'Error al realizar el ingreso: %' , v_rta_egr;
+        --
+        END IF;                             
         --
     ELSE
         --

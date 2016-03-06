@@ -131,6 +131,18 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(
     --
     v_exis_total            NUMERIC(1000,10) := 0;
     --
+    v_iva_precio            NUMERIC(1000,10) := 0;
+    --
+    v_auxiliar              NUMERIC(1000,10) := 100.000;
+    --
+    --Cursor que obtiene el iva parametrizado
+    --
+    c_iva_precio CURSOR IS
+    SELECT cast(para_valor as numeric)
+      FROM em_tpara
+     WHERE para_clave = 'IVAPRVENTA'
+    ;
+    --
     BEGIN
     --
     OPEN c_exit_x_sede;
@@ -155,9 +167,14 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(
         --
     END IF;
     --
-    --Calculo la base del iva
+    --Calculo la base del iva con el iva parametrizado previamente
     --
-    p_precio := p_precio / 1.16;
+    OPEN c_iva_precio;
+    FETCH c_iva_precio INTO v_iva_precio;
+    CLOSE c_iva_precio;
+    --
+    p_precio := (v_auxiliar * p_precio) / (v_auxiliar + v_iva_precio);
+    --p_precio := p_precio / 1.16;
     --
     v_aplica_desc := 'N';
     --
