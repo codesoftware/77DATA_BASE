@@ -263,6 +263,6 @@
         RETURN 'OK-'||v_dska_dska;
         --
         EXCEPTION WHEN OTHERS THEN
-             RETURN 'Err' || sqlerrm;
+             RETURN 'Error ' || sqlerrm;
         END;
     $$ LANGUAGE 'plpgsql';
