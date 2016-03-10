@@ -9,3 +9,9 @@ ALTER TABLE in_tdska
 ADD CONSTRAINT IN_DSKA_INICONT_CHK 
 CHECK (dska_inicont in ('S','N'))
 ;
+--
+--Adicion de columna en la tabla temporal para el codigo de barras
+--
+alter table in_tmprefe
+add tmprefe_codbarr varchar(1000);
+--
