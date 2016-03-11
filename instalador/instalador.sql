@@ -65,6 +65,7 @@
 \i /77DATA_BASE/tables/fa_tfcprd.sql;
 \i /77DATA_BASE/tables/fa_tfpago.sql;
 \i /77DATA_BASE/tables/fa_timfac.sql;
+\i /77DATA_BASE/tables/fa_thfacsql;
 
 --
 --Alters
@@ -96,6 +97,7 @@
 \i /77DATA_BASE/checks/in_tcate_chks.sql;
 \i /77DATA_BASE/checks/in_tpedi_chks.sql;
 \i /77DATA_BASE/checks/in_tajic_chks.sql;
+\i /77DATA_BASE/checks/fa_thfac_chks.sql;
 --
 -- Uniques Constrains
 --
@@ -178,6 +180,7 @@
 \i /77DATA_BASE/comments/in_tprpd_com.sql;
 \i /77DATA_BASE/comments/in_tajic_com.sql;
 \i /77DATA_BASE/comments/in_tpops_com.sql;
+\i /77DATA_BASE/comments/fa_tfac_com.sql;
 --
 -- Llaves foraneas
 --
@@ -218,7 +221,7 @@
 \i /77DATA_BASE/foreignKey/fk_tretde.sql;
 \i /77DATA_BASE/foreignKey/fk_in_tprov.sql;
 \i /77DATA_BASE/foreignKey/fk_fa_timfac.sql;	
-
+\i /77DATA_BASE/foreignKey/fk_fa_thfac.sql;	
 --
 --Vistas
 --
@@ -295,6 +298,7 @@
 \i /77DATA_BASE/functions/IN_EJECUTA_MASIVOS.sql;
 \i /77DATA_BASE/functions/FA_REGISTRA_FACT_COMPRA.sql;
 \i /77DATA_BASE/functions/FX_VALIDA_PROMEDIO_PONDERADO.sql;
+\i /77DATA_BASE/functions/FA_CANCELA_FACTURA_HIS.sql;
 --
 -- Triggers
 --
