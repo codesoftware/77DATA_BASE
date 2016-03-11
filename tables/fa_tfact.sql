@@ -1,7 +1,4 @@
--- CREAMOS LA TABLA DESCRIPCION DE HABITACIONES
--- Tabla en la cual se almacenara los datos generales de las habitaciones que se encuentran en el hotel
 
---DROP TABLE IF EXISTS IN_TDSHA; 
 
 CREATE TABLE FA_TFACT(
     FACT_FACT                BIGINT                  NOT NULL                    ,
