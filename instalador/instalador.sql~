@@ -65,7 +65,7 @@
 \i /77DATA_BASE/tables/fa_tfcprd.sql;
 \i /77DATA_BASE/tables/fa_tfpago.sql;
 \i /77DATA_BASE/tables/fa_timfac.sql;
-\i /77DATA_BASE/tables/fa_thfac.sql;
+\i /77DATA_BASE/tables/fa_thfacsql;
 
 --
 --Alters
@@ -180,7 +180,7 @@
 \i /77DATA_BASE/comments/in_tprpd_com.sql;
 \i /77DATA_BASE/comments/in_tajic_com.sql;
 \i /77DATA_BASE/comments/in_tpops_com.sql;
-\i /77DATA_BASE/comments/fa_thfac_com.sql;
+\i /77DATA_BASE/comments/fa_tfac_com.sql;
 --
 -- Llaves foraneas
 --
@@ -326,24 +326,7 @@
 --
 --  Inserts
 --
---inserts de parametrizacion
-\i /77DATA_BASE/inserts/ins_co_tclas.sql;    
-\i /77DATA_BASE/inserts/ins_co_tgrup.sql;  
-\i /77DATA_BASE/inserts/ins_co_tcuen.sql; 
-\i /77DATA_BASE/inserts/ins_cuentas_por_tipo_documento.sql; 
-\i /77DATA_BASE/inserts/ins_in_tmvin.sql; 
-\i /77DATA_BASE/inserts/ins_ub_tpais.sql; 
-\i /77DATA_BASE/inserts/ins_ub_tdepa.sql; 
-\i /77DATA_BASE/inserts/ins_ub_tciud.sql; 
---
---Usuario maestro de la aplicacion y parametros basicos para el funcionamiento de la aplicacion
---
-\i /77DATA_BASE/inserts/ins_ad_tpara.sql;
-\i /77DATA_BASE/usuario_maestro.sql;
---
---Inserta las subcategorias del home en pedidos
---
-\i /77DATA_BASE/inserts/ins_paramhome.sql;
+
 --
 --Alters
 --
