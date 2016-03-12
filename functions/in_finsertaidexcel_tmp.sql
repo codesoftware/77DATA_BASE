@@ -33,7 +33,7 @@ DECLARE
   SELECT tmprefe_codexte,tmprefe_ubicaci,
             tmprefe_descrip,tmprefe_categor,tmprefe_subcate,
             tmprefe_tipo,tmprefe_existencia,
-            tmprefe_costo
+            tmprefe_costo, tmprefe_codbarr
     FROM in_tmprefe;
 
   --
@@ -120,6 +120,13 @@ DECLARE
                 OPEN c_formato_dska(v_ins_prod);
                 FETCH c_formato_dska INTO v_dska_dska;
                 CLOSE c_formato_dska;
+                --
+                --Actualizo el codigo de barras
+                --
+                UPDATE in_tdska
+                   SET dska_barcod = datos.tmprefe_codbarr
+                 WHERE dska_dska = v_dska_dska
+                ;
                 --
                 --RAISE exception 'Para hacer el update idtabla(%) y el del dska (%)', v_idTabla,v_dska_dska ;
                 --

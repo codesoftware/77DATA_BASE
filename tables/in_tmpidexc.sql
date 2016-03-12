@@ -9,7 +9,7 @@ CREATE TABLE in_tmpidexc(
     tmpidexc_existencia     NUMERIC(1000,10)    NOT NULL,
     tmpidexc_costo          NUMERIC(1000,10)            ,
     tmpidexc_fecha          TIMESTAMP                   ,
-    tmpidexc_usu            BIGINT                         ,
-    tmpidexc_dska           BIGINT                         ,
+    tmpidexc_usu            BIGINT                      ,
+    tmpidexc_dska           BIGINT                      ,
 PRIMARY KEY(tmpidexc_tmpidexc)               
 );

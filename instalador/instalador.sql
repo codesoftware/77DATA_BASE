@@ -348,3 +348,4 @@
 --Alters
 --
 \i /77DATA_BASE/alters/24_02_2016_001.sql;
+\i /77DATA_BASE/alters/26_02_2016_001.sql;
