@@ -316,6 +316,7 @@
 \i /77DATA_BASE/triggers/in_tpedi_before_insert.sql;
 \i /77DATA_BASE/triggers/in_tpedprod_after_insert_or_update.sql;
 \i /77DATA_BASE/triggers/in_tcopr_after_insert_or_update.sql;
+\i /77DATA_BASE/triggers/in_tdska_before_insert_or_update.sql;
 --
 --SECUENCIAS
 --
