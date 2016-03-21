@@ -34,6 +34,10 @@ CREATE OR REPLACE FUNCTION FA_CANCELA_FACTURA_HIS(
 	FETCH c_hfac_hfac INTO v_hfac;
 	CLOSE c_hfac_hfac;
 
+	OPEN c_tcliente;
+	FETCH c_tcliente INTO v_clie;
+	CLOSE c_tcliente;	
+
 	INSERT INTO fa_thfac VALUES (v_hfac,p_tius,NOW(),p_fact,p_desc,v_clie,p_esta);
 	UPDATE FA_TFACT 
 	SET fact_estado = p_esta
