@@ -23,13 +23,21 @@ CREATE OR REPLACE FUNCTION FA_CANCELA_FACTURA_HIS(
         SELECT fact_clien FROM 
         FA_TFACT WHERE FACT_FACT = p_fact;
         --
+        --cursor que consulta el ultimo registro insertado
+        --para la nota credito
+        --
+        c_tnotacr CURSOR IS
+        SELECT MAX(fanc_fanc)
+        FROM fa_tfanc
+        WHERE FANC_FACT = p_fact;
         --variables
         --
         v_hfac   INT :=0;
 		v_clie   INT :=0;
+		v_fanc   INT :=0;
 
 	BEGIN
-	
+	raise EXCEPTION 'PERRO %',p_tius;
 	OPEN c_hfac_hfac;
 	FETCH c_hfac_hfac INTO v_hfac;
 	CLOSE c_hfac_hfac;
@@ -42,6 +50,37 @@ CREATE OR REPLACE FUNCTION FA_CANCELA_FACTURA_HIS(
 	UPDATE FA_TFACT 
 	SET fact_estado = p_esta
 	WHERE fact_fact = p_fact;
+	--
+	--Logica de insercion para los registros de la nota credito
+	--
+	IF p_esta = 'S' THEN
+		INSERT INTO fa_tfanc (fanc_fact,fanc_pers_s,fanc_fech_s,fanc_come_s,fanc_esta) 
+		VALUES (p_fact,p_tius,now(),p_desc,p_esta);
+
+	ELSIF p_esta = 'A' THEN 
+		OPEN  c_tnotacr;
+		FETCH c_tnotacr INTO v_fanc;
+		CLOSE c_tnotacr;
+		UPDATE fa_tfanc SET fanc_pers_a= p_tius, fanc_fech_a= now(),fanc_come_a=p_desc, fanc_esta=p_esta 
+		WHERE fanc_fanc = v_fanc;
+
+		ELSIF p_esta = 'R' THEN 
+		OPEN  c_tnotacr;
+		FETCH c_tnotacr INTO v_fanc;
+		CLOSE c_tnotacr;
+		UPDATE fa_tfanc SET fanc_pers_r= p_tius, fanc_fech_r= now(),fanc_come_r=p_desc, fanc_esta=p_esta 
+		WHERE fanc_fanc = v_fanc; 	
+
+		ELSIF p_esta = 'C' THEN 
+		OPEN  c_tnotacr;
+		FETCH c_tnotacr INTO v_fanc;
+		CLOSE c_tnotacr;
+		UPDATE fa_tfanc SET fanc_pers_c= p_tius, fanc_fech_c= now(),fanc_come_c=p_desc, fanc_esta=p_esta 
+		WHERE fanc_fanc = v_fanc;
+
+	END IF;
+
+
 	RETURN 'OK';
 
 	EXCEPTION WHEN OTHERS THEN

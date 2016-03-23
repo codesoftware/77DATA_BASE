@@ -1,0 +1,16 @@
+COMMENT ON TABLE FA_TFANC       			IS 'Tabla encargada de ingresar los datos necesarios para generar a nota credito';
+COMMENT ON COLUMN FA_TFANC.FANC_FANC        IS 'id unico de la tabla';
+COMMENT ON COLUMN FA_TFANC.fanc_fact        IS 'llave foranea de la tabla factura';
+COMMENT ON COLUMN FA_TFANC.fanc_pers_s      IS 'llave foranea del usuario que realiza la solicitud de cancelacion';
+COMMENT ON COLUMN FA_TFANC.fanc_fech_s      IS 'fecha cuando se realiza la solicitud de cancelacion';
+COMMENT ON COLUMN FA_TFANC.fanc_come_s      IS 'comentario cuando se realiza la solicitud de cancelacion';
+COMMENT ON COLUMN FA_TFANC.fanc_pers_a      IS 'llave foranea del usuario que realiza la aceptacion de la  solicitud';
+COMMENT ON COLUMN FA_TFANC.fanc_fech_a      IS 'fecha cuando se realiza la aceptacion de la solicitud';
+COMMENT ON COLUMN FA_TFANC.fanc_come_a      IS 'comentario cuando se realiza la aceptacion de la solicitud';
+COMMENT ON COLUMN FA_TFANC.fanc_pers_r      IS 'llave foranea del usuario que realiza la contabilizacion';
+COMMENT ON COLUMN FA_TFANC.fanc_fech_r      IS 'fecha cuando se realiza la contabilizacion';
+COMMENT ON COLUMN FA_TFANC.fanc_come_r      IS 'comentario cuando se realiza la contabilizacion';
+COMMENT ON COLUMN FA_TFANC.fanc_pers_c      IS 'llave foranea del usuario que realiza la cancelacion';
+COMMENT ON COLUMN FA_TFANC.fanc_fech_c      IS 'fecha cuando se realiza la cancelacion';
+COMMENT ON COLUMN FA_TFANC.fanc_ruta_c      IS 'ruta de la nota credito';
+COMMENT ON COLUMN FA_TFANC.fanc_esta        IS 'estado de la solicitud';

@@ -22,3 +22,19 @@ values('CIUDAD', 'BOGOTA D.C.')
 insert into em_tpara(para_clave, para_valor)
 values('IVAPRVENTA', '16')
 ;
+
+insert into em_tpara(para_clave, para_valor)
+values('FACTURA', '0')
+;
+insert into em_tpara(para_clave, para_valor)
+values('CORREOENVIO', ' ')
+; 
+insert into em_tpara(para_clave, para_valor)
+values('CLAVECORRENV', ' ')
+;
+insert into em_tpara(para_clave, para_valor)
+values('PUERTOENV', ' ')
+;
+insert into em_tpara(para_clave, para_valor)
+values('SERVSMTP', ' ')
+;
