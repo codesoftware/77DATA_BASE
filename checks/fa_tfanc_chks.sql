@@ -1,4 +1,4 @@
 ALTER TABLE FA_TFANC 
 ADD CONSTRAINT FANC_ESTADO_CHK 
-CHECK (HFAC_ESTA in ('P','C','U','S','A','R'))
+CHECK (FANC_ESTA in ('P','C','U','S','A','R'))
 ;

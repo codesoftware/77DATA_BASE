@@ -37,7 +37,6 @@ CREATE OR REPLACE FUNCTION FA_CANCELA_FACTURA_HIS(
 		v_fanc   INT :=0;
 
 	BEGIN
-	raise EXCEPTION 'PERRO %',p_tius;
 	OPEN c_hfac_hfac;
 	FETCH c_hfac_hfac INTO v_hfac;
 	CLOSE c_hfac_hfac;
@@ -68,7 +67,8 @@ CREATE OR REPLACE FUNCTION FA_CANCELA_FACTURA_HIS(
 		OPEN  c_tnotacr;
 		FETCH c_tnotacr INTO v_fanc;
 		CLOSE c_tnotacr;
-		UPDATE fa_tfanc SET fanc_pers_r= p_tius, fanc_fech_r= now(),fanc_come_r=p_desc, fanc_esta=p_esta 
+		UPDATE fa_tfanc SET fanc_pers_r= p_tius, fanc_fech_r= now(),fanc_come_r=p_desc, fanc_esta=p_esta,
+		fanc_id = (select nextval('fa_tfanc_seq'))
 		WHERE fanc_fanc = v_fanc; 	
 
 		ELSIF p_esta = 'C' THEN 
