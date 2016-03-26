@@ -28,3 +28,9 @@ INSERT INTO co_tsbft(
             sbft_visible, sbft_comentario)
     VALUES ( 1, '240801', 'D', 16,'N','IVA EL CUAL SE DESCONTARA AL PAGAR IMPUESTOS');
 
+--
+--NOTA CREDITO
+--
+INSERT INTO co_ttido(
+            tido_tido,tido_estado, tido_nombre, tido_descripcion)
+    VALUES (4,'A', 'NOTACRED','NOTA CREDITO');
