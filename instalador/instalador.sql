@@ -102,6 +102,7 @@
 \i /77DATA_BASE/checks/fa_thfac_chks.sql;
 \i /77DATA_BASE/checks/fa_tfanc_chks.sql;
 \i /77DATA_BASE/checks/fa_timfa_chks.sql;
+\i /77DATA_BASE/checks/co_tmvco_chks.sql;
 --
 -- Uniques Constrains
 --
@@ -307,6 +308,8 @@
 \i /77DATA_BASE/functions/FA_REGISTRA_FACT_COMPRA.sql;
 \i /77DATA_BASE/functions/FX_VALIDA_PROMEDIO_PONDERADO.sql;
 \i /77DATA_BASE/functions/FA_CANCELA_FACTURA_HIS.sql;
+\i /77DATA_BASE/functions/FA_ID_CONSULTA_NOTA.sql;
+\i /77DATA_BASE/functions/FA_REVERSO_FACTURACION.sql;
 --
 -- Triggers
 --

@@ -35,6 +35,7 @@ CREATE OR REPLACE FUNCTION FA_CANCELA_FACTURA_HIS(
         v_hfac   INT :=0;
 		v_clie   INT :=0;
 		v_fanc   INT :=0;
+		v_resp   VARCHAR(2000) :='';
 
 	BEGIN
 	OPEN c_hfac_hfac;
@@ -72,10 +73,18 @@ CREATE OR REPLACE FUNCTION FA_CANCELA_FACTURA_HIS(
 		WHERE fanc_fanc = v_fanc; 	
 
 		ELSIF p_esta = 'C' THEN 
+
+		v_resp = FA_REVERSO_FACTURACION(p_fact,p_tius
+										);
+			IF (v_resp) like '%OK%' THEN
+			ELSE
+			RAISE EXCEPTION '%',v_resp;
+		END IF;
+
 		OPEN  c_tnotacr;
 		FETCH c_tnotacr INTO v_fanc;
 		CLOSE c_tnotacr;
-		UPDATE fa_tfanc SET fanc_pers_c= p_tius, fanc_fech_c= now(),fanc_come_c=p_desc, fanc_esta=p_esta 
+		UPDATE fa_tfanc SET fanc_pers_c= p_tius, fanc_fech_c= now(), fanc_esta=p_esta 
 		WHERE fanc_fanc = v_fanc;
 
 	END IF;
