@@ -40,8 +40,8 @@ CREATE OR REPLACE FUNCTION FX_VALIDA_PROMEDIO_PONDERADO(
         FETCH c_iva_precio INTO v_iva_precio;
         CLOSE c_iva_precio;
         --
-        --
         --Saco la base del iva
+        --
         v_auxiliar := 100.00;
         --
         v_auxiliar :=  (v_iva_precio / v_auxiliar)+1;
@@ -54,10 +54,12 @@ CREATE OR REPLACE FUNCTION FX_VALIDA_PROMEDIO_PONDERADO(
             --
         ELSE
             --
-            RETURN "OK";
+            RETURN 'OK';
             --
         END IF;
-        --
-        raise exception 'El precio que se le dara al producto es inferior al promedio ponderado del mismo operacion no permitida';
+        -- 
+    EXCEPTION
+        WHEN OTHERS THEN
+            RETURN 'FX_VALIDA_PROMEDIO_PONDERADO ' || sqlerrm;
     END;
 $$ LANGUAGE 'plpgsql';
