@@ -3,5 +3,5 @@
 --
 ALTER TABLE CO_TMVCO
 ADD CONSTRAINT MVCO_LLAVE_CHK 
-CHECK (mvco_lladetalle in ('fact','corin','notcr','mvin'))
+CHECK (mvco_lladetalle in ('fact','corin','notcr','mvin','fctc'))
 ;

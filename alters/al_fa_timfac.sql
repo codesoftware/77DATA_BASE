@@ -1,0 +1,1 @@
+----Columna adicionada para referenciar ubicacion fisica del documento--ALTER TABLE fa_timfacADD imfac_ubica VARCHAR(2000);
