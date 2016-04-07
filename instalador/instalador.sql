@@ -310,6 +310,7 @@
 \i /77DATA_BASE/functions/FA_CANCELA_FACTURA_HIS.sql;
 \i /77DATA_BASE/functions/FA_ID_CONSULTA_NOTA.sql;
 \i /77DATA_BASE/functions/FA_REVERSO_FACTURACION.sql;
+\i /77DATA_BASE/functions/IN_GENERA_REMISION.sql;
 --
 -- Triggers
 --
