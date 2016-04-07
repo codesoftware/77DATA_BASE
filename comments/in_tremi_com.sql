@@ -1,0 +1,12 @@
+COMMENT ON TABLE    IN_TREMI                        IS     'Tabla encargada de almacenar los movimientos contables de la empresa';
+COMMENT ON COLUMN   IN_TREMI.remi_remi              IS     'Identificador primario de la tabla';
+COMMENT ON COLUMN   IN_TREMI.remi_clien             IS     'llave foranea con la tabla de clientes.';
+COMMENT ON COLUMN   IN_TREMI.remi_pedi              IS     'Llave foranea con la tabla de pedidos';
+COMMENT ON COLUMN   IN_TREMI.remi_estado            IS     'Identifica el estado en el cual se encuentra la remision RE(Remisionado) FA(Facturado)';
+COMMENT ON COLUMN   IN_TREMI.remi_fact              IS     'Llave foranea con la tabla de facturas fa_tfact';
+COMMENT ON COLUMN   IN_TREMI.remi_tius              IS     'Usuario el cual realizo la accion de remisionar el pedido';
+COMMENT ON COLUMN   IN_TREMI.remi_plazod            IS     'Numero de dias de plazo para que la remision se convierta en factura';
+COMMENT ON COLUMN   IN_TREMI.remi_fplazo            IS     'Fecha en la cual se vence el plazo para facturar la remision';
+COMMENT ON COLUMN   IN_TREMI.remi_venci             IS     'Indica si la remision se encuentra vencida S(si) o N(no)';
+COMMENT ON COLUMN   IN_TREMI.remi_valor             IS     'Valor total por el cual se encuentra la remisión';
+COMMENT ON COLUMN   IN_TREMI.remi_fecha             IS     'Fecha en la cual se creo la remision';

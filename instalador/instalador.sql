@@ -68,7 +68,8 @@
 \i /77DATA_BASE/tables/fa_thfac.sql;
 \i /77DATA_BASE/tables/fa_tfanc.sql;
 \i /77DATA_BASE/tables/fa_timfa.sql;
-
+\i /77DATA_BASE/tables/in_tremi.sql;
+\i /77DATA_BASE/tables/in_tdrem.sql;
 --
 --Alters
 --
@@ -103,6 +104,8 @@
 \i /77DATA_BASE/checks/fa_tfanc_chks.sql;
 \i /77DATA_BASE/checks/fa_timfa_chks.sql;
 \i /77DATA_BASE/checks/co_tmvco_chks.sql;
+\i /77DATA_BASE/checks/in_tremi_chks.sql;
+\i /77DATA_BASE/checks/in_tdrem_chks.sql;
 --
 -- Uniques Constrains
 --
@@ -188,6 +191,8 @@
 \i /77DATA_BASE/comments/fa_thfac_com.sql;
 \i /77DATA_BASE/comments/fa_tfanc_com.sql;
 \i /77DATA_BASE/comments/fa_timfa_com.sql;
+\i /77DATA_BASE/comments/in_tremi_com.sql;
+\i /77DATA_BASE/comments/in_tdrem_com.sql;
 --
 -- Llaves foraneas
 --
@@ -227,10 +232,12 @@
 \i /77DATA_BASE/foreignKey/fk_tfpago.sql;
 \i /77DATA_BASE/foreignKey/fk_tretde.sql;
 \i /77DATA_BASE/foreignKey/fk_in_tprov.sql;
-\i /77DATA_BASE/foreignKey/fk_fa_timfac.sql;	
+\i /77DATA_BASE/foreignKey/fk_fa_timfac.sql;
 \i /77DATA_BASE/foreignKey/fk_fa_thfac.sql;
-\i /77DATA_BASE/foreignKey/fk_fa_tfanc.sql;	
-\i /77DATA_BASE/foreignKey/fk_fa_timfa.sql;		
+\i /77DATA_BASE/foreignKey/fk_fa_tfanc.sql;
+\i /77DATA_BASE/foreignKey/fk_fa_timfa.sql;
+\i /77DATA_BASE/foreignKey/fk_in_tdrem.sql;
+\i /77DATA_BASE/foreignKey/fk_in_tremi.sql;
 --
 --Vistas
 --
