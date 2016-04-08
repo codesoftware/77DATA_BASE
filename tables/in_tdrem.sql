@@ -9,5 +9,6 @@ CREATE TABLE in_tdrem(
     drem_cantid                 NUMERIC(1000,10)        NOT NULL    ,
     drem_estado                 varchar(2)                  NOT NULL    , 
     drem_fecha                  TIMESTAMP               NOT NULL  DEFAULT now()     ,
+    drem_kapr                   BIGINT                              ,
 PRIMARY KEY (drem_drem)
 );
