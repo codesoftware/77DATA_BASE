@@ -68,7 +68,7 @@ CREATE OR REPLACE FUNCTION IN_GENERA_REMISION(
         CLOSE c_pedido;
         --
         INSERT INTO in_tremi (remi_remi,remi_clien , remi_pedi  , remi_estado, remi_tius  , remi_sede  , remi_plazod, remi_fplazo, remi_valor)
-        VALUES(v_remi_remi,v_pedi_clien,v_pedi_pedi,'RE',p_idTius,v_pedi_sede,15,(select now() + cast( 1 || ' days' as interval )), v_pedi_valor);
+        VALUES(v_remi_remi,v_pedi_clien,v_pedi_pedi,'RE',p_idTius,v_pedi_sede,1,(select now() + cast( 1 || ' days' as interval )), v_pedi_valor);
         --
         INSERT INTO in_tdrem(drem_remi  , drem_dska  , drem_precio, drem_cantid, drem_estado )
         SELECT v_remi_remi, pedprod_dska, pedprod_precio, pedprod_canti, 'A'
