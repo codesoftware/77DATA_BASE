@@ -44,7 +44,7 @@ values('Ajuste de inventario automatico Ingreso','I','N','N','N','N','N','AAII')
 ;
 --
 insert into IN_TMVIN (MVIN_DESCR, MVIN_NATU, MVIN_USIM, MVIN_VENTA, MVIN_INICIAL,MVIN_REVFACT, MVIN_CORRIGE_ING,MVIN_CODIGO)
-values('Ingrso por factura de compra','I','N','N','N','N','N','INFC')
+values('Ingreso por factura de compra','I','N','N','N','N','N','INFC')
 ;
 --
 insert into IN_TMVIN (MVIN_DESCR, MVIN_NATU, MVIN_USIM, MVIN_VENTA, MVIN_INICIAL,MVIN_REVFACT, MVIN_CORRIGE_ING,MVIN_CODIGO)
