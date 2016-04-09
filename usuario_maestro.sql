@@ -102,13 +102,21 @@ INSERT INTO co_tsbcu(
     VALUES (221, 4, 27, 'A',  'MERCNCIAS AL POR MAYOR Y AL POR MENOR', 
             '35',  'MERCNCIAS AL POR MAYOR Y AL POR MENOR', 'C');
 --
---Insercion de subcuentas 
+--Insercion de subcuentas de retencion en la fuente
 --
 INSERT INTO co_tsbcu(
             sbcu_cuen, sbcu_clas, sbcu_grup, sbcu_estado, sbcu_nombre, 
             sbcu_codigo, sbcu_descripcion, sbcu_naturaleza)
     VALUES (131, 2, 12, 'A',  'RETENCION EN LA FUENTE', 
             '01', 'RETENCION EN LA FUENTE', 'C');
+--
+--Insercion de subcuentas 
+--
+INSERT INTO co_tsbcu(
+            sbcu_cuen, sbcu_clas, sbcu_grup, sbcu_estado, sbcu_nombre, 
+            sbcu_codigo, sbcu_descripcion, sbcu_naturaleza)
+    VALUES (245, 4, 28, 'A',  'AJUSTE AL PESO', 
+            '81', 'AJUSTE AL PESO', 'C');
 --
 --PARAMETRIZACIONES DE IVA DE VENTA Y COMPRA DE PRODUCTOS
 --

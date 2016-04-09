@@ -20,3 +20,4 @@ COMMENT ON COLUMN FA_TFACT.FACT_SEDE                IS          'Referencia el i
 COMMENT ON COLUMN FA_TFACT.FACT_PEDI                IS          'Referencia el id de la tabla de pedidos en el caso en el que el campo sea cero quiere decir que no tiene un pedido asociado';
 COMMENT ON COLUMN FA_TFACT.FACT_RETEFUN             IS          'Indica si a la factura se le aplico retencion en la fuente Si(S) o No(N)';
 COMMENT ON COLUMN FA_TFACT.FACT_VLRRTFU             IS          'Indica el valor de la retencion en la fuente en caso de que no halla sera cero';
+COMMENT ON COLUMN FA_TFACT.FACT_AJPESO              IS          'Indica el valor que se ajusto al peso para que la factura fuera redondeada a 50 pesos';

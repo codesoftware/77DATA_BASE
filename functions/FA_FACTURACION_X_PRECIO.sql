@@ -175,7 +175,11 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
      WHERE fact_fact = vc_fact_fact
       ;
     --
-    v_vlr_dsc         NUMERIC(1000,6) := 0;
+    v_vlr_dsc           NUMERIC(1000,6) := 0;
+    --
+    v_ajuste_peso       NUMERIC(1000,6) := 0;
+    --
+    v_aux_peso          NUMERIC(1000,6) := 50.0000000000;
     --
     BEGIN
     --
@@ -358,12 +362,27 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
         --
     END IF;
     --
+    --Logica para el redondeo de las cantidades a 50 y 100
+    --
+    IF mod(v_vlr_fin_tot,50) <> 0 THEN
+        --
+        v_ajuste_peso :=  v_aux_peso - mod(v_vlr_fin_tot,50);
+        --
+        INSERT INTO co_ttem_mvco(
+            tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
+                     VALUES (v_idTrans_con, '429581' , v_ajuste_peso, 'C');
+        --
+        v_vlr_fin_tot := v_vlr_fin_tot + v_ajuste_peso;
+        --
+    END IF;
+    --
     INSERT INTO co_ttem_mvco(
             tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
                      VALUES (v_idTrans_con, v_sbcu_caja_cod , v_vlr_fin_tot, 'D');
     --
     UPDATE fa_tfact
-    SET fact_vlr_efectivo = v_vlr_total_fact_co
+    SET fact_vlr_efectivo = v_vlr_total_fact_co,
+    fact_ajpeso = v_ajuste_peso
     WHERE fact_fact = v_fact_fact
     ;
     --

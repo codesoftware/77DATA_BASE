@@ -1,5 +1,6 @@
-
-
+--
+--Tabla en la cual se almacena toda la informacion principal de la factura
+--
 CREATE TABLE FA_TFACT(
     FACT_FACT                BIGINT                  NOT NULL                    ,
     FACT_TIUS                BIGINT                  NOT NULL                    ,
