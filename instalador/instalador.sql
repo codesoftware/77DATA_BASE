@@ -70,6 +70,7 @@
 \i /77DATA_BASE/tables/fa_timfa.sql;
 \i /77DATA_BASE/tables/in_tremi.sql;
 \i /77DATA_BASE/tables/in_tdrem.sql;
+\i /77DATA_BASE/tables/fa_trsfa.sql;
 --
 --Alters
 --
@@ -193,6 +194,7 @@
 \i /77DATA_BASE/comments/fa_timfa_com.sql;
 \i /77DATA_BASE/comments/in_tremi_com.sql;
 \i /77DATA_BASE/comments/in_tdrem_com.sql;
+\i /77DATA_BASE/comments/fa_trsfa_com.sql;
 --
 -- Llaves foraneas
 --
