@@ -125,3 +125,8 @@ VALUES('IVAPR','16');
 --
 INSERT INTO em_tpara(para_clave, para_valor)
 VALUES('IVAPRVENTA','16');
+--
+--Parametrizacion de la resolucion de facturacion por defecto
+--
+insert into fa_trsfa(rsfa_prefij,rsfa_fechaInic,rsfa_consec,rsfa_inicon,rsfa_estado,rsfa_comentario) 
+values(' ','01/01/2016',0,0,'A','Prueba de resolucion de facturacion')
