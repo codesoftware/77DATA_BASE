@@ -48,6 +48,14 @@ CREATE OR REPLACE FUNCTION FA_VAL_CON_FACTU (
      WHERE sbcu_codigo = '135515'
       ;
     --
+    --Cursor el cual verifica si existe la subcuenta para los ajustes al peso
+    --
+    c_ajustePeso CURSOR FOR
+    SELECT count(*)
+      FROM co_tsbcu
+     WHERE sbcu_codigo = '429581'
+      ;
+    --
     --Variables necesarias para la validacion de subcuentas
     --
     v_val_iva_generado          BIGINT :=0;
@@ -55,6 +63,7 @@ CREATE OR REPLACE FUNCTION FA_VAL_CON_FACTU (
     v_val_mercancias_mm         BIGINT :=0;
     v_val_descuentos            BIGINT :=0;
     v_val_retefuente            BIGINT :=0;
+    v_val_ajustepeso            BIGINT :=0;
     --
     --Cursor con el cual evaluo si la sede puede facturar osea que no esta marcada como bodega
     --
@@ -160,6 +169,10 @@ CREATE OR REPLACE FUNCTION FA_VAL_CON_FACTU (
     FETCH c_retefuente INTO v_val_retefuente;
     CLOSE c_retefuente;
     --
+    OPEN c_ajustePeso;
+    FETCH c_ajustePeso INTO v_val_ajustepeso;
+    CLOSE c_ajustePeso;
+    --
     IF v_val_iva_generado <> 1 THEN
         --
         RAISE EXCEPTION 'Error cuenta de iva generado 240802 no se encuentra parametrizada por favor comunicarse con el administrador del sistema ';
@@ -187,6 +200,12 @@ CREATE OR REPLACE FUNCTION FA_VAL_CON_FACTU (
     IF v_val_retefuente <> 1 THEN
         --
         RAISE EXCEPTION 'Error cuenta de retenciones en la fuente o anticipos de impuestos 135515 no se encuentra parametrizada por favor comunicarse con el administrador del sistema ';
+        --
+    END IF;
+    --
+    IF v_val_ajustepeso <> 1 THEN
+        --
+        RAISE EXCEPTION 'Error cuenta de ajuste al peso 429581 no se encuentra parametrizada por favor comunicarse con el administrador del sistema ';
         --
     END IF;
     --
