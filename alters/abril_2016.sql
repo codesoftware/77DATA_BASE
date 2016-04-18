@@ -11,12 +11,11 @@ ALTER TABLE fa_tfact
 ADD fact_ajpeso NUMERIC(1000,10) NOT NULL DEFAULT 0
 ;
 
-<<<<<<< HEAD
 CREATE SEQUENCE sq_co_ttem_fact_rece;
 ALTER TABLE co_ttem_fact_rece ALTER COLUMN TEM_FACT_RECE SET NOT NULL;
 ALTER TABLE co_ttem_fact_rece ALTER COLUMN TEM_FACT_RECE SET DEFAULT nextval('sq_co_ttem_fact_rece');
 ALTER SEQUENCE sq_co_ttem_fact_rece OWNED BY co_ttem_fact_rece.TEM_FACT_RECE;
-=======
+
 --
 --Columna la cual se utilizara para indicar a que resolucion de facturacion pertenece la factura
 --
@@ -43,4 +42,14 @@ ALTER TABLE FA_TFACT
 ADD CONSTRAINT RSFA_UNIQUE 
 UNIQUE (fact_rsfa,fact_cons)
 ;
->>>>>>> origin/master
+
+--
+--Adicionar el campo de ajuste de la factura (S,N°)
+--
+ALTER TABLE fa_tfacom 
+ADD COLUMN facom_ajus VARCHAR(2);
+
+--
+--campo parametrizable para el ajuste al peso
+--
+INSERT INTO EM_TPARA VALUES(22,NOW(),'VALORAJUSTEPESO','1100');
