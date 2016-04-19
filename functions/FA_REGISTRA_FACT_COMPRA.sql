@@ -15,7 +15,7 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA (
         --Cursor con el cual obtengo la informacion basica de la factura de compra(productos adquiridos)
         --
         c_facCom CURSOR IS
-        SELECT fcprd_cant, fcprd_subt, fcprd_dska, fcprd_piva,facom_sede, facom_tius,facom_tprov
+        SELECT fcprd_cant, fcprd_subt, fcprd_dska, fcprd_piva,facom_sede, facom_tius,facom_tprov,facom_ajus
           FROM FA_TFACOM, fa_tfcprd
          WHERE facom_facom = fcprd_facom
            and fcprd_esta = 'A'
@@ -77,6 +77,7 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA (
          ;
         --
         v_mvin_mvin                     bigint:=0;
+        v_ajustepeso                    varchar(2) :='';
         --
         --
         --Obtiene debitos ingresados por el usuario
@@ -166,6 +167,8 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA (
             v_vlr_iva_total := v_vlr_iva_total + ((prod.fcprd_piva*(prod.fcprd_subt*prod.fcprd_cant))/v_aux);
             --
             v_vlr_subtotal := v_vlr_subtotal + prod.fcprd_subt;
+            
+            v_ajustepeso :=facom_ajus;
             --
             OPEN c_sbcu_prod(prod.fcprd_dska);
             FETCH c_sbcu_prod INTO v_sbcu_prod;
@@ -254,6 +257,36 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA (
         FETCH c_cre_usua INTO v_creditos;
         CLOSE c_cre_usua;
         --
+        IF facom_ajus = S AND v_creditos <> v_debitos THEN 
+            --
+            v_ajustepeso := v_creditos - v_debitos;
+            --
+            IF v_ajustepeso > 0 THEN
+                --
+                INSERT INTO co_ttem_mvco(
+                        tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
+                            VALUES (v_sec_cont, '429581' , v_ajustepeso, 'D');
+                --
+            ELSE
+                --
+                INSERT INTO co_ttem_mvco(
+                        tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
+                            VALUES (v_sec_cont, '429581' , ((v_ajustepeso)*-1), 'C');
+                --
+            END IF;
+            
+        OPEN c_deb_usua(v_sec_cont);
+        FETCH c_deb_usua INTO v_debitos;
+        CLOSE c_deb_usua;
+        --
+        OPEN c_cre_usua(v_sec_cont);
+        FETCH c_cre_usua INTO v_creditos;
+        CLOSE c_cre_usua;
+            
+            
+        END IF;
+        
+        
         IF v_creditos = v_debitos THEN
             --
             OPEN c_id_ttido;
