@@ -78,6 +78,7 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA (
         --
         v_mvin_mvin                     bigint:=0;
         v_ajustepeso                    varchar(2) :='';
+        v_valorajuste                   numeric(1000,10) :=0;
         --
         --
         --Obtiene debitos ingresados por el usuario
@@ -126,10 +127,29 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA (
          WHERE sbcu_codigo = '236501'
          ;
         --
+        --
+        --Cursor el cual verifica si existe la subcuenta para los ajustes al peso
+        --
+        c_ajustePeso CURSOR FOR
+        SELECT count(*)
+        FROM co_tsbcu
+        WHERE sbcu_codigo = '429581'
+        ;
+        --
         v_valida_rtft   bigint:= 0;
+        v_valida_basica varchar(4000) :='';
+        v_val_ajustepeso            BIGINT :=0;
         --
     BEGIN
+        OPEN c_ajustePeso;
+        FETCH c_ajustePeso INTO v_val_ajustepeso;
+        CLOSE c_ajustePeso;
+        
+        IF v_val_ajustepeso <> 1 THEN
         --
+        RAISE EXCEPTION 'Error cuenta de ajuste al peso 429581 no se encuentra parametrizada por favor comunicarse con el administrador del sistema ';
+        --
+    END IF;
         OPEN c_estado;
         FETCH c_estado INTO v_estado;
         CLOSE c_estado;
@@ -168,7 +188,7 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA (
             --
             v_vlr_subtotal := v_vlr_subtotal + prod.fcprd_subt;
             
-            v_ajustepeso :=facom_ajus;
+            v_ajustepeso :=prod.facom_ajus;
             --
             OPEN c_sbcu_prod(prod.fcprd_dska);
             FETCH c_sbcu_prod INTO v_sbcu_prod;
@@ -257,24 +277,26 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA (
         FETCH c_cre_usua INTO v_creditos;
         CLOSE c_cre_usua;
         --
-        IF facom_ajus = S AND v_creditos <> v_debitos THEN 
+        IF v_ajustepeso = 'S' AND v_creditos <> v_debitos THEN 
             --
-            v_ajustepeso := v_creditos - v_debitos;
+            v_valorajuste := v_creditos - v_debitos;
             --
-            IF v_ajustepeso > 0 THEN
+            IF v_valorajuste > 0 THEN
                 --
                 INSERT INTO co_ttem_mvco(
                         tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
-                            VALUES (v_sec_cont, '429581' , v_ajustepeso, 'D');
+                            VALUES (v_sec_cont, '429581' , v_valorajuste, 'D');
                 --
             ELSE
                 --
                 INSERT INTO co_ttem_mvco(
                         tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
-                            VALUES (v_sec_cont, '429581' , ((v_ajustepeso)*-1), 'C');
+                            VALUES (v_sec_cont, '429581' , ((v_valorajuste)*-1), 'C');
                 --
-            END IF;
-            
+            END IF;            
+        --
+        END IF;
+        --
         OPEN c_deb_usua(v_sec_cont);
         FETCH c_deb_usua INTO v_debitos;
         CLOSE c_deb_usua;
@@ -282,11 +304,7 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA (
         OPEN c_cre_usua(v_sec_cont);
         FETCH c_cre_usua INTO v_creditos;
         CLOSE c_cre_usua;
-            
-            
-        END IF;
-        
-        
+        --
         IF v_creditos = v_debitos THEN
             --
             OPEN c_id_ttido;
