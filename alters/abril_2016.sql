@@ -55,3 +55,13 @@ ALTER TABLE em_tsede
 ADD FOREIGN KEY (sede_rsfa)
 REFERENCES fa_trsfa(rsfa_rsfa)
 ;
+--
+--Adicionar el campo de ajuste de la factura (S,N°)
+--
+ALTER TABLE fa_tfacom 
+ADD COLUMN facom_ajus VARCHAR(2);
+
+--
+--campo parametrizable para el ajuste al peso
+--
+INSERT INTO EM_TPARA VALUES(22,NOW(),'VALORAJUSTEPESO','1100');
