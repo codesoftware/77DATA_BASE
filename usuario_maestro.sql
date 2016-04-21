@@ -26,15 +26,23 @@ INSERT INTO co_tretde(
             retde_bpeso, retde_tarif, retde_estad, retde_fecha)
     VALUES (2, 1, 'Reco', 'Compras generales (no declarantes)', 27, 
             803000.000000, 3.50, 'V', NOW());
+--
+--Insercion de resolucion de facturacion
+--
+INSERT INTO fa_trsfa(
+            rsfa_prefij, rsfa_fechainic, rsfa_consec, rsfa_inicon, 
+            rsfa_estado, rsfa_comentario)
+    VALUES ('PO', to_date('01/01/2016','dd/mm/yyyy'), 1, 1, 
+            'A', 'Resolucion de facturacion por default');
 
 --
 --Sede bodega
 -- 
-insert into em_tsede (sede_nombre,sede_direccion, sede_telefono)
-    values ('BODEGA', 'Cra 14 No. 112' , '778899');
+insert into em_tsede (sede_nombre,sede_direccion, sede_telefono,sede_rsfa)
+    values ('BODEGA', 'Cra 14 No. 112' , '778899',1);
 --
-insert into em_tsede (sede_nombre,sede_direccion, sede_telefono)
-    values ('VENTA MOSTRADOR', 'Cra 24 No. 112' , '778899');
+insert into em_tsede (sede_nombre,sede_direccion, sede_telefono,sede_rsfa)
+    values ('VENTA MOSTRADOR', 'Cra 24 No. 112' , '778899',1);
 --
 --Usuario administrador
 --
