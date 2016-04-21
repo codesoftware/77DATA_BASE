@@ -12,5 +12,6 @@ CREATE TABLE in_trefe(
    refe_came              varchar(500) default  'N/A'   , 
    refe_memori            varchar(500) default  'N/A'   ,
    refe_pantalla          varchar(500) default  'N/A'   ,
-   PRIMARY KEY (refe_refe)	
+   refe_cate              bigint                        ,
+   PRIMARY KEY (refe_refe)
 ); 

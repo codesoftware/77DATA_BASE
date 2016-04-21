@@ -15,7 +15,10 @@ ALTER TABLE in_tdska
 ADD FOREIGN KEY (dska_marca)
 REFERENCES in_tmarca(marca_marca)
 ;
-alter table in_teprs  add constraint fk_sede foreign key (eprs_sede) references em_tsede;
+--
+ALTER TABLE in_teprs  
+ADD CONSTRAINT fk_sede 
+FOREIGN KEY (eprs_sede) REFERENCES em_tsede;
 --
 --Adicion del campo de codigo de barras al producto
 --
