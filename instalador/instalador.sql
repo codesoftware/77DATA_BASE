@@ -74,7 +74,7 @@
 --
 --Alters
 --
-\i /77DATA_BASE/alters/al_in_trefe.sql;
+--\i /77DATA_BASE/alters/al_in_trefe.sql;
 --
 -- Cheks constrains
 --
