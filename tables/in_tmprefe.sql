@@ -10,5 +10,6 @@ CREATE TABLE in_tmprefe(
     tmprefe_costo          NUMERIC(1000,5)           ,
     tmprefe_fecha          TIMESTAMP                 ,
     tmprefe_usu            BIGINT                    ,
+    tmprefe_codbarr        varchar(1000)             ,
 PRIMARY KEY(tmprefe_tmprefe)               
 );

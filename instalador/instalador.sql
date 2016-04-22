@@ -132,6 +132,7 @@
 \i /77DATA_BASE/uniques/IN_TEPRS_UNIQUES.sql;
 \i /77DATA_BASE/uniques/IN_TSEDE_UNIQUES.sql;
 \i /77DATA_BASE/uniques/IN_TAJIC_UNIQUES.sql;
+\i /77DATA_BASE/uniques/FA_TFACT_UNIQUES.sql;
 --
 -- Comentarios de las tablas
 --
@@ -370,7 +371,7 @@
 --
 --Alters
 --
-\i /77DATA_BASE/alters/24_02_2016_001.sql;
-\i /77DATA_BASE/alters/26_02_2016_001.sql;
-\i /77DATA_BASE/alters/abril_2016.sql;
-\i /77DATA_BASE/alters/09_03_2016.sql;
+--\i /77DATA_BASE/alters/24_02_2016_001.sql;
+--\i /77DATA_BASE/alters/26_02_2016_001.sql;
+--\i /77DATA_BASE/alters/abril_2016.sql;
+--\i /77DATA_BASE/alters/09_03_2016.sql;

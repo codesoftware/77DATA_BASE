@@ -14,5 +14,6 @@ CREATE TABLE fa_tfanc(
     fanc_fech_c                     TIMESTAMP               ,
     fanc_ruta_c                     VARCHAR(2000)           ,
     fanc_esta                       VARCHAR(2)              ,
+    fanc_id                         int                     ,
 PRIMARY KEY(fanc_fanc)
 );

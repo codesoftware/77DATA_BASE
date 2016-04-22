@@ -25,5 +25,8 @@ CREATE TABLE FA_TFACT(
     FACT_FECHAEX             TIMESTAMP                          DEFAULT NOW()   ,
     FACT_RETEFUN             VARCHAR(200)           NOT NULL    DEFAULT 'N'     ,
     FACT_VLRRTFU             NUMERIC(1000,10)       NOT NULL    DEFAULT 0       ,
+    FACT_AJPESO              NUMERIC(1000,10)       NOT NULL    DEFAULT 0       ,
+    FACT_CONS                NUMERIC(1000,10)       NOT NULL    DEFAULT 0       ,
+    FACT_RSFA                bigint                 NOT NULL                    ,
     PRIMARY KEY (FACT_FACT)
 );

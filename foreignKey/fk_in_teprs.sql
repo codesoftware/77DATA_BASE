@@ -12,3 +12,4 @@ ALTER TABLE in_teprs
 ADD FOREIGN KEY (eprs_sede)
 REFERENCES em_tsede(sede_sede)
 ;
+

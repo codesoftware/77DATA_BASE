@@ -21,4 +21,11 @@ ALTER TABLE FA_TFACT
 ADD FOREIGN KEY (FACT_SEDE)
 REFERENCES EM_TSEDE(SEDE_SEDE)
 ;
+--
+--Llave con la cual garantizo la existencia de una resolucion de facturacion
+--
+ALTER TABLE FA_TFACT
+ADD FOREIGN KEY (fact_rsfa)
+REFERENCES fa_trsfa(rsfa_rsfa)
+;
 

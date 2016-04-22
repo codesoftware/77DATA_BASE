@@ -11,3 +11,4 @@ COMMENT ON COLUMN IN_TDSKA.DSKA_FEC_INGRESO         IS          'Fecha en la cua
 COMMENT ON COLUMN IN_TDSKA.DSKA_CATE                IS          'Categoria del producto esta parametrica funciona para las subcuentas de inventario';
 COMMENT ON COLUMN IN_TDSKA.DSKA_SBCU                IS          'Subcuenta a la cual se va el inventario de los productos';
 COMMENT ON COLUMN IN_TDSKA.DSKA_PROV                IS          'Proveedor principal del producto';
+COMMENT ON COLUMN IN_TDSKA.DSKA_INICONT             IS          'Campo con el cual se marcara un producto con el cual se iniciara un conteo';
