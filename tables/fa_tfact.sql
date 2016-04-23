@@ -27,6 +27,6 @@ CREATE TABLE FA_TFACT(
     FACT_VLRRTFU             NUMERIC(1000,10)       NOT NULL    DEFAULT 0       ,
     FACT_AJPESO              NUMERIC(1000,10)       NOT NULL    DEFAULT 0       ,
     FACT_CONS                NUMERIC(1000,10)       NOT NULL    DEFAULT 0       ,
-    FACT_RSFA                bigint                 NOT NULL                    ,
+    FACT_RSFA                bigint                                             ,
     PRIMARY KEY (FACT_FACT)
 );

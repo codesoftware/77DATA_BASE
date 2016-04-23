@@ -10,7 +10,8 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
                                 p_idVaucher             BIGINT,
                                 p_valrTarjeta           BIGINT,
                                 p_idPedido              BIGINT,
-                                p_retefuente            VARCHAR
+                                p_retefuente            VARCHAR,
+                                p_rsfa                  bigint default -1
                          )RETURNS VARCHAR AS $$
     DECLARE
     --
@@ -180,6 +181,8 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
     v_ajuste_peso       NUMERIC(1000,6) := 0;
     --
     v_aux_peso          NUMERIC(1000,6) := 50.0000000000;
+    --
+    v_valida            varchar(4000) := '';
     --
     BEGIN
     --
@@ -433,6 +436,16 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
        pedi_esta = 'FA'
      WHERE pedi_pedi = p_idPedido
     ;
+    --
+    --Llamamos la funcion en donde determinamos la resolucion de facturacion y su consecutivo dentro de la resolucion
+    --
+    v_valida := FA_ASIGNA_RESOLUCION_FACTURA(cast(v_fact_fact as BIGINT),-1);
+    --
+    IF upper(v_valida) <> 'OK' THEN
+        --
+        RAISE EXCEPTION ' Error al encontrar la resolucion de facturacion % ',v_valida;
+        --
+    END IF;
     --
     RETURN 'Ok-'||cast(v_fact_fact as BIGINT);
     -- 

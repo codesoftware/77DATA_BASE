@@ -8,7 +8,7 @@ CREATE OR REPLACE FUNCTION IN_GENERA_REMISION(
     DECLARE 
     --
     c_pedido CURSOR FOR
-    SELECT pedi_sede, pedi_clie,pedi_pedi, (select sum(pedprod_precio) from in_tpedprod where pedprod_pedi = pedi_pedi) valor
+    SELECT pedi_sede, pedi_clie,pedi_pedi, (select sum(pedprod_precio*pedprod_canti) from in_tpedprod where pedprod_pedi = pedi_pedi) valor
       FROM in_tpedi
     WHERE pedi_esta = 'SR'
       AND pedi_pedi = p_idPedido

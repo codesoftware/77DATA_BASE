@@ -5,6 +5,7 @@ CREATE TABLE in_tdrem(
     drem_drem                   BIGSERIAL               NOT NULL    ,
     drem_remi                   BIGINT                  NOT NULL    ,
     drem_dska                   BIGINT                  NOT NULL    ,
+    drem_codext                 VARCHAR(500)            NOT NULL    ,
     drem_precio                 NUMERIC(1000,10)        NOT NULL    ,
     drem_cantid                 NUMERIC(1000,10)        NOT NULL    ,
     drem_estado                 varchar(2)                  NOT NULL    , 

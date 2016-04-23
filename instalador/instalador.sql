@@ -322,6 +322,7 @@
 \i /77DATA_BASE/functions/FA_REVERSO_FACTURACION.sql;
 \i /77DATA_BASE/functions/IN_GENERA_REMISION.sql;
 \i /77DATA_BASE/functions/FA_REMISION_FACTURA.sql;
+\i /77DATA_BASE/functions/FA_ASIGNA_RESOLUCION_FACTURA.sql;
 --
 -- Triggers
 --
