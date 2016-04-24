@@ -1,9 +1,10 @@
 --
---Funcion con la cual convierte una remision en una factura
+--Funcion con la cual convierte una remision en una factura desde la remision
 --
 CREATE OR REPLACE FUNCTION FA_REMISION_FACTURA (  
                                 p_tius              BIGINT,
-                                p_remi              BIGINT
+                                p_remi              BIGINT,
+                                P_rsfa              BIGINT
                          )RETURNS VARCHAR AS $$
     DECLARE
         --
@@ -69,7 +70,7 @@ CREATE OR REPLACE FUNCTION FA_REMISION_FACTURA (
             --
         END LOOP;
         --
-        v_rta := FA_FACTURACION_X_PRECIO(
+        v_rta := FA_FACTURA_REMISION(
                                             p_tius,
                                             v_clien,
                                             v_secuencia,   
@@ -78,7 +79,9 @@ CREATE OR REPLACE FUNCTION FA_REMISION_FACTURA (
                                             cast(0 as bigint),
                                             cast(0 as bigint),
                                             cast(0 as bigint),
-                                            cast('N' as varchar)
+                                            cast('N' as varchar),
+                                            P_rsfa,
+                                            p_remi
                                          );
         --
         IF upper(v_rta) like '%OK%' then

@@ -70,10 +70,11 @@ CREATE OR REPLACE FUNCTION IN_GENERA_REMISION(
         INSERT INTO in_tremi (remi_remi,remi_clien , remi_pedi  , remi_estado, remi_tius  , remi_sede  , remi_plazod, remi_fplazo, remi_valor)
         VALUES(v_remi_remi,v_pedi_clien,v_pedi_pedi,'RE',p_idTius,v_pedi_sede,1,(select now() + cast( 1 || ' days' as interval )), v_pedi_valor);
         --
-        INSERT INTO in_tdrem(drem_remi  , drem_dska  , drem_precio, drem_cantid, drem_estado )
-        SELECT v_remi_remi, pedprod_dska, pedprod_precio, pedprod_canti, 'A'
-          FROM in_tpedprod
+        INSERT INTO in_tdrem(drem_remi  , drem_dska  , drem_precio, drem_cantid, drem_estado,drem_codext )
+        SELECT v_remi_remi, pedprod_dska, pedprod_precio, pedprod_canti, 'A', dska_cod_ext
+          FROM in_tpedprod, in_tdska
          WHERE pedprod_pedi = p_idPedido
+           AND dska_dska = pedprod_dska
         ;
         --
         UPDATE in_tpedi
