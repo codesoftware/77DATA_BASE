@@ -4,7 +4,8 @@
 CREATE OR REPLACE FUNCTION FA_REMISION_FACTURA (  
                                 p_tius              BIGINT,
                                 p_remi              BIGINT,
-                                P_rsfa              BIGINT
+                                P_rsfa              BIGINT,
+                                p_dpago             BIGINT --Numero maximo de dias que el cliente tiene para pagar la factura 
                          )RETURNS VARCHAR AS $$
     DECLARE
         --
@@ -92,7 +93,9 @@ CREATE OR REPLACE FUNCTION FA_REMISION_FACTURA (
             --
             UPDATE in_tremi
                SET remi_estado = 'FA',
-                   remi_fact = v_fact_fact
+                   remi_fact = v_fact_fact,
+                   remi_pladFac = p_dpago,
+                   remi_fpladFac =  cast( p_dpago || ' days' as interval ) + now()
             WHERE remi_remi = p_remi
             ;
             -- 

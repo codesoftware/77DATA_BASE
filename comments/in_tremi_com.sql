@@ -10,3 +10,6 @@ COMMENT ON COLUMN   IN_TREMI.remi_fplazo            IS     'Fecha en la cual se 
 COMMENT ON COLUMN   IN_TREMI.remi_venci             IS     'Indica si la remision se encuentra vencida S(si) o N(no)';
 COMMENT ON COLUMN   IN_TREMI.remi_valor             IS     'Valor total por el cual se encuentra la remisión';
 COMMENT ON COLUMN   IN_TREMI.remi_fecha             IS     'Fecha en la cual se creo la remision';
+COMMENT ON COLUMN   IN_TREMI.remi_pladFac           IS     'Numero de dias que tiene el cliente para pagar la factura';
+COMMENT ON COLUMN   IN_TREMI.remi_fpladFac          IS     'Fecha en la cual cliente como maximo puede pagar la factura';
+COMMENT ON COLUMN   IN_TREMI.remi_fpagoc            IS     'Fecha en la cual el cliente pago la factura';

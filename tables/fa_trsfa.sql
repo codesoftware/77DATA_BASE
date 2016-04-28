@@ -11,6 +11,7 @@ CREATE TABLE fa_trsfa(
    rsfa_consec                  numeric(1000,10)    not null        DEFAULT 0       , 
    rsfa_inicon                  numeric(1000,10)    not null        DEFAULT 0       , 
    rsfa_estado                  varchar(4)                                          ,
+   rsfa_numdian                 varchar(400)                                        ,
    rsfa_fecha                   timestamp           not null        DEFAULT NOW()   ,
    rsfa_comentario              varchar(1000)       not null                        ,   
    PRIMARY KEY (rsfa_rsfa)	

@@ -14,5 +14,8 @@ CREATE TABLE in_tremi(
     remi_venci                  VARCHAR(2)              NOT NULL  default 'N'       ,
     remi_valor                  NUMERIC(1000,10)        NOT NULL    , 
     remi_fecha                  TIMESTAMP               NOT NULL  DEFAULT now()     , 
+    remi_pladFac                BIGINT                              ,
+    remi_fpladFac               TIMESTAMP                           ,
+    remi_fpagoc                 TIMESTAMP                           ,
 PRIMARY KEY (remi_remi)
 );
