@@ -388,7 +388,7 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_REMISION (
                      VALUES (v_idTrans_con, v_sbcu_caja_cod , v_vlr_fin_tot, 'D');
     --
     UPDATE fa_tfact
-    SET fact_vlr_efectivo = v_vlr_total_fact_co,
+    SET FACT_VLR_ACOBRAR = v_vlr_total_fact_co,
     fact_ajpeso = v_ajuste_peso
     WHERE fact_fact = v_fact_fact
     ;

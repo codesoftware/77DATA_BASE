@@ -325,6 +325,7 @@
 \i /77DATA_BASE/functions/FA_ASIGNA_RESOLUCION_FACTURA.sql;
 \i /77DATA_BASE/functions/FA_FACTURA_REMISION.sql;
 \i /77DATA_BASE/functions/FA_FACT_PROD_REMI.sql;
+\i /77DATA_BASE/functions/F_NUMEROS_A_LETRAS.sql;
 --
 -- Triggers
 --

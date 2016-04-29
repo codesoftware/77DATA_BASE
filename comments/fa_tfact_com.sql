@@ -14,6 +14,8 @@ COMMENT ON COLUMN FA_TFACT.FACT_DEVOLUCION          IS          'Indica si la fa
 COMMENT ON COLUMN FA_TFACT.FACT_ORIGINAL            IS          'Si es una cancelacion de otra factura indica cual es la que esta cancelando';
 COMMENT ON COLUMN FA_TFACT.FACT_VLR_DCTO            IS          'Indica cual fue el descuento total que se le realizo a la factura';
 COMMENT ON COLUMN FA_TFACT.FACT_VLR_EFECTIVO        IS          'Indica el valor que pago el cliente en efectivo';
+COMMENT ON COLUMN FA_TFACT.FACT_VLR_ACOBRAR         IS          'Indica el valor que se debe cobrar en la factura ya que se ha dado a credito el dinero referenciado en este campo';
+COMMENT ON COLUMN FA_TFACT.FACT_VLR_ABONOS          IS          'Indica el valor que se realiza en abonos paulatinamente despues de la entrega de la mercancia';
 COMMENT ON COLUMN FA_TFACT.FACT_VLR_TARJETA         IS          'Indica el valor que pago el cliente en tarjeta';
 COMMENT ON COLUMN FA_TFACT.FACT_CIERRE              IS          'Referencia el id del cierre en el cual fue realizado la factura';
 COMMENT ON COLUMN FA_TFACT.FACT_SEDE                IS          'Referencia el id de la sede en la cual fue realizada la factura';

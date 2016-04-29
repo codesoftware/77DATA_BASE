@@ -18,6 +18,8 @@ CREATE TABLE FA_TFACT(
     FACT_ORIGINAL            BIGINT                  NOT NULL   DEFAULT  0       ,
     FACT_VLR_DCTO            NUMERIC(1000,10)        NOT NULL   DEFAULT  0       ,
     FACT_VLR_EFECTIVO        NUMERIC(1000,10)        NOT NULL   DEFAULT  0       ,
+    FACT_VLR_ACOBRAR         NUMERIC(1000,10)        NOT NULL   DEFAULT  0       ,
+    FACT_VLR_ABONOS          NUMERIC(1000,10)        NOT NULL   DEFAULT  0       ,
     FACT_VLR_TARJETA         NUMERIC(1000,10)        NOT NULL   DEFAULT  0       ,
     FACT_CIERRE              BIGINT                                             ,
     FACT_SEDE                BIGINT                 NOT NULL                    ,
