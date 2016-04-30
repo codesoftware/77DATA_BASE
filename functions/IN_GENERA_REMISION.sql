@@ -61,7 +61,7 @@ CREATE OR REPLACE FUNCTION IN_GENERA_REMISION(
     ;
     BEGIN
         --
-        v_remi_remi :=  nextval('in_tdrem_drem_drem_seq');
+        v_remi_remi :=  nextval('in_tremi_remi_remi_seq');
         --
         OPEN c_pedido;
         FETCH c_pedido INTO v_pedi_sede, v_pedi_clien, v_pedi_pedi, v_pedi_valor;
@@ -132,7 +132,7 @@ CREATE OR REPLACE FUNCTION IN_GENERA_REMISION(
             --
         END LOOP;
         --
-        RETURN 'Ok';
+        RETURN 'Ok-'||cast(v_remi_remi as bigint) ;
         --
     EXCEPTION WHEN 
         OTHERS THEN
