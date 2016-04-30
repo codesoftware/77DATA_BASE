@@ -200,8 +200,8 @@
         --    --
         --END IF;
         --
-        INSERT INTO in_tdska(dska_dska,DSKA_REFE,DSKA_COD, DSKA_NOM_PROD, DSKA_DESC, DSKA_IVA, DSKA_PORC_IVA, DSKA_MARCA,DSKA_CATE,DSKA_PROV,DSKA_UBICACION,DSKA_COD_EXT)
-                      VALUES(v_dska_dska,p_refe_refe,v_codigo,'Por asignar',upper(p_descripcion),'N',0,p_marca,p_categoria,1,p_ubicacion,p_codExterno);
+        INSERT INTO in_tdska(dska_dska,DSKA_REFE,DSKA_COD, DSKA_NOM_PROD, DSKA_DESC, DSKA_IVA, DSKA_PORC_IVA, DSKA_MARCA,DSKA_CATE,DSKA_PROV,DSKA_UBICACION,DSKA_COD_EXT,DSKA_BARCOD)
+                      VALUES(v_dska_dska,p_refe_refe,v_codigo,'Por asignar',upper(p_descripcion),'N',0,p_marca,p_categoria,1,p_ubicacion,p_codExterno,p_codigobarras);
         --
         --Creacion de la subcuenta por categoria
         --
