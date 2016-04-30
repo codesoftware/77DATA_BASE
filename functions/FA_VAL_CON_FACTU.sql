@@ -56,6 +56,14 @@ CREATE OR REPLACE FUNCTION FA_VAL_CON_FACTU (
      WHERE sbcu_codigo = '429581'
       ;
     --
+    --Cursor el cual verifica si existe la subcuenta para las cuentas por cobrar
+    --
+    c_cuentasCobrar CURSOR FOR
+    SELECT count(*)
+      FROM co_tsbcu
+     WHERE sbcu_codigo = '138020'
+      ;
+    --
     --Variables necesarias para la validacion de subcuentas
     --
     v_val_iva_generado          BIGINT :=0;
@@ -64,6 +72,7 @@ CREATE OR REPLACE FUNCTION FA_VAL_CON_FACTU (
     v_val_descuentos            BIGINT :=0;
     v_val_retefuente            BIGINT :=0;
     v_val_ajustepeso            BIGINT :=0;
+    v_val_cuentaCobrar          BIGINT :=0;
     --
     --Cursor con el cual evaluo si la sede puede facturar osea que no esta marcada como bodega
     --
@@ -173,6 +182,10 @@ CREATE OR REPLACE FUNCTION FA_VAL_CON_FACTU (
     FETCH c_ajustePeso INTO v_val_ajustepeso;
     CLOSE c_ajustePeso;
     --
+    OPEN c_cuentasCobrar;
+    FETCH c_cuentasCobrar INTO v_val_cuentaCobrar;
+    CLOSE c_cuentasCobrar;
+    --
     IF v_val_iva_generado <> 1 THEN
         --
         RAISE EXCEPTION 'Error cuenta de iva generado 240802 no se encuentra parametrizada por favor comunicarse con el administrador del sistema ';
@@ -206,6 +219,12 @@ CREATE OR REPLACE FUNCTION FA_VAL_CON_FACTU (
     IF v_val_ajustepeso <> 1 THEN
         --
         RAISE EXCEPTION 'Error cuenta de ajuste al peso 429581 no se encuentra parametrizada por favor comunicarse con el administrador del sistema ';
+        --
+    END IF;
+    --
+    IF v_val_cuentaCobrar <> 1 THEN
+        --
+        RAISE EXCEPTION 'Error cuenta de cuentas por cobrar 138020 no se encuentra parametrizada por favor comunicarse con el administrador del sistema ';
         --
     END IF;
     --

@@ -126,6 +126,14 @@ INSERT INTO co_tsbcu(
     VALUES (245, 4, 28, 'A',  'AJUSTE AL PESO', 
             '81', 'AJUSTE AL PESO', 'C');
 --
+--Insercion de subcuentas 
+--
+INSERT INTO co_tsbcu(
+            sbcu_cuen, sbcu_clas, sbcu_grup, sbcu_estado, sbcu_nombre, 
+            sbcu_codigo, sbcu_descripcion, sbcu_naturaleza)
+    VALUES (36, 1, 3, 'A',  'CUENTAS POR COBRAR DE TERCEROS', 
+            '81', 'CUENTAS POR COBRAR DE TERCEROS', 'D');
+--
 --PARAMETRIZACIONES DE IVA DE VENTA Y COMPRA DE PRODUCTOS
 --
 INSERT INTO em_tpara(para_clave, para_valor)

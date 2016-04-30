@@ -383,9 +383,13 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_REMISION (
         --
     END IF;
     --
+    --Se retira este ingreso ya que en el caso de remisiones el dinero debe ir es a cuentas por cobrar mas no a la caja
+    --INSERT INTO co_ttem_mvco(
+    --        tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
+    --                 VALUES (v_idTrans_con, v_sbcu_caja_cod , v_vlr_fin_tot, 'D');
     INSERT INTO co_ttem_mvco(
             tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
-                     VALUES (v_idTrans_con, v_sbcu_caja_cod , v_vlr_fin_tot, 'D');
+                     VALUES (v_idTrans_con, '138020' , v_vlr_fin_tot, 'D');
     --
     UPDATE fa_tfact
     SET FACT_VLR_ACOBRAR = v_vlr_total_fact_co,
