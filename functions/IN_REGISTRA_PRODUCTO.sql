@@ -8,7 +8,8 @@
                                             p_categoria         BIGINT,
                                             p_codExterno        varchar(100),
                                             p_ubicacion         varchar(100),
-                                            p_repetidos         varchar(2) default 'N'
+                                            p_repetidos         varchar(2) default 'N',
+                                            p_codigobarras      varchar(200)  default 'N/A'
                                                 ) RETURNS varchar AS $$
         DECLARE
         --
