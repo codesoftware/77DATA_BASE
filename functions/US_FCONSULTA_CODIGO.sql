@@ -1,6 +1,6 @@
 --Funcion encargada de buscar todas las coincidencias de los codigos de los productos de acuerdo a un filtro
 
-CREATE FUNCTION US_FCONSULTA_CODIGO (  
+CREATE OR REPLACE FUNCTION US_FCONSULTA_CODIGO (  
                                        p_codigo       varchar(50)                                         
                                      ) RETURNS VARCHAR[] AS $$
    DECLARE

@@ -7,6 +7,7 @@ CREATE TABLE in_tpedprod(
      pedprod_codi           VARCHAR(200)    NOT NULL          ,
      pedprod_descu          NUMERIC(15,6)                     ,
      pedprod_name           VARCHAR(1000)                     ,
+     pedprod_cod_ext        VARCHAR(1000)                     ,
      PRIMARY KEY(pedprod_pedprod)
   ); 
    

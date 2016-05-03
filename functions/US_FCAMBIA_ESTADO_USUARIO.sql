@@ -1,4 +1,4 @@
-CREATE FUNCTION US_FCAMBIA_ESTADO_USUARIO (  
+CREATE OR REPLACE FUNCTION US_FCAMBIA_ESTADO_USUARIO (  
                                        p_usuario       varchar(500)
                                       ) RETURNS VARCHAR AS $$
    DECLARE

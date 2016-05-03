@@ -1,4 +1,4 @@
-CREATE FUNCTION US_FVERIFICA_CORREO(  
+CREATE OR REPLACE FUNCTION US_FVERIFICA_CORREO(  
                                        p_correo      varchar(200)
                                     ) RETURNS VARCHAR AS'
    DECLARE

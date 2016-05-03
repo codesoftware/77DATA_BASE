@@ -27,7 +27,23 @@ CREATE OR REPLACE FUNCTION f_ins_pedprod_costos() RETURNS trigger AS $f_ins_pedp
         --
         v_precio_base       NUMERIC(1000,10) := 0;
         --
+        --Obtengo el codigo externo
+        --
+        c_codigo_ext CURSOR(vc_dska BIGINT) IS
+        select dska_cod_ext
+          from in_tdska
+         where dska_dska = vc_dska
+         ;
+        --
+        v_cod_ext             varchar(1000) :='';
+        --
     BEGIN
+        --
+        OPEN c_codigo_ext(NEW.pedprod_dska);
+        FETCH c_codigo_ext INTO v_cod_ext; 
+        CLOSE c_codigo_ext;        
+        --
+        NEW.pedprod_cod_ext = v_cod_ext;
         --
         OPEN c_prom_pond_prod;
         FETCH c_prom_pond_prod into v_prom_pond;
@@ -43,7 +59,7 @@ CREATE OR REPLACE FUNCTION f_ins_pedprod_costos() RETURNS trigger AS $f_ins_pedp
         --
         v_auxiliar :=  (v_iva_precio / v_auxiliar)+1;
         --
-        v_precio_base :=  (new.pedprod_precio - new.pedprod_descu) /v_auxiliar;
+        v_precio_base :=  (new.pedprod_precio - new.pedprod_descu) / v_auxiliar;
         --
         if v_prom_pond >= v_precio_base then
             --

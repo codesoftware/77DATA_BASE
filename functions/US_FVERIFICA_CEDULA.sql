@@ -1,4 +1,4 @@
-CREATE FUNCTION US_FVERIFICA_CEDULA(  
+CREATE OR REPLACE FUNCTION US_FVERIFICA_CEDULA(  
                                        p_cedula      varchar(500)
                                     ) RETURNS VARCHAR AS'
    DECLARE

@@ -1,4 +1,4 @@
-CREATE FUNCTION US_FVERIFICA_USUARIO(  
+CREATE OR REPLACE FUNCTION US_FVERIFICA_USUARIO(  
                                        p_usuario      varchar(200)
                                     ) RETURNS VARCHAR AS'
    DECLARE
