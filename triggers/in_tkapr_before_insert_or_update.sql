@@ -30,6 +30,7 @@ CREATE OR REPLACE FUNCTION f_ins_kapr_negativos() RETURNS trigger AS $f_ins_kapr
         v_ext_pr_sede   int := 0;
         v_natuMovi      varchar(2) := '';
         --
+        v_mvto_cant_total   bigint:= 0;
     BEGIN
         --
         IF NEW.kapr_cant_saldo < 0 THEN 
@@ -83,12 +84,12 @@ CREATE OR REPLACE FUNCTION f_ins_kapr_negativos() RETURNS trigger AS $f_ins_kapr
             --
             IF upper(v_natuMovi) = 'E' then
                 --
-                NEW.KAPR_CANT_MVTO := NEW.KAPR_CANT_MVTO * (-1);
+                v_mvto_cant_total := NEW.KAPR_CANT_MVTO * (-1);
                 --
             END IF;
             --
             UPDATE IN_TEPRS
-               SET eprs_existencia = eprs_existencia + NEW.KAPR_CANT_MVTO
+               SET eprs_existencia = eprs_existencia + v_mvto_cant_total
              WHERE eprs_eprs = v_ext_pr_sede
              ;
         END IF;
