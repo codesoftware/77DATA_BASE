@@ -73,6 +73,7 @@
 \i /77DATA_BASE/tables/fa_trsfa.sql;
 \i /77DATA_BASE/tables/fa_tsoli.sql;
 \i /77DATA_BASE/tables/fa_tsopd.sql;
+\i /77DATA_BASE/tables/fa_tpgrm.sql;
 --
 --Alters
 --
@@ -136,6 +137,7 @@
 \i /77DATA_BASE/uniques/IN_TSEDE_UNIQUES.sql;
 \i /77DATA_BASE/uniques/IN_TAJIC_UNIQUES.sql;
 \i /77DATA_BASE/uniques/FA_TFACT_UNIQUES.sql;
+\i /77DATA_BASE/uniques/FA_TPGRM_UNIQUES.sql;
 --
 -- Comentarios de las tablas
 --
@@ -201,6 +203,7 @@
 \i /77DATA_BASE/comments/fa_trsfa_com.sql;
 \i /77DATA_BASE/comments/fa_tsoli_com.sql;
 \i /77DATA_BASE/comments/fa_tsopd_com.sql;
+\i /77DATA_BASE/comments/fa_tpgrm_com.sql;
 --
 -- Llaves foraneas
 --
@@ -248,6 +251,7 @@
 \i /77DATA_BASE/foreignKey/fk_in_tremi.sql;
 \i /77DATA_BASE/foreignKey/fk_fa_tsopd.sql;
 \i /77DATA_BASE/foreignKey/fk_fa_tsoli.sql;
+\i /77DATA_BASE/foreignKey/fk_fa_tpgrm.sql;
 --
 --Vistas
 --
