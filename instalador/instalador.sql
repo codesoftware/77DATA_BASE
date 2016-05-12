@@ -74,6 +74,7 @@
 \i /77DATA_BASE/tables/fa_tsoli.sql;
 \i /77DATA_BASE/tables/fa_tsopd.sql;
 \i /77DATA_BASE/tables/fa_tpgrm.sql;
+\i /77DATA_BASE/tables/fa_tdpgrm.sql;
 --
 --Alters
 --
@@ -111,6 +112,7 @@
 \i /77DATA_BASE/checks/in_tremi_chks.sql;
 \i /77DATA_BASE/checks/in_tdrem_chks.sql;
 \i /77DATA_BASE/checks/fa_tsoli_chks.sql;
+\i /77DATA_BASE/checks/fa_tdpgr_chks.sql;
 --
 -- Uniques Constrains
 --
@@ -204,6 +206,7 @@
 \i /77DATA_BASE/comments/fa_tsoli_com.sql;
 \i /77DATA_BASE/comments/fa_tsopd_com.sql;
 \i /77DATA_BASE/comments/fa_tpgrm_com.sql;
+\i /77DATA_BASE/comments/fa_tdpgr_com.sql;
 --
 -- Llaves foraneas
 --
@@ -252,6 +255,7 @@
 \i /77DATA_BASE/foreignKey/fk_fa_tsopd.sql;
 \i /77DATA_BASE/foreignKey/fk_fa_tsoli.sql;
 \i /77DATA_BASE/foreignKey/fk_fa_tpgrm.sql;
+\i /77DATA_BASE/foreignKey/fk_fa_tdpgr.sql;
 --
 --Vistas
 --
