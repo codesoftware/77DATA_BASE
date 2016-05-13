@@ -424,7 +424,7 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_REMISION (
                          v_sbcu_sbcu , movi.tem_mvco_naturaleza, 
                          2, cast(movi.tem_mvco_valor as NUMERIC),
                          'fact', v_fact_fact,
-                         p_clien, p_clien );
+                         p_clien, 1 );
             
         END LOOP;
         --

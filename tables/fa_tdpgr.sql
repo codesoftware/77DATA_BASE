@@ -2,7 +2,7 @@
 --Tabla en la cual se almaceran los detalles de los pagos
 --
 CREATE TABLE fa_tdpgr(
-    dpgr_dpgr                   BIGINT                  NOT NULL                    ,
+    dpgr_dpgr                   BIGSERIAL               NOT NULL                    ,
     dpgr_pgrm                   BIGINT                  NOT NULL                    ,
     dpgr_fecha                  TIMESTAMP               NOT NULL DEFAULT now()      ,    
     dpgr_estado                 VARCHAR(2)              NOT NULL                    ,
