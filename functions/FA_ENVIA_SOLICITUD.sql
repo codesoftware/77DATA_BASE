@@ -1,10 +1,10 @@
 --
 --funcion que realiza la solicitud
 --
-CREATE OR REPLACE FA_ENVIASOLICITUD(
+CREATE OR REPLACE function FA_ENVIASOLICITUD(
                   p_tius         BIGINT,
                   p_soli         BIGINT
-                  )AS $$
+                  ) RETURNS VARCHAR AS $$
     DECLARE
     --
     --Cursor encargado de consultar los datos de la solicitud
@@ -23,3 +23,9 @@ CREATE OR REPLACE FA_ENVIASOLICITUD(
     WHERE sopd_soli = p_soli
     ;
     
+    BEGIN
+   
+    RETURN 'OK';
+    
+    END;
+    $$ LANGUAGE 'plpgsql';
