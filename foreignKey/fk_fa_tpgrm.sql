@@ -10,5 +10,5 @@ REFERENCES fa_tfact(fact_fact)
 --
 ALTER TABLE fa_tpgrm
 ADD FOREIGN KEY (pgrm_remi)
-REFERENCES in_tremiremi_remi)
+REFERENCES in_tremi(remi_remi)
 ;

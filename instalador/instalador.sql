@@ -74,7 +74,7 @@
 \i /77DATA_BASE/tables/fa_tsoli.sql;
 \i /77DATA_BASE/tables/fa_tsopd.sql;
 \i /77DATA_BASE/tables/fa_tpgrm.sql;
-\i /77DATA_BASE/tables/fa_tdpgrm.sql;
+\i /77DATA_BASE/tables/fa_tdpgr.sql;
 --
 --Alters
 --
