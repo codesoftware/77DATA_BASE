@@ -133,7 +133,18 @@ INSERT INTO co_tsbcu(
             sbcu_codigo, sbcu_descripcion, sbcu_naturaleza)
     VALUES (36, 1, 3, 'A',  'CUENTAS POR COBRAR DE TERCEROS', 
             '81', 'CUENTAS POR COBRAR DE TERCEROS', 'D');
+
+    INSERT INTO co_tsbcu(
+            sbcu_cuen, sbcu_clas, sbcu_grup, sbcu_estado, sbcu_nombre, 
+            sbcu_codigo, sbcu_descripcion, sbcu_naturaleza)
+    VALUES (32, 1, 3, 'A',  'RETENCION EN LA FUENTE', 
+            '15', 'RETENCION EN LA FUENTE', 'D');
 --
+    INSERT INTO co_tsbcu(
+            sbcu_cuen, sbcu_clas, sbcu_grup, sbcu_estado, sbcu_nombre, 
+            sbcu_codigo, sbcu_descripcion, sbcu_naturaleza)
+    VALUES (36, 1, 3, 'A',  'CUENTAS POR COBRAR', 
+            '15', 'CUENTAS POR COBRAR', 'D');
 --PARAMETRIZACIONES DE IVA DE VENTA Y COMPRA DE PRODUCTOS
 --
 INSERT INTO em_tpara(para_clave, para_valor)

@@ -12,6 +12,6 @@ facom_estad                 VARCHAR(2),
 facom_tius                  BIGINT,
 facom_sede                  BIGINT,
 facom_fecre                 TIMESTAMP NOT NULL,
-facom_ajus                  NUMERIC(1000,10) NOT NULL DEFAULT 0,
+facom_ajus                  VARCHAR(1000),
  PRIMARY KEY(facom_facom)
 );
