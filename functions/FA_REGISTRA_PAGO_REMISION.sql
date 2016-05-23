@@ -23,18 +23,19 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_PAGO_REMISION(
         v_pgrm_pgrm     bigint;
         --
         c_id_pgrm CURSOR FOR
-        SELECT MAX(pgrm_pgrm) + 1
+        SELECT coalesce(MAX(pgrm_pgrm) , 0)+ 1
           FROM fa_tpgrm
           ;
         --
         c_datos_fact CURSOR FOR
-        SELECT fact_clien, fact_vlr_acobrar
+        SELECT fact_clien, fact_vlr_acobrar, fact_vlr_abonos
           FROM fa_tfact
          WHERE fact_fact = p_fact
         ;
         --
         v_cliente           bigint;
         v_vlr_acobrar       numeric(1000,10) := 0;
+        v_vlr_abonos        numeric(1000,10) := 0;
         --
         c_remi_remi CURSOR FOR
         SELECT remi_remi
@@ -105,7 +106,7 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_PAGO_REMISION(
         CLOSE c_busca_pagos;
         --
         OPEN c_datos_fact;
-        FETCH c_datos_fact INTO v_cliente,v_vlr_acobrar;
+        FETCH c_datos_fact INTO v_cliente,v_vlr_acobrar,v_vlr_abonos;
         CLOSE c_datos_fact;
         --
         OPEN c_remi_remi;
@@ -161,7 +162,7 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_PAGO_REMISION(
         --
         INSERT INTO co_ttem_mvco(
             tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
-                     VALUES (v_idTrans_con, '110501' , v_vlr_fin_tot, 'D');
+                     VALUES (v_idTrans_con, '110501' , v_valor_dt_pag, 'D');
         --
         OPEN c_sum_debitos(v_idTrans_con);
         FETCH c_sum_debitos INTO v_sum_deb;
@@ -199,13 +200,30 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_PAGO_REMISION(
             --
         END IF;
         --
-        INSERT INTO fa_tdpgr(dpgr_pgrm,dpgr_estado,dpgr_tipopago,dpgr_valor,dpgr_mvcot)
+        INSERT INTO fa_tdpgr(dpgr_pgrm,dpgr_estado,dpgr_tipopago,dpgr_valor,dpgr_vlrdeuda,dpgr_mvcot)
               VALUES(v_pgrm_pgrm,'P',p_tipoPag,v_valor_dt_pag,v_vlr_acobrar,v_idTrans_con);
         --
+        v_vlr_abonos := v_vlr_abonos +  v_valor_dt_pag;
+        --
+        v_vlr_acobrar := v_vlr_acobrar - v_valor_dt_pag;
+        --        
         UPDATE fa_tfact
-           SET fact_vlr_acobrar = (fact_vlr_acobrar-v_vlr_acobrar),
-               fact_vlr_abonos = v_vlr_acobrar
+           SET fact_vlr_acobrar = v_vlr_acobrar,
+               fact_vlr_abonos = v_vlr_abonos
          WHERE fact_fact = p_fact;
+        --
+        IF v_vlr_acobrar < 0 THEN
+            --
+            raise exception ' Los pagos no pueden superar el total de la deuda  ';
+            --
+        ELSIF v_vlr_acobrar = 0 THEN
+            --
+            UPDATE fa_tpgrm 
+               SET pgrm_estado = 'PT'
+             WHERE pgrm_pgrm = v_pgrm_pgrm
+             ;
+            --
+        END IF;
         --
     RETURN 'OK';
 
