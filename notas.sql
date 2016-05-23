@@ -20,3 +20,14 @@ and dska_cate = cate_cate
 and dska_refe = refe_refe
 and dska_marca = marca_marca
 order by cate_desc, refe_nombre, marca_nombre
+
+
+select dska_dska, 'VENTA' ubicacion ,dska_cod,dska_desc,cate_desc,refe_nombre,marca_nombre, kapr_cant_saldo,kapr_cost_saldo_uni, 'NO APLICA'
+from in_tdska,in_tcate,in_trefe,in_tmarca, in_tkapr
+where cate_cate = dska_cate
+and dska_refe = refe_refe
+and marca_marca = dska_marca
+and kapr_dska = dska_dska
+and kapr_kapr = (select max(kapr_kapr) from in_tkapr where kapr_dska = dska_dska)
+order by dska_dska
+;
