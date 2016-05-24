@@ -26,6 +26,8 @@ CREATE OR REPLACE function FA_ENVIASOLICITUD(
     v_estado        varchar(2):= '';
     v_sede          bigint:= 0;
     --
+    --cursor encargado de validar existencias por sede
+    --
     c_exist_sede CURSOR (vc_dska bigint,vc_sede bigint)FOR
     SELECT eprs_existencia
       FROM in_teprs
@@ -101,6 +103,12 @@ CREATE OR REPLACE function FA_ENVIASOLICITUD(
             fetch c_exist_sede into v_exist_sede;
             close c_exist_sede;
             --
+            IF v_exist_sede is null THEN
+                --
+                raise exception 'El producto con el codigo 1-% en la sede % no tiene existencias',producto.sopd_dska,producto.sopd_sede;
+                --
+            END IF;
+            --
             IF v_exist_sede < producto.sopd_cenv THEN
                 --
                 raise exception 'La cantidad que desea enviar no puede superar la existente en la sede ' ;
@@ -142,6 +150,7 @@ CREATE OR REPLACE function FA_ENVIASOLICITUD(
                 --
                 IF UPPER(v_rta_ing) like '%OK%' THEN
                     --
+                    
                     v_rta_egr := IN_FINSERTA_PROD_KARDEX(   producto.sopd_dska,
                                                             v_mvin_egr,
                                                             p_tius,
@@ -149,7 +158,6 @@ CREATE OR REPLACE function FA_ENVIASOLICITUD(
                                                             v_costo_total,
                                                             producto.sopd_sede                                                   
                                                             );
-                    
                     IF UPPER(v_rta_egr) not like '%OK%' THEN
                     --
                         RAISE EXCEPTION 'Error al realizar el ingreso: %' , v_rta_egr;
