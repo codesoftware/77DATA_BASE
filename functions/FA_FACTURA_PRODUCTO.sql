@@ -244,7 +244,7 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(
     FETCH c_prom_pond_prod INTO v_vlr_prom_pond;
     CLOSE c_prom_pond_prod;
     --
-    IF v_vlr_prom_pond >= p_precio THEN
+    IF v_vlr_prom_pond > p_precio THEN
         --
         RAISE EXCEPTION 'Precio demasiado bajo para realizar la venta, con el producto con el codigo 1-%',p_dska;
         --

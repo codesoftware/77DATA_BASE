@@ -27,7 +27,7 @@ CREATE OR REPLACE FUNCTION f_ins_kapr_negativos() RETURNS trigger AS $f_ins_kapr
          WHERE mvin_mvin = NEW.KAPR_MVIN
          ;
         --
-        v_ext_pr_sede   int := 0;
+        v_ext_pr_sede   bigint := 0;
         v_natuMovi      varchar(2) := '';
         --
         v_mvto_cant_total   bigint:= 0;

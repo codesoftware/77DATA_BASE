@@ -83,6 +83,8 @@ CREATE OR REPLACE function FA_ENVIASOLICITUD(
     --
     v_kapr_kapr         bigint := 0;
     --
+    v_valida                varchar(1000):= '';
+    --
     BEGIN
     --
     OPEN c_consultasoli;
@@ -181,6 +183,8 @@ CREATE OR REPLACE function FA_ENVIASOLICITUD(
                     --
                 END IF;
             --
+            v_valida := IN_VALIDA_EXISTENCIAS(producto.sopd_dska);
+            --
         END LOOP;
         --
     ELSE
@@ -193,6 +197,8 @@ CREATE OR REPLACE function FA_ENVIASOLICITUD(
        SET soli_esta = 'A'
      WHERE soli_soli = p_soli
     ;
+    --
+    
     --
     RETURN 'OK';
     --
