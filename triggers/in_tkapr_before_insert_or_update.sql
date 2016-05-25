@@ -91,6 +91,7 @@ CREATE OR REPLACE FUNCTION f_ins_kapr_negativos() RETURNS trigger AS $f_ins_kapr
             UPDATE IN_TEPRS
                SET eprs_existencia = eprs_existencia + v_mvto_cant_total
              WHERE eprs_eprs = v_ext_pr_sede
+               AND eprs_dska = NEW.KAPR_DSKA
              ;
         END IF;
         --
