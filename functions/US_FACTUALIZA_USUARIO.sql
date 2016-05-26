@@ -50,6 +50,6 @@ CREATE OR REPLACE FUNCTION US_FACTUALIZA_USUARIO (
     RETURN 'OK';
     
     EXCEPTION WHEN OTHERS THEN
-         RETURN 'Err';
+         RETURN 'Error '|| sqlerrm;
     END;
 $$ LANGUAGE 'plpgsql';
