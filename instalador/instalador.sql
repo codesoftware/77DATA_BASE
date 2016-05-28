@@ -342,6 +342,7 @@
 \i /77DATA_BASE/functions/FA_FACT_PROD_REMI.sql;
 \i /77DATA_BASE/functions/F_NUMEROS_A_LETRAS.sql;
 \i /77DATA_BASE/functions/IN_VALIDA_EXISTENCIAS.sql;
+\i /77DATA_BASE/functions/FA_REGISTRA_PAGO_REMISION.sql;
 --
 -- Triggers
 --
