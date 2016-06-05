@@ -75,6 +75,7 @@
 \i /77DATA_BASE/tables/fa_tsopd.sql;
 \i /77DATA_BASE/tables/fa_tpgrm.sql;
 \i /77DATA_BASE/tables/fa_tdpgr.sql;
+\i /77DATA_BASE/tables/im_tpvin.sql;
 --
 --Alters
 --
@@ -207,6 +208,7 @@
 \i /77DATA_BASE/comments/fa_tsopd_com.sql;
 \i /77DATA_BASE/comments/fa_tpgrm_com.sql;
 \i /77DATA_BASE/comments/fa_tdpgr_com.sql;
+\i /77DATA_BASE/comments/im_tpvin_com.sql;
 --
 -- Llaves foraneas
 --
