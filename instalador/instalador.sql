@@ -76,6 +76,7 @@
 \i /77DATA_BASE/tables/fa_tpgrm.sql;
 \i /77DATA_BASE/tables/fa_tdpgr.sql;
 \i /77DATA_BASE/tables/im_tpvin.sql;
+\i /77DATA_BASE/tables/im_timpo.sql;
 --
 --Alters
 --
@@ -114,6 +115,7 @@
 \i /77DATA_BASE/checks/in_tdrem_chks.sql;
 \i /77DATA_BASE/checks/fa_tsoli_chks.sql;
 \i /77DATA_BASE/checks/fa_tdpgr_chks.sql;
+\i /77DATA_BASE/checks/im_timpo_chks.sql;
 --
 -- Uniques Constrains
 --

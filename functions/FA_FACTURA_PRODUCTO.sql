@@ -246,7 +246,7 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(
     --
     IF v_vlr_prom_pond > p_precio THEN
         --
-        RAISE EXCEPTION 'Precio demasiado bajo para realizar la venta, con el producto con el codigo 1-%',p_dska;
+        RAISE EXCEPTION 'Precio demasiado bajo para realizar la venta, con el producto con el codigo 1-% precio: % promedio ponderado: % ',p_dska,p_precio, v_vlr_prom_pond;
         --
     END IF; 
     --
