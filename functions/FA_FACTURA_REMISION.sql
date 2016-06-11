@@ -447,7 +447,7 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_REMISION (
     --
     --Llamamos la funcion en donde determinamos la resolucion de facturacion y su consecutivo dentro de la resolucion
     --
-    v_valida := FA_ASIGNA_RESOLUCION_FACTURA(cast(v_fact_fact as BIGINT),-1);
+    v_valida := FA_ASIGNA_RESOLUCION_FACTURA(cast(v_fact_fact as BIGINT),p_rsfa);
     --
     IF upper(v_valida) <> 'OK' THEN
         --
