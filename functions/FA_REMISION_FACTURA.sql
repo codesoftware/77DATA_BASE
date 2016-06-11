@@ -5,7 +5,8 @@ CREATE OR REPLACE FUNCTION FA_REMISION_FACTURA (
                                 p_tius              BIGINT,
                                 p_remi              BIGINT,
                                 P_rsfa              BIGINT,
-                                p_dpago             BIGINT --Numero maximo de dias que el cliente tiene para pagar la factura 
+                                p_dpago             BIGINT, --Numero maximo de dias que el cliente tiene para pagar la factura 
+                                p_retefuente        VARCHAR
                          )RETURNS VARCHAR AS $$
     DECLARE
         --
@@ -48,6 +49,7 @@ CREATE OR REPLACE FUNCTION FA_REMISION_FACTURA (
         --
     BEGIN
         --
+        --
         OPEN c_remision;
         FETCH c_remision INTO v_clien,v_sede;
         CLOSE c_remision;
@@ -80,7 +82,7 @@ CREATE OR REPLACE FUNCTION FA_REMISION_FACTURA (
                                             cast(0 as bigint),
                                             cast(0 as bigint),
                                             cast(0 as bigint),
-                                            cast('N' as varchar),
+                                            p_retefuente,
                                             P_rsfa,
                                             p_remi
                                          );
