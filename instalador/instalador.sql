@@ -77,6 +77,7 @@
 \i /77DATA_BASE/tables/fa_tdpgr.sql;
 \i /77DATA_BASE/tables/im_tpvin.sql;
 \i /77DATA_BASE/tables/im_timpo.sql;
+\i /77DATA_BASE/tables/im_tprim.sql;
 --
 --Alters
 --
@@ -143,6 +144,7 @@
 \i /77DATA_BASE/uniques/IN_TAJIC_UNIQUES.sql;
 \i /77DATA_BASE/uniques/FA_TFACT_UNIQUES.sql;
 \i /77DATA_BASE/uniques/FA_TPGRM_UNIQUES.sql;
+\i /77DATA_BASE/uniques/IM_TPRIM_UNIQUES.sql;
 --
 -- Comentarios de las tablas
 --
@@ -260,6 +262,7 @@
 \i /77DATA_BASE/foreignKey/fk_fa_tsoli.sql;
 \i /77DATA_BASE/foreignKey/fk_fa_tpgrm.sql;
 \i /77DATA_BASE/foreignKey/fk_fa_tdpgr.sql;
+\i /77DATA_BASE/foreignKey/fk_im_tprim.sql;
 --
 --Vistas
 --

@@ -1,0 +1,3 @@
+ALTER TABLE im_tprim
+ADD CONSTRAINT PRIM_CODIGO_UNIQUE UNIQUE (prim_impo,prim_codext)
+;
