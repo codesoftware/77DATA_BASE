@@ -11,5 +11,7 @@ CREATE TABLE im_timpo(
     impo_tius                   BIGINT                                  NOT NULL    , 
     impo_vlrTotal               numeric(1000,10)    default 0           NOT NULL    , 
     impo_vlrImpu                numeric(1000,10)    default 0           NOT NULL    , 
+    impo_trm                    numeric(1000,10)    default 0           NOT NULL    , 
+    impo_tazaProm               numeric(1000,10)    default 0           NOT NULL    , 
 PRIMARY KEY (impo_impo)
 );

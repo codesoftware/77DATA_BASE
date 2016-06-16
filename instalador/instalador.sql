@@ -350,6 +350,7 @@
 \i /77DATA_BASE/functions/F_NUMEROS_A_LETRAS.sql;
 \i /77DATA_BASE/functions/IN_VALIDA_EXISTENCIAS.sql;
 \i /77DATA_BASE/functions/FA_REGISTRA_PAGO_REMISION.sql;
+\i /77DATA_BASE/functions/IM_CONVIERTE_DOLARES_IMPORTACION.sql;
 --
 -- Triggers
 --
