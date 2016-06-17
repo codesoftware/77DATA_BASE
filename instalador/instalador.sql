@@ -78,6 +78,7 @@
 \i /77DATA_BASE/tables/im_tpvin.sql;
 \i /77DATA_BASE/tables/im_timpo.sql;
 \i /77DATA_BASE/tables/im_tprim.sql;
+\i /77DATA_BASE/tables/im_tgast.sql;
 --
 --Alters
 --
@@ -213,6 +214,7 @@
 \i /77DATA_BASE/comments/fa_tpgrm_com.sql;
 \i /77DATA_BASE/comments/fa_tdpgr_com.sql;
 \i /77DATA_BASE/comments/im_tpvin_com.sql;
+\i /77DATA_BASE/comments/im_tgast_com.sql;
 --
 -- Llaves foraneas
 --
@@ -263,6 +265,7 @@
 \i /77DATA_BASE/foreignKey/fk_fa_tpgrm.sql;
 \i /77DATA_BASE/foreignKey/fk_fa_tdpgr.sql;
 \i /77DATA_BASE/foreignKey/fk_im_tprim.sql;
+\i /77DATA_BASE/foreignKey/fk_im_tgast.sql;
 --
 --Vistas
 --
