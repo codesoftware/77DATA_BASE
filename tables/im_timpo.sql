@@ -9,9 +9,9 @@ CREATE TABLE im_timpo(
     impo_estado                 varchar(2)          default 'C'         NOT NULL    , --Estado C (creado o en ejecucion) y X (Cerrado o ya finalizo el proceso)
     impo_pvin                   BIGINT                                  NOT NULL    , 
     impo_tius                   BIGINT                                  NOT NULL    , 
-    impo_vlrTotal               numeric(1000,10)    default 0           NOT NULL    , 
-    impo_vlrImpu                numeric(1000,10)    default 0           NOT NULL    , 
-    impo_trm                    numeric(1000,10)    default 0           NOT NULL    , 
-    impo_tazaProm               numeric(1000,10)    default 0           NOT NULL    , 
+    impo_vlrTotal               numeric(1000,10)    default 0               , 
+    impo_vlrImpu                numeric(1000,10)    default 0               , 
+    impo_trm                    numeric(1000,10)    default 0               , 
+    impo_tazaProm               numeric(1000,10)    default 0               , 
 PRIMARY KEY (impo_impo)
 );
