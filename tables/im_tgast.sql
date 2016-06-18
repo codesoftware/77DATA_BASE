@@ -9,5 +9,5 @@ CREATE TABLE im_tgast(
     gast_valor              NUMERIC(1000,10)        NOT NULL        ,
     gast_fecha              NUMERIC(1000,10)        NOT NULL        ,
     gast_fechaRegi          NUMERIC(1000,10)        NOT NULL        ,
-PRIMARY KEY (prim_prim)
+PRIMARY KEY (gast_gast)
 );
