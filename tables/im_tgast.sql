@@ -9,5 +9,6 @@ CREATE TABLE im_tgast(
     gast_valor              NUMERIC(1000,10)        NOT NULL        ,
     gast_fecha              timestamp               NOT NULL        ,
     gast_fechaRegi          timestamp           default now()        NOT NULL        ,
+    gast_sbcu               bigint                  NOT NULL        ,
 PRIMARY KEY (gast_gast)
 );
