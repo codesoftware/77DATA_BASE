@@ -33,6 +33,7 @@
 \i /77DATA_BASE/tables/co_tsbcu.sql;
 \i /77DATA_BASE/tables/co_tmvco.sql;
 \i /77DATA_BASE/tables/co_ttido.sql;
+\i /77DATA_BASE/tables/co_tauco.sql;
 \i /77DATA_BASE/tables/co_ttem_sifc.sql;
 \i /77DATA_BASE/tables/co_ttem_simmvco.sql;
 \i /77DATA_BASE/tables/co_ttem_mvco.sql;
@@ -215,6 +216,7 @@
 \i /77DATA_BASE/comments/fa_tdpgr_com.sql;
 \i /77DATA_BASE/comments/im_tpvin_com.sql;
 \i /77DATA_BASE/comments/im_tgast_com.sql;
+\i /77DATA_BASE/comments/co_tauco_com.sql;
 --
 -- Llaves foraneas
 --
@@ -266,6 +268,7 @@
 \i /77DATA_BASE/foreignKey/fk_fa_tdpgr.sql;
 \i /77DATA_BASE/foreignKey/fk_im_tprim.sql;
 \i /77DATA_BASE/foreignKey/fk_im_tgast.sql;
+\i /77DATA_BASE/foreignKey/fk_co_tauco.sql;
 --
 --Vistas
 --

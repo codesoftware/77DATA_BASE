@@ -13,5 +13,6 @@ CREATE TABLE CO_TMVCO(
     MVCO_TERCERO                BIGINT                  NOT NULL    , 
     MVCO_TIPO                   BIGINT                  NOT NULL    , 
     MVCO_FECHA                  TIMESTAMP               NOT NULL  DEFAULT now()   , 
+    MVCO_AUCO                   BIGINT                  default 0,
 PRIMARY KEY (MVCO_MVCO)
 );
