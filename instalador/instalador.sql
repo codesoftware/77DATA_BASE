@@ -147,6 +147,7 @@
 \i /77DATA_BASE/uniques/FA_TFACT_UNIQUES.sql;
 \i /77DATA_BASE/uniques/FA_TPGRM_UNIQUES.sql;
 \i /77DATA_BASE/uniques/IM_TPRIM_UNIQUES.sql;
+\i /77DATA_BASE/uniques/CO_TAUCO_UNIQUES.sql;
 --
 -- Comentarios de las tablas
 --
@@ -375,6 +376,7 @@
 \i /77DATA_BASE/triggers/in_tpedprod_after_insert_or_update.sql;
 \i /77DATA_BASE/triggers/in_tcopr_after_insert_or_update.sql;
 \i /77DATA_BASE/triggers/in_tdska_before_insert_or_update.sql;
+\i /77DATA_BASE/triggers/co_tauco_before_insert.sql;
 --
 --SECUENCIAS
 --

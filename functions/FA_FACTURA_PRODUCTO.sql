@@ -157,7 +157,22 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(
         --
         IF v_exis_total > p_cantidad THEN
             --
-            RAISE EXCEPTION 'En la sede en la cual esta facturando no hay las cantidades suficientes pero en el resto de la empresa si hay suficientes para satisfacer la compra, cantidad total de productos con codigo: 1-% , cantidades totales: % ',p_dska, v_exis_total;
+            IN_VALIDA_EXISTENCIAS(p_dska); 
+            --
+            OPEN c_exist_total;
+            FETCH c_exist_total INTO v_exis_total;
+            CLOSE c_exist_total;
+            --
+            IF v_exis_total > p_cantidad THEN
+                --
+                RAISE EXCEPTION 'En la sede en la cual esta facturando no hay las cantidades suficientes pero en el resto de la empresa si hay suficientes para satisfacer la compra, cantidad total de productos con codigo: 1-% , cantidades totales: % ',p_dska, v_exis_total;
+                --
+            ELSE
+                --
+                RAISE EXCEPTION 'No existe la cantidad de productos suficientes del producto con el codigo 1-% Las cantidades en toda la empresa actualmente son: % ', p_dska,v_exis_total;
+                --
+            END IF;
+            --
             --
         ELSE
             --
