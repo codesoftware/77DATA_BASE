@@ -358,3 +358,4 @@ INSERT INTO co_tcuen(cuen_cuen,cuen_grup,cuen_estado,cuen_nombre,cuen_codigo,cue
 INSERT INTO co_tcuen(cuen_cuen,cuen_grup,cuen_estado,cuen_nombre,cuen_codigo,cuen_descripcion)VALUES(326,93,UPPER('A'),'CONTRATOS DE ARRENDAMIENTO FINANCIERO',9305,'descripcion');
 INSERT INTO co_tcuen(cuen_cuen,cuen_grup,cuen_estado,cuen_nombre,cuen_codigo,cuen_descripcion)VALUES(327,93,UPPER('A'),'OTRAS CUENTAS DE ORDEN ACREEDORAS DE CONTROL',9395,'descripcion');
 INSERT INTO co_tcuen(cuen_cuen,cuen_grup,cuen_estado,cuen_nombre,cuen_codigo,cuen_descripcion)VALUES(328,93,UPPER('A'),'AJUSTES POR INFLACION PATRIMONIO',9399,'descripcion');
+INSERT INTO co_tcuen(cuen_cuen,cuen_grup,cuen_estado,cuen_nombre,cuen_codigo,cuen_descripcion)VALUES(329,79,UPPER('A'),'CUENTA PUENTE INVENTARIOS',7905,'descripcion');

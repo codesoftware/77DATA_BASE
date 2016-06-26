@@ -218,6 +218,7 @@
 \i /77DATA_BASE/comments/im_tpvin_com.sql;
 \i /77DATA_BASE/comments/im_tgast_com.sql;
 \i /77DATA_BASE/comments/co_tauco_com.sql;
+\i /77DATA_BASE/comments/im_tprim_com.sql;
 --
 -- Llaves foraneas
 --
@@ -358,6 +359,7 @@
 \i /77DATA_BASE/functions/IN_VALIDA_EXISTENCIAS.sql;
 \i /77DATA_BASE/functions/FA_REGISTRA_PAGO_REMISION.sql;
 \i /77DATA_BASE/functions/IM_CONVIERTE_DOLARES_IMPORTACION.sql;
+\i /77DATA_BASE/functions/IM_FEJECUTAIMPORTACION.sql;
 --
 -- Triggers
 --
