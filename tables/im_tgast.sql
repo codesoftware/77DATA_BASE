@@ -8,7 +8,6 @@ CREATE TABLE im_tgast(
     gast_tius               bigint                  NOT NULL        ,
     gast_valor              NUMERIC(1000,10)        NOT NULL        ,
     gast_fecha              timestamp               NOT NULL        ,
-    gast_fechaRegi          timestamp           default now()        NOT NULL        ,
-    gast_auco               bigint                  NOT NULL        ,
+    gast_fechaRegi          timestamp           default now()        NOT NULL     ,
 PRIMARY KEY (gast_gast)
 );

@@ -80,6 +80,7 @@
 \i /77DATA_BASE/tables/im_timpo.sql;
 \i /77DATA_BASE/tables/im_tprim.sql;
 \i /77DATA_BASE/tables/im_tgast.sql;
+\i /77DATA_BASE/tables/im_tdgas.sql;
 --
 --Alters
 --
@@ -271,6 +272,7 @@
 \i /77DATA_BASE/foreignKey/fk_im_tprim.sql;
 \i /77DATA_BASE/foreignKey/fk_im_tgast.sql;
 \i /77DATA_BASE/foreignKey/fk_co_tauco.sql;
+\i /77DATA_BASE/foreignKey/fk_im_tdgas.sql;
 --
 --Vistas
 --
