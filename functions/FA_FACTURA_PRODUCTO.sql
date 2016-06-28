@@ -143,6 +143,8 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(
      WHERE para_clave = 'IVAPRVENTA'
     ;
     --
+	v_valida_ex 			varchar(1000):='';
+	--
     BEGIN
     --
     OPEN c_exit_x_sede;
@@ -157,7 +159,7 @@ CREATE OR REPLACE FUNCTION FA_FACTURA_PRODUCTO(
         --
         IF v_exis_total > p_cantidad THEN
             --
-            IN_VALIDA_EXISTENCIAS(p_dska); 
+            v_valida_ex := IN_VALIDA_EXISTENCIAS(p_dska); 
             --
             OPEN c_exist_total;
             FETCH c_exist_total INTO v_exis_total;

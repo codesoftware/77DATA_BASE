@@ -409,10 +409,3 @@
 --Inserta las subcategorias del home en pedidos
 --
 \i /77DATA_BASE/inserts/ins_paramhome.sql;
---
---Alters
---
---\i /77DATA_BASE/alters/24_02_2016_001.sql;
---\i /77DATA_BASE/alters/26_02_2016_001.sql;
---\i /77DATA_BASE/alters/abril_2016.sql;
---\i /77DATA_BASE/alters/09_03_2016.sql;

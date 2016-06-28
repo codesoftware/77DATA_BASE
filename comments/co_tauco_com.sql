@@ -4,4 +4,3 @@ COMMENT ON COLUMN   co_tauco.AUCO_SBCU          IS     'Subcuenta con el cual es
 COMMENT ON COLUMN   co_tauco.AUCO_NOMB          IS     'Nombre del auxiliar que se creo';
 COMMENT ON COLUMN   co_tauco.AUCO_CODI          IS     'Codigo que se le dara al auxiliar contable';
 COMMENT ON COLUMN   co_tauco.AUCO_DESCR         IS     'Descripcion de la informacion del auxiliar que se almacenara en la tabla';
-COMMENT ON COLUMN   co_tauco.AUCO_COD_DIGITO    IS     'Digito que el usuario le dio al auxiliar contable';
