@@ -1,0 +1,3 @@
+--
+--Funcion encargada de verificar la facura de compra temporal
+--

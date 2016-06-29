@@ -14,6 +14,8 @@ facom_tmp_sede                  BIGINT,
 facom_tmp_fecre                 TIMESTAMP,
 facom_tmp_ajus                  VARCHAR(1000),
 facom_tmp_plaz					BIGINT,
+facom_tmp_porc					NUMERIC(1000,6),
 
  PRIMARY KEY(facom_tmp_facom)
 );
+

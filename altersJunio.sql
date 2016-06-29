@@ -22,3 +22,6 @@ add prov_dver VARCHAR(200);
 --dias credito
 alter table in_tprov
 add prov_dcre BIGINT;
+--
+--porcentaje retencion
+ALTER TABLE fa_tfacom_tmp ADD facom_tmp_porc NUMERIC(1000,6);
