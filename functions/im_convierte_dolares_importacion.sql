@@ -44,6 +44,6 @@ BEGIN
     RETURN 'Ok';
     --
 EXCEPTION WHEN OTHERS THEN
-    RETURN 'Error ' || sqlerrm;
+    RETURN 'Error im_convierte_dolares_importacion' || sqlerrm;
 END;
 $$ LANGUAGE 'plpgsql';
