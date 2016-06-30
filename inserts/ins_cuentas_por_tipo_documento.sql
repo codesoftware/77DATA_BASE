@@ -34,3 +34,12 @@ INSERT INTO co_tsbft(
 INSERT INTO co_ttido(
             tido_tido,tido_estado, tido_nombre, tido_descripcion)
     VALUES (4,'A', 'NOTACRED','NOTA CREDITO');
+--
+--
+--
+--
+--NOTA CREDITO
+--
+INSERT INTO co_ttido(
+            tido_tido,tido_estado, tido_nombre, tido_descripcion)
+    VALUES (5,'A', 'IMPORTA','Importacion');
