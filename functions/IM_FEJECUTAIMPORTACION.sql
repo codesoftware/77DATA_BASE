@@ -213,8 +213,8 @@ CREATE OR REPLACE function IM_FEJECUTAIMPORTACION(
                     VALUES ( v_sec_cont, 
                           movi.sbcu_sbcu , movi.natu, 
                           v_tipoDocumento, movi.valor,
-                          'fctc', p_facom_facom,
-                          v_proveedor, 2);
+                          'impo', p_impo,
+                          provedor_internacional, 3);
             --
         END LOOP;
         --
