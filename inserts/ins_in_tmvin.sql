@@ -50,3 +50,7 @@ values('Ingreso por factura de compra','I','N','N','N','N','N','INFC')
 insert into IN_TMVIN (MVIN_DESCR, MVIN_NATU, MVIN_USIM, MVIN_VENTA, MVIN_INICIAL,MVIN_REVFACT, MVIN_CORRIGE_ING,MVIN_CODIGO)
 values('Egreso de Remision','E','N','N','N','N','N','REMI')
 ;
+--
+insert into IN_TMVIN (MVIN_DESCR, MVIN_NATU, MVIN_USIM, MVIN_VENTA, MVIN_INICIAL,MVIN_REVFACT, MVIN_CORRIGE_ING,MVIN_CODIGO)
+values('Ingreso Importacion','I','N','N','N','N','N','IMPO')
+;

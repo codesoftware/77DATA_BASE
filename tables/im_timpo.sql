@@ -13,5 +13,6 @@ CREATE TABLE im_timpo(
     impo_vlrImpu                numeric(1000,10)    default 0               , 
     impo_trm                    numeric(1000,10)    default 0               , 
     impo_tazaProm               numeric(1000,10)    default 0               , 
+    impo_idTrans_co             BIGINT              default 0           NOT NULL    ,
 PRIMARY KEY (impo_impo)
 );
