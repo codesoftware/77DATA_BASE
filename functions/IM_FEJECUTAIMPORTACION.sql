@@ -100,11 +100,26 @@ CREATE OR REPLACE function IM_FEJECUTAIMPORTACION(
      WHERE tem_mvco_sbcu = sbcu_codigo
        AND tem_mvco_trans = vc_idTrans
        ;
+    --
+    --Cursor con el cual obtengo el proveedor internacional de la importacion
+    --
+    c_pvin_cont CURSOR FOR
+    SELECT impo_pvin
+      FROM im_timpo
+     WHERE impo_impo = p_impo
+     ;
+    --
+    v_pvin              bigint := 0;
+    --
     BEGIN
     --
     OPEN c_valida_trm_tasa;
     FETCH c_valida_trm_tasa into v_trm,v_taza,v_estado;
     CLOSE c_valida_trm_tasa;
+    --
+    OPEN c_pvin_cont;
+    FETCH c_pvin_cont into v_pvin;
+    CLOSE c_pvin_cont;
     --
     IF v_estado <> 'A' THEN
         --
@@ -132,7 +147,7 @@ CREATE OR REPLACE function IM_FEJECUTAIMPORTACION(
     --
     FOR prod in c_prod_impo LOOP
         --
-        v_valor_prod := prod.fcprd_subt*prod.prim_cant;
+        v_valor_prod := prod.prim_vlrpestzprom*prod.prim_cant;
         --
         --Se realiza el ingreso de lo productos
         --
@@ -214,7 +229,7 @@ CREATE OR REPLACE function IM_FEJECUTAIMPORTACION(
                           movi.sbcu_sbcu , movi.natu, 
                           v_tipoDocumento, movi.valor,
                           'impo', p_impo,
-                          provedor_internacional, 3);
+                          v_pvin, 3);
             --
         END LOOP;
         --
