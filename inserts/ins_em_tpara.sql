@@ -39,7 +39,8 @@ insert into em_tpara(para_clave, para_valor)
 values('SERVSMTP', ' ')
 ;
 
---
---campo parametrizable para el ajuste al peso
---
-INSERT INTO EM_TPARA VALUES(22,NOW(),'VALORAJUSTEPESO','1100');
+insert into em_tpara (para_clave,para_valor)
+ values ('VALORAJUSTEPESO','1100')
+ ;
+
+
