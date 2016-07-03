@@ -111,6 +111,8 @@ CREATE OR REPLACE function IM_FEJECUTAIMPORTACION(
     --
     v_pvin              bigint := 0;
     --
+    v_auco_auco         bigint := 0;
+    --
     BEGIN
     --
     OPEN c_valida_trm_tasa;
@@ -220,16 +222,20 @@ CREATE OR REPLACE function IM_FEJECUTAIMPORTACION(
         FOR movi IN c_movi_cont(v_sec_cont)
         LOOP
             --
+            v_auco_auco := CO_BUSCA_AUXILIAR_X_TIDO(movi.sbcu_sbcu,'impo');
+            --
             INSERT INTO co_tmvco(mvco_trans, 
                          mvco_sbcu, mvco_naturaleza, 
                          mvco_tido, mvco_valor, 
                          mvco_lladetalle, mvco_id_llave, 
-                         mvco_tercero, mvco_tipo)
+                         mvco_tercero, mvco_tipo, mvco_auco )
                     VALUES ( v_sec_cont, 
                           movi.sbcu_sbcu , movi.natu, 
                           v_tipoDocumento, movi.valor,
                           'impo', p_impo,
-                          v_pvin, 3);
+                          v_pvin, 3, v_auco_auco );
+            --
+            
             --
         END LOOP;
         --
@@ -246,6 +252,14 @@ CREATE OR REPLACE function IM_FEJECUTAIMPORTACION(
        SET impo_idTrans_co = v_sec_cont
      WHERE IMPO_IMPO = p_impo
      ;
+    --
+    --Inicio de contabilizacion de 
+    --
+    --OPEN c_sec_contabilidad;
+    --FETCH c_sec_contabilidad INTO v_sec_cont;
+    --CLOSE c_sec_contabilidad;
+    --
+    
     --
     RETURN 'OK';
     --
