@@ -9,6 +9,5 @@ CREATE TABLE im_tdgas(
     dgas_valor              NUMERIC(1000,10)        NOT NULL        ,
     dgas_fechaRegi          timestamp           default now()        NOT NULL     ,
     dgas_auco               bigint                  NOT NULL        ,
-    dgas_prov               bigint                  NOT NULL        ,
 PRIMARY KEY (dgas_dgas)
 );
