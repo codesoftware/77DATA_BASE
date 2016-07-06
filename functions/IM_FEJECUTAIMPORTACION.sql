@@ -152,8 +152,28 @@ CREATE OR REPLACE function IM_FEJECUTAIMPORTACION(
        AND auco_sbcu = sbcu_sbcu
        ;
     --
+    --Cursor el cual valida si la subcuenta para el iva generado existe
+    --
+    c_val_iva_proveedores CURSOR FOR
+    SELECT count(*)
+      FROM co_tsbcu
+     WHERE sbcu_codigo = '220501'
+      ;
+	--
+	v_val_proveedores          bigint :=0;
+	--
     BEGIN
     --
+	OPEN c_val_iva_proveedores;
+    FETCH c_val_iva_proveedores INTO v_val_proveedores;
+    CLOSE c_val_iva_proveedores;
+	--
+	IF v_val_proveedores <> 1 THEN
+        --
+        RAISE EXCEPTION 'Error cuenta de proveedores 220501 no se encuentra parametrizada por favor comunicarse con el administrador del sistema ';
+        --
+    END IF;
+	--
     OPEN c_dtgas;
     FETCH c_dtgas into v_dtgas;
     CLOSE c_dtgas;
@@ -375,15 +395,7 @@ CREATE OR REPLACE function IM_FEJECUTAIMPORTACION(
             FOR movi IN c_movi_cont(v_sec_cont)
             LOOP
                 --
-                v_prov_prov := movi.prov;
-                --
-                IF  v_prov_prov is null THEN
-                    --
-                    v_prov_prov := 0;
-                    --
-                END IF;
-                --
-                --v_auco_auco := CO_BUSCA_AUXILIAR_X_TIDO(movi.sbcu_sbcu,'impo');
+                v_auco_auco := CO_BUSCA_AUXILIAR_X_TIDO(movi.sbcu_sbcu,'impo');
                 --
                 INSERT INTO co_tmvco(mvco_trans, 
                              mvco_sbcu, mvco_naturaleza, 
@@ -394,7 +406,7 @@ CREATE OR REPLACE function IM_FEJECUTAIMPORTACION(
                                 movi.sbcu_sbcu , movi.natu, 
                                 v_tipoDocumento, movi.valor,
                                 'gaim', gasto.gast_gast,
-                                gasto.gast_prov, 2,0 );
+                                gasto.gast_prov, 2, v_auco_auco);
                 --
                 
                 --

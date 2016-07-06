@@ -65,7 +65,7 @@ CREATE OR REPLACE FUNCTION FA_CALCULA_PAGOS_FAC_COMPRA(
 		
 		FOR prod IN c_consultavalor_prd LOOP
 			v_subtotal := v_subtotal+(prod.fcprd_tmp_subt*prod.fcprd_tmp_cant);
-			v_iva	:=(v_iva+prod.fcprd_tmp_piva)*prod.fcprd_tmp_cant;
+			v_iva	:=v_iva+(prod.fcprd_tmp_piva*prod.fcprd_tmp_cant);
 		END LOOP;
 		IF v_aplicar = 'N'
 			THEN
