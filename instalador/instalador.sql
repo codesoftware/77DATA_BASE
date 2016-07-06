@@ -82,6 +82,8 @@
 \i /77DATA_BASE/tables/im_tgast.sql;
 \i /77DATA_BASE/tables/im_tdgas.sql;
 \i /77DATA_BASE/tables/fa_tfacom_tmp.sql;
+\i /77DATA_BASE/tables/fa_tfcprd_tmp.sql;
+
 --
 --Alters
 --

@@ -15,8 +15,14 @@ PROV_CELULAR              VARCHAR(15)           NOT NULL            ,
 PROV_ESTADO               VARCHAR(2)            DEFAULT ('A')       ,
 prov_corre                VARCHAR(50)                               ,
 prov_retde                bigint                DEFAULT 1           ,
-prov_gcron                VARCHAR(2)                                ,        
-prov_ciu                  VARCHAR(2)                                ,                               
-prov_mpio                 VARCHAR(2)                                ,                               
+prov_gcron                VARCHAR(200)                                ,        
+prov_ciu                  VARCHAR(200)                                ,                               
+prov_mpio                 VARCHAR(200)                                ,
+prov_rete				  NUMERIC(1000,10)							,
+prov_dver				  VARCHAR(200)								,
+prov_dcre				  BIGINT				DEFAULT 1			,
+
+
+                               
 PRIMARY KEY (PROV_PROV)
 );
