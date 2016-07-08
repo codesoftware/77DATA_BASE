@@ -145,7 +145,7 @@ CREATE OR REPLACE function IM_FEJECUTAIMPORTACION(
     v_total_gasto               NUMERIC(1000,10):= 0;
     --
     c_detalle_gasto CURSOR(vc_gast  bigint) FOR
-    SELECT dgas_valor, auco_auco, sbcu_sbcu, sbcu_codigo
+    SELECT dgas_valor, auco_auco, sbcu_sbcu, sbcu_codigo,dgas_natu
       FROM im_tdgas, co_tauco, co_tsbcu
      WHERE dgas_gast = vc_gast
        AND dgas_auco = auco_auco
@@ -162,6 +162,8 @@ CREATE OR REPLACE function IM_FEJECUTAIMPORTACION(
 	--
 	v_val_proveedores          bigint :=0;
 	--
+    v_valor_creditos            numeric(1000,10):= 0;
+    --
     BEGIN
     --
 	OPEN c_val_iva_proveedores;
@@ -309,7 +311,7 @@ CREATE OR REPLACE function IM_FEJECUTAIMPORTACION(
         --
     ELSE
         --
-        RAISE EXCEPTION 'La suma de los debitos: % y los creditos: % no coinciden.', v_creditos,  v_debitos;
+        RAISE EXCEPTION 'La suma de los debitos: % y los creditos: % en la contabilizacion de los productos no coinciden.', v_creditos,  v_debitos;
         --
     END IF;
     --        
@@ -348,7 +350,15 @@ CREATE OR REPLACE function IM_FEJECUTAIMPORTACION(
         
         FOR detalle IN c_detalle_gasto(gasto.gast_gast) LOOP
             --
-            v_total_gasto := v_total_gasto + detalle.dgas_valor;
+            IF detalle.dgas_natu = 'D' then 
+                --
+                v_total_gasto := v_total_gasto + detalle.dgas_valor;
+                --
+            ELSE
+                --
+                v_valor_creditos := v_valor_creditos + detalle.dgas_valor;
+                --
+            END IF;
             --
             INSERT INTO co_ttem_mvco(
                                 tem_mvco_trans, 
@@ -359,11 +369,15 @@ CREATE OR REPLACE function IM_FEJECUTAIMPORTACION(
                             VALUES (v_sec_cont,
                                     detalle.sbcu_codigo, 
                                     detalle.dgas_valor, 
-                                    'D'
+                                    detalle.dgas_natu
                                     )
                                     ;
             --
         END LOOP;
+        --
+        v_total_gasto := v_total_gasto -  v_valor_creditos;
+        --
+        
         --
         INSERT INTO co_ttem_mvco(
                                 tem_mvco_trans, 
@@ -414,7 +428,7 @@ CREATE OR REPLACE function IM_FEJECUTAIMPORTACION(
             --
         ELSE
             --
-            RAISE EXCEPTION 'La suma de los debitos: % y los creditos: % no coinciden.', v_creditos,  v_debitos;
+            RAISE EXCEPTION 'La suma de los debitos: % y los creditos: % en la contabilizacion de los gastos no coinciden.', v_creditos,  v_debitos;
             --
         END IF;
         --
