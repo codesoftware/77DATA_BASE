@@ -144,7 +144,6 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA (
         OPEN c_ajustePeso;
         FETCH c_ajustePeso INTO v_val_ajustepeso;
         CLOSE c_ajustePeso;
-        raise exception 'Paso por aqui';
         IF v_val_ajustepeso <> 1 THEN
         --
         RAISE EXCEPTION 'Error cuenta de ajuste al peso 429581 no se encuentra parametrizada por favor comunicarse con el administrador del sistema ';
@@ -182,6 +181,8 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA (
         --
         FOR prod IN c_facCom LOOP
             --
+			raise exception 'tius %',prod.facom_tius;
+			--
             v_proveedor := prod.facom_tprov;
             --
             v_vlr_iva_total := v_vlr_iva_total + ((prod.fcprd_piva*(prod.fcprd_subt*prod.fcprd_cant))/v_aux);

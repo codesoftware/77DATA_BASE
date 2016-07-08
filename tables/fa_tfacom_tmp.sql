@@ -17,7 +17,8 @@ facom_tmp_plaz					BIGINT,
 facom_tmp_porc					NUMERIC(1000,10),
 facom_tmp_vlpr					NUMERIC(1000,10),
 facom_tmp_vltot					NUMERIC(1000,10),
-facom_tmp_vlraj					NUMERIC(1000,10),	
+facom_tmp_vlraj					NUMERIC(1000,10),
+facom_tmp_cbret					VARCHAR(2),	
  PRIMARY KEY(facom_tmp_facom)
 );
 

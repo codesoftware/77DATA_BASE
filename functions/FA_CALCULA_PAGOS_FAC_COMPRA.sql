@@ -16,6 +16,7 @@ CREATE OR REPLACE FUNCTION FA_CALCULA_PAGOS_FAC_COMPRA(
 		v_valorfa				NUMERIC(1000,10):=0;
 		v_valajup				NUMERIC(1000,10):=0;
 		v_valajfa				NUMERIC(1000,10):=0;
+		v_cobrete				VARCHAR(2):='';
 		
 		--
 		--Cursor que consulta el valor de los productos 
@@ -30,7 +31,7 @@ CREATE OR REPLACE FUNCTION FA_CALCULA_PAGOS_FAC_COMPRA(
 		--
 		
 		c_datos_fact CURSOR IS
-		SELECT facom_tmp_porc,facom_tmp_valor
+		SELECT facom_tmp_porc,facom_tmp_valor,facom_tmp_cbret
 		FROM fa_tfacom_tmp
 		WHERE facom_tmp_facom = p_facom_facom;
 		
@@ -44,19 +45,13 @@ CREATE OR REPLACE FUNCTION FA_CALCULA_PAGOS_FAC_COMPRA(
 		AND prov_retde = retde_retde
 		AND facom_tmp_facom= p_facom_facom;
 		
-		--
-		--Cursor que consulta el valor parametrizado del valor ajuste al peso
-		--
-		c_consulta_ajuste CURSOR IS
-		select CAST(PARA_VALOR AS NUMERIC)
-		FROM EM_TPARA 
-		WHERE PARA_CLAVE = 'VALORAJUSTEPESO';
+
 
 
 	BEGIN 
 	
 		OPEN c_datos_fact;
-		FETCH c_datos_fact INTO v_porcret,v_valorfa;
+		FETCH c_datos_fact INTO v_porcret,v_valorfa,v_cobrete;
 		CLOSE c_datos_fact;
 		
 		OPEN c_consulta_prov;
@@ -65,28 +60,21 @@ CREATE OR REPLACE FUNCTION FA_CALCULA_PAGOS_FAC_COMPRA(
 		
 		FOR prod IN c_consultavalor_prd LOOP
 			v_subtotal := v_subtotal+(prod.fcprd_tmp_subt*prod.fcprd_tmp_cant);
-			v_iva	:=v_iva+(prod.fcprd_tmp_piva*prod.fcprd_tmp_cant);
+			v_iva	:=v_iva+((prod.fcprd_tmp_piva /100::numeric)*prod.fcprd_tmp_subt*prod.fcprd_tmp_cant);
 		END LOOP;
-		IF v_aplicar = 'N'
-			THEN
-				v_retefuen  := v_porcret*v_subtotal;
-			ELSE
-				v_retefuen  :=0;
-		END IF;
-		
+
+		v_retefuen  := (v_porcret/100::numeric)*v_subtotal;
+
+		IF v_cobrete <>'S' THEN
 		v_total 	:= v_subtotal+v_iva-v_retefuen;
-		
-		--
-		--consulta el valor del ajuste al peso parametrizado
-		
-		OPEN c_consulta_ajuste;
-		FETCH c_consulta_ajuste INTO v_valajup;
-		CLOSE c_consulta_ajuste;
-		IF v_total between (v_valorfa+v_valajup) AND (v_valorfa-v_valajup)
-		THEN 
-		v_valajfa := v_total - v_valajup;
-		
+		ELSE
+		v_total 	:= v_subtotal+v_iva;
 		END IF;
+		--
+		--consulta el valor del ajuste al peso parametrizado			
+ 
+		v_valajfa :=   v_valorfa -v_total;
+
 		
 		UPDATE fa_tfacom_tmp SET facom_tmp_vliva = v_iva,facom_tmp_vlret = v_retefuen,facom_tmp_vlpr = v_subtotal,
 				facom_tmp_vltot = v_total,facom_tmp_vlraj=v_valajfa 

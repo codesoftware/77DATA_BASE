@@ -13,5 +13,6 @@ facom_tius                  BIGINT,
 facom_sede                  BIGINT,
 facom_fecre                 TIMESTAMP NOT NULL,
 facom_ajus                  VARCHAR(1000),
+FACOM_PLAZ					BIGINT,	
  PRIMARY KEY(facom_facom)
 );
