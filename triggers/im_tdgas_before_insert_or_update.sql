@@ -7,14 +7,14 @@ CREATE OR REPLACE FUNCTION f_suma_detalles() RETURNS trigger AS $f_suma_detalles
         --Cursor con el cual sumo el total de los detalles de los gastos
         --
         c_suma_detalles_d CURSOR FOR
-        SELECT sum(dgas_valor)
+        SELECT COALESCE(sum(dgas_valor),0)
           FROM im_tdgas
          WHERE dgas_gast = NEW.dgas_gast
            AND dgas_natu = 'D'
          ;
         --
         c_suma_detalles_c CURSOR FOR
-        SELECT sum(dgas_valor)
+        SELECT COALESCE(sum(dgas_valor),0)
           FROM im_tdgas
          WHERE dgas_gast = NEW.dgas_gast
            AND dgas_natu = 'C'

@@ -95,7 +95,7 @@ CREATE OR REPLACE function IM_FEJECUTAIMPORTACION(
     --Cursor necesario para la realizacion de los movimientos contables
     --
     c_movi_cont CURSOR (vc_idTrans  bigint)FOR
-    SELECT sbcu_sbcu,cast(tem_mvco_valor as numeric) valor,tem_mvco_naturaleza natu,TEM_MVCO_PROV prov
+    SELECT sbcu_sbcu,cast(tem_mvco_valor as numeric) valor,tem_mvco_naturaleza natu
       FROM co_ttem_mvco, co_tsbcu
      WHERE tem_mvco_sbcu = sbcu_codigo
        AND tem_mvco_trans = vc_idTrans
