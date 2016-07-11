@@ -343,6 +343,8 @@ CREATE OR REPLACE function IM_FEJECUTAIMPORTACION(
         --
         v_total_gasto := 0; 
         --
+        v_valor_creditos := 0;
+        --
         OPEN c_sec_contabilidad;
         FETCH c_sec_contabilidad INTO v_sec_cont;
         CLOSE c_sec_contabilidad;

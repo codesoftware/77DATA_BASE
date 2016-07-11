@@ -14,5 +14,6 @@ CREATE TABLE im_timpo(
     impo_trm                    numeric(1000,10)    default 0               , 
     impo_tazaProm               numeric(1000,10)    default 0               , 
     impo_idTrans_co             BIGINT              default 0               ,
+    impo_vlr_fob                numeric(1000,10)    default 0               ,
 PRIMARY KEY (impo_impo)
 );
