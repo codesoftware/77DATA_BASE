@@ -59,6 +59,7 @@ CREATE OR REPLACE function IN_VALIDA_EXISTENCIAS(
      WHERE eprs_dska = p_dska
        AND eprs_sede = vc_sede
        ;
+    --
     BEGIN
     --
     OPEN c_cons_exist;

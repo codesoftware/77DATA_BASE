@@ -13,7 +13,7 @@ CREATE OR REPLACE FUNCTION IN_CIERRA_CONTEO(
         c_productos CURSOR FOR
         SELECT dska_dska
           FROM in_tdska,in_tecop
-	     WHERE ecop_dska = dska_dska
+         WHERE ecop_dska = dska_dska
           ;
         --
         c_conteo CURSOR (vc_dska_dska int) IS
@@ -38,6 +38,8 @@ CREATE OR REPLACE FUNCTION IN_CIERRA_CONTEO(
         v_sede_sede         BIGINT := 0;
         v_diferencia        NUMERIC(1000,10) := 0;
         --
+        v_valida_conteo     varchar(1000):= '';
+        --
     BEGIN
         --
         OPEN c_sede_conteo;
@@ -46,6 +48,8 @@ CREATE OR REPLACE FUNCTION IN_CIERRA_CONTEO(
         --
         FOR prod IN c_productos
         LOOP
+            --
+            v_valida_conteo := IN_VALIDA_EXISTENCIAS(prod.dska_dska);
             --
             v_exist_prod := IN_OBTIENEEXIS_PROD_SEDE(v_sede_sede,prod.dska_dska); 
             --
