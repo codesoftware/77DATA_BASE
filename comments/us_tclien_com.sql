@@ -5,3 +5,4 @@ COMMENT ON COLUMN US_TCLIEN.CLIEN_NOMBRES        IS          'Nombres del client
 COMMENT ON COLUMN US_TCLIEN.CLIEN_APELLIDOS      IS          'Apellidos del cliente';
 COMMENT ON COLUMN US_TCLIEN.CLIEN_TELEFONO       IS          'Telefono del cliente';
 COMMENT ON COLUMN US_TCLIEN.CLIEN_CORREO         IS          'Correo de contacto del cliente';
+COMMENT ON COLUMN US_TCLIEN.CLIEN_DVERI         IS           'Digito de verificaciòn del cliente';
