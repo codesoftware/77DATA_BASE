@@ -37,6 +37,7 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA (
         v_sec_cont                      BIGINT :=0;
         --
         v_sbcu_prod                     VARCHAR(500)     := '';
+		v_auxcont						BIGINT				:=0;
         --
         --Cursor para obtener el codigo de la subcuenta
         --
@@ -181,7 +182,7 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA (
         --
         FOR prod IN c_facCom LOOP
             --
-			raise exception 'tius %',prod.facom_tius;
+			--raise exception 'tius %',prod.facom_tius;
 			--
             v_proveedor := prod.facom_tprov;
             --
@@ -315,23 +316,22 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA (
             FOR movi IN c_movi_cont(v_sec_cont)
             LOOP
                 --
+			v_auxcont := CO_BUSCA_AUXILIAR_X_TIDO(movi.sbcu_sbcu,'facom');
                 INSERT INTO co_tmvco(mvco_trans, 
                              mvco_sbcu, mvco_naturaleza, 
                              mvco_tido, mvco_valor, 
                              mvco_lladetalle, mvco_id_llave, 
-                             mvco_tercero, mvco_tipo)
+                             mvco_tercero, mvco_tipo,mvco_auco)
                         VALUES ( v_sec_cont, 
                               movi.sbcu_sbcu , movi.natu, 
                               v_tipoDocumento, movi.valor,
                               'fctc', p_facom_facom,
-                              v_proveedor, 2);
+                              v_proveedor, 2,v_auxcont);
                 --
             END LOOP;
             --
-        ELSE
-            --
+        ELSE          
             RAISE EXCEPTION 'La suma de los debitos: % y los creditos: % no coinciden.', v_creditos,  v_debitos;
-            --
         END IF;
         --        
         DELETE FROM co_ttem_mvco

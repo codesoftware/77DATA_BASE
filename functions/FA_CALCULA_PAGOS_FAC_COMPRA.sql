@@ -66,9 +66,9 @@ CREATE OR REPLACE FUNCTION FA_CALCULA_PAGOS_FAC_COMPRA(
 		v_retefuen  := (v_porcret/100::numeric)*v_subtotal;
 
 		IF v_cobrete <>'S' THEN
-		v_total 	:= v_subtotal+v_iva-v_retefuen;
-		ELSE
 		v_total 	:= v_subtotal+v_iva;
+		ELSE
+		v_total 	:= v_subtotal+v_iva-v_retefuen;
 		END IF;
 		--
 		--consulta el valor del ajuste al peso parametrizado			
