@@ -6,7 +6,7 @@ CREATE TABLE FA_TFACMIG(
   factMIG_fact 	bigint NOT NULL, -- Identificador primario de la tabla
   factMIG_tius bigint NOT NULL, -- Identifica el usuario del sistema que creo la factura
   factMIG_fec_ini date NOT NULL, -- Fecha en la cual se creo la factura.
-  factMIG_fec_cierre date, -- Fecha en la cual se cerro la factura
+  factMIG_fec_cierre date, -- Fecha en la cual se cerro la facturasactura
   factMIG_clien bigint NOT NULL, -- Cleinte del cual es la factura
   factMIG_vlr_total numeric(1000,10) NOT NULL, -- Valor total de la factura
   factMIG_vlr_iva numeric(1000,10) NOT NULL, -- Iva el cual cobra toda la factura

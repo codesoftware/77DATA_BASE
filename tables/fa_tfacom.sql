@@ -16,3 +16,5 @@ facom_ajus                  VARCHAR(1000),
 FACOM_PLAZ					BIGINT,	
  PRIMARY KEY(facom_facom)
 );
+
+--alter table FA_TFACOM ADD COLUMN FACOM_PLAZ BIGINT
