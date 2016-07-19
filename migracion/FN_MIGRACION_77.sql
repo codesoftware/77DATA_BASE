@@ -14,13 +14,13 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
 	--
 	c_cons_fact_migr CURSOR FOR
 	SELECT factMIG_fact,factMIG_tius,factMIG_fec_ini,factMIG_clien,factMIG_vlr_total,factMIG_vlr_iva,factMIG_sede,
-	factMIG_retefun,factMIG_vlrrtfu
-	FROM FA_TFACMIG where factMIG_fact = 1;
+	factMIG_retefun,factMIG_vlrrtfu,factMIG_ajpeso
+	FROM FA_TFACMIG where factMIG_fact = 2555;
 	--
 	--cursor con el cual obtengo los datos de los productos
 	--
 	c_cons_prod_migt CURSOR (v_fact_fact BIGINT)  IS
-	SELECT dtprMIG_dska,dtprMIG_cant,dtprMIG_vlr_uni_prod,dtprMIG_vlr_iva_uni,dtprMIG_vlr_venta_tot,dtprMIG_vlr_iva_tot,dtprMIG_vlr_total	
+	SELECT dtprMIG_dska,dtprMIG_cant,dtprMIG_vlr_uni_prod,dtprMIG_vlr_iva_uni,dtprMIG_vlr_venta_tot,dtprMIG_vlr_iva_tot,dtprMIG_vlr_total,dtprMIG_utilidad	
 	FROM fa_tdtprMIG 
 	WHERE dtprMIG_fact = v_fact_fact;
 	--
@@ -43,7 +43,7 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
     --
     --Cursor con el cual se obtiene el id de la subcuenta de la caja menor
     --
-    c_sbcu_caja CURSOR FOR
+    c_sbcu_caja CURSOR  (p_sede BIGINT) FOR
     SELECT sbcu_codigo
       FROM em_tsede, co_tsbcu
      WHERE sede_sede = p_sede
@@ -104,6 +104,7 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
     v_sum_deb               NUMERIC(1000,10):=0;
     v_sum_cre               NUMERIC(1000,10):=0;
     v_sbcu_sbcu             BIGINT := 0;
+	v_valida_basica         varchar(4000)   := '';
 		BEGIN
 		
 
@@ -118,6 +119,12 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
 								fact.factMIG_clien , fact.factMIG_vlr_total , fact.factMIG_vlr_iva,
 								fact.factMIG_sede  ,fact.factMIG_retefun       ,fact.factMIG_vlrrtfu	 )
 							;
+			v_valida_basica := FA_VAL_CON_FACTU(fact.factMIG_sede);	
+			IF UPPER(v_valida_basica) <> 'OK' THEN
+				--
+				RAISE EXCEPTION ' %', v_valida_basica;
+				--
+			END IF;			
 			--
 			--Cursor con el cual obtengo el id de movimientos contables
 			--
@@ -143,8 +150,9 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
                                                 prod.dtprMIG_utilidad	
                                                 );
 			END LOOP;
+			IF v_rta_fact_prod = 'OK' THEN
 
-			OPEN c_vlr_iva_fact(cast(v_fact_fact as int));
+			OPEN c_vlr_iva_fact(cast(fact.factMIG_fact as int));
 		    FETCH c_vlr_iva_fact INTO v_valor_iva_fact;  
 		    CLOSE c_vlr_iva_fact;
 
@@ -161,17 +169,17 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
     		--
 		    --Logica para que el dinero valla directo a la caja menor
 		    --
-		    OPEN c_sbcu_caja;
+		    OPEN c_sbcu_caja(fact.factMIG_sede);
 		    FETCH c_sbcu_caja INTO v_sbcu_caja_cod;
 		    CLOSE c_sbcu_caja;
 
-		    IF prod.factMIG_retefun = 'S' THEN
+		    IF fact.factMIG_retefun = 'S' THEN
 		    --
 		    --inserta movimiento contable de retefuente
 		    --
 		     INSERT INTO co_ttem_mvco(
             tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
-                     VALUES (v_idTrans_con, '135515' , prod.factMIG_vlrrtfu, 'D');
+                     VALUES (v_idTrans_con, '135515' , fact.factMIG_vlrrtfu, 'D');
 	        --
 	        --actualiza la factura la retefuente
 	        --
@@ -183,7 +191,7 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
 
 		    END IF;
 
-		    IF prod.factMIG_ajpeso <> 0 THEN
+		    IF fact.factMIG_ajpeso <> 0 THEN
 		    	  INSERT INTO co_ttem_mvco(
             	  tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
                   VALUES (v_idTrans_con, '429581' , fact.factMIG_ajpeso, 'C');
@@ -238,6 +246,9 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
         RAISE EXCEPTION ' Error al encontrar la resolucion de facturacion % ',v_valida;
         --
     END IF;	
+	ELSE
+	RAISE EXCEPTION '%',v_rta_fact_prod;
+	END IF;
 		 
 		 END LOOP;
 
