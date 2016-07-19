@@ -1,3 +1,4 @@
+create extension pldbgapi;
 --
 -- Funcion encargada de realizar toda la facturacion del sistema
 --

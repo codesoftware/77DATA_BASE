@@ -14,13 +14,13 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
 	--
 	c_cons_fact_migr CURSOR FOR
 	SELECT factMIG_fact,factMIG_tius,factMIG_fec_ini,factMIG_clien,factMIG_vlr_total,factMIG_vlr_iva,factMIG_sede,
-	factMIG_retefun,factMIG_vlrrtfu,	
-	FROM FA_TFACMIG;
+	factMIG_retefun,factMIG_vlrrtfu
+	FROM FA_TFACMIG where factMIG_fact = 1;
 	--
 	--cursor con el cual obtengo los datos de los productos
 	--
 	c_cons_prod_migt CURSOR (v_fact_fact BIGINT)  IS
-	SELECT dtprMIG_dska,dtprMIG_cant,dtprMIG_vlr_uni_prod,factMIG_vlr_iva,factMIG_vlr_total
+	SELECT dtprMIG_dska,dtprMIG_cant,dtprMIG_vlr_uni_prod,dtprMIG_vlr_iva_uni,dtprMIG_vlr_venta_tot,dtprMIG_vlr_iva_tot,dtprMIG_vlr_total	
 	FROM fa_tdtprMIG 
 	WHERE dtprMIG_fact = v_fact_fact;
 	--
@@ -36,7 +36,7 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
     --Cursor con el cual obtnemos el valor de la factura sin iva
     --
     c_vlr_total_fact_sin_iva CURSOR(vc_fact_fact INT) FOR
-    SELECT fact_vlr_total, 
+    SELECT fact_vlr_total 
       FROM fa_tfact
      WHERE fact_fact = vc_fact_fact
      ;
@@ -112,9 +112,11 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
 		 	--
 			--Insertar facturas
 			INSERT INTO FA_TFACT(fact_fact		   ,  fact_tius	    		,  fact_fec_ini		   , 
-								fact_clien		   , fact_vlr_total		   	, fact_vlr_iva		   )
+								fact_clien		   , fact_vlr_total		   	, fact_vlr_iva,
+								fact_sede		   ,fact_retefun 			,fact_vlrrtfu)
                      VALUES (	fact.factMIG_fact  , fact.factMIG_tius      ,  fact.factMIG_fec_ini, 
-								fact.factMIG_clien , fact.factMIG_vlr_total , fac.factMIG_vlr_iva   )
+								fact.factMIG_clien , fact.factMIG_vlr_total , fact.factMIG_vlr_iva,
+								fact.factMIG_sede  ,fact.factMIG_retefun       ,fact.factMIG_vlrrtfu	 )
 							;
 			--
 			--Cursor con el cual obtengo el id de movimientos contables
@@ -129,7 +131,7 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
 				        v_rta_fact_prod := FN_FACTPROD_MIGRACION_77(
                                                 fact.factMIG_tius,
                                                 prod.dtprMIG_dska,
-                                                fac.factMIG_sede,
+                                                fact.factMIG_sede,
                                                 prod.dtprMIG_cant,
                                                 v_idTrans_con,
                                                 cast(fact.factMIG_fact as int),
@@ -137,7 +139,7 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
                                                 prod.dtprMIG_vlr_iva_tot,
                                                 prod.dtprMIG_vlr_iva_uni,
                                                 prod.dtprMIG_vlr_total,
-                                                prod.dtpr_vlr_venta_tot,
+                                                prod.dtprMIG_vlr_total,
                                                 prod.dtprMIG_utilidad	
                                                 );
 			END LOOP;
@@ -243,7 +245,7 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
         RETURN 'Ok-'||cast(fact.factMIG_fact as BIGINT);	
 	
 		EXCEPTION WHEN OTHERS THEN
-			 RETURN 'Error FA_REGISTRA_FACT_COMPRA '|| sqlerrm;
+			 RETURN 'Error FN_MIGRACION_77 '|| sqlerrm;
 		END;
 $$ LANGUAGE 'plpgsql';
 	
