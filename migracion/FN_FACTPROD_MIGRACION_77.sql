@@ -122,7 +122,7 @@ CREATE OR REPLACE FUNCTION FN_FACTPROD_MIGRACION_77(
 
     --
     --verifica las existencias en la sede
-    IF v_existencias < p_cantidad THEN
+    IF v_existencias < p_cantidad OR v_existencias IS NULL THEN
 
         OPEN c_exist_total;
         FETCH c_exist_total INTO v_exis_total;
@@ -228,10 +228,11 @@ CREATE OR REPLACE FUNCTION FN_FACTPROD_MIGRACION_77(
     --
     v_vlr_prom_pond_tot := v_vlr_prom_pond * p_cantidad;   
     
-
+	
      --
     --Insercion para que se contabilice la salida del producto
     --
+
     INSERT INTO co_ttem_mvco(
             tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
     VALUES (p_idmvco, v_sbcu_cod_prod , v_vlr_prom_pond_tot , 'C');
