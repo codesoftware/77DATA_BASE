@@ -14,7 +14,7 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
 	c_cons_fact_migr CURSOR FOR
 	SELECT factMIG_fact,factMIG_tius,factMIG_fec_ini,factMIG_clien,factMIG_vlr_total,factMIG_vlr_iva,factMIG_sede,factMIG_retefun,factMIG_vlrrtfu,factMIG_ajpeso
 	  FROM fa_tfacmig 
-	 WHERE factMIG_fact = 2555
+	 WHERE factMIG_fact = 100
 	 ;
 	--
 	--cursor con el cual obtengo los datos de los productos
@@ -146,7 +146,7 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
 									prod.dtprMIG_cant,
 									v_idTrans_con,
 									cast(fact.factMIG_fact as int),
-									prod.dtprMIG_vlr_uni_prod,
+									prod.dtprMIG_vlr_uni_prod+prod.dtprMIG_vlr_iva_uni,
 									prod.dtprMIG_vlr_iva_tot,
 									prod.dtprMIG_vlr_iva_uni,
 									prod.dtprMIG_vlr_total,
@@ -253,6 +253,9 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
 				--
 			END IF;
 
+		
+		ELSE
+			RAISE EXCEPTION 'Error productos %',v_rta_fact_prod;
 		END IF;
 		--
 	END LOOP;
