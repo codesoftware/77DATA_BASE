@@ -35,9 +35,6 @@ INSERT INTO co_ttido(
             tido_tido,tido_estado, tido_nombre, tido_descripcion)
     VALUES (4,'A', 'NOTACRED','NOTA CREDITO');
 --
---
---
---
 --NOTA CREDITO
 --
 INSERT INTO co_ttido(
@@ -45,6 +42,3 @@ INSERT INTO co_ttido(
     VALUES (5,'A', 'IMPORTA','Importacion');
 
 
-INSERT INTO co_tsbcu (
-sbcu_cuen,sbcu_clas,sbcu_grup,sbcu_estado,sbcu_nombre,sbcu_codigo,sbcu_descripcion,sbcu_naturaleza)
-values(125,2,12,'A','CUENTAS POR PAGAR','01','CUENTAS POR PAGAR','C');
