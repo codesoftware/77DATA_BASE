@@ -391,6 +391,7 @@
 \i /77DATA_BASE/triggers/in_tdska_before_insert_or_update.sql;
 \i /77DATA_BASE/triggers/co_tauco_before_insert.sql;
 \i /77DATA_BASE/triggers/im_tdgas_before_insert_or_update.sql;
+\i /77DATA_BASE/triggers/in_teprs_after_insert_or_update.sql;
 --
 --SECUENCIAS
 --

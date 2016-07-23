@@ -41,6 +41,7 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA_TMP(
 	SELECT COALESCE(sbcu_sbcu,0)
     FROM co_tsbcu
     WHERE sbcu_codigo = '233501';
+    --
 	BEGIN 
 	--llama la funcion que actualiza los parametros
 	v_funcion := FA_CALCULA_PAGOS_FAC_COMPRA(p_idfac_tmp);
@@ -58,7 +59,7 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA_TMP(
 	CLOSE c_traedatos_fact;	
 	
 	IF v_cdsbc = 0 THEN
-		RAISE EXCEPTION 'Error: no existe la subcuenta de cuentaws por pagar  233501';
+		RAISE EXCEPTION 'Error: no existe la subcuenta de cuentas por pagar  233501';
 	END IF;
 	--verifica si se realiza cobro de retefuente, si no , deja ese valor en 0
 
