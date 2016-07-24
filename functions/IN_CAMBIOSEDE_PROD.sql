@@ -155,7 +155,7 @@ CREATE OR REPLACE FUNCTION IN_CAMBIOSEDE_PROD(
                                             );
         IF UPPER(v_rta_ing) not like '%OK%' THEN
         --
-            RAISE EXCEPTION 'Error al realizar el ingreso: %' , v_rta_egr;
+            RAISE EXCEPTION 'Error al realizar el ingreso: %' , v_rta_ing;
         --
         END IF;                             
         --
