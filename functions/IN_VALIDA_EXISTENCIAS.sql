@@ -62,15 +62,15 @@ CREATE OR REPLACE function IN_VALIDA_EXISTENCIAS(
     --
     BEGIN
     --
-    OPEN c_cons_exist;
-    FETCH c_cons_exist INTO v_exist_prod_tot;
-    CLOSE  c_cons_exist;
+    --OPEN c_cons_exist;
+    --FETCH c_cons_exist INTO v_exist_prod_tot;
+    --CLOSE  c_cons_exist;
     --
-    OPEN c_cons_ex_sede;
-    FETCH c_cons_ex_sede INTO v_exist_prod_sed;
-    CLOSE c_cons_ex_sede;
+    --OPEN c_cons_ex_sede;
+    --FETCH c_cons_ex_sede INTO v_exist_prod_sed;
+    --CLOSE c_cons_ex_sede;
     --
-    IF v_exist_prod_tot <> v_exist_prod_sed THEN 
+    --IF v_exist_prod_tot <> v_exist_prod_sed THEN 
         --
         FOR sede IN c_sedes_emp LOOP
             --
@@ -123,7 +123,7 @@ CREATE OR REPLACE function IN_VALIDA_EXISTENCIAS(
             --
         END LOOP;
         --
-    END IF;
+    --END IF;
     --
     RETURN 'OK';
     --

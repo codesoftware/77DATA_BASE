@@ -191,22 +191,25 @@ CREATE OR REPLACE FUNCTION IN_FINSERTA_PROD_KARDEX (
             --
         ELSE
             --
+            OPEN c_exist_prod_sede;
+            FETCH c_exist_prod_sede into v_existencia_sede;
+            CLOSE c_exist_prod_sede;
+            --
             IF upper(v_natMov) = 'E' then
                 --
                 v_mvto_cant_total := p_numProd * (-1);
                 --
+            ELSE
+                --
+                v_mvto_cant_total  := p_numProd;
+                --
             END IF;
-            --
-            OPEN c_exist_prod_sede;
-            FETCH c_exist_prod_sede into v_existencia_sede;
-            CLOSE c_exist_prod_sede;
             --
             v_total_sede := v_existencia_sede +  v_mvto_cant_total;
             --
             UPDATE IN_TEPRS
                SET eprs_existencia = v_total_sede
              WHERE eprs_eprs = v_ext_pr_sede
-               AND eprs_dska = p_numProd
              ;
         END IF;
         --
