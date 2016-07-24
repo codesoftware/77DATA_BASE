@@ -15,7 +15,7 @@ REFERENCES co_ttido(tido_tido)
 --
 --Referencia con la tabla auxiliar contable
 --
-ALTER TABLE co_tmvco
-ADD FOREIGN KEY (mvco_auco)
-REFERENCES co_tauco(auco_auco)
-;
+--ALTER TABLE co_tmvco
+--ADD FOREIGN KEY (mvco_auco)
+--REFERENCES co_tauco(auco_auco)
+--;

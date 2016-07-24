@@ -38,7 +38,7 @@ $f_ins_sbcuenta$ LANGUAGE plpgsql;
 
 
 CREATE TRIGGER f_ins_sbcuenta
-    BEFORE INSERT ON co_tsbcu
+    BEFORE INSERT OR UPDATE ON co_tsbcu
     FOR EACH ROW
     EXECUTE PROCEDURE f_ins_sbcuenta()
     ;

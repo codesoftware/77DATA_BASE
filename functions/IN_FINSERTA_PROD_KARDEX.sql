@@ -67,9 +67,20 @@ CREATE OR REPLACE FUNCTION IN_FINSERTA_PROD_KARDEX (
         c_ex_prod_sede CURSOR FOR
         SELECT eprs_eprs
           FROM in_teprs
-         WHERE eprs_dska = NEW.KAPR_DSKA
-           AND eprs_sede = NEW.KAPR_SEDE
+         WHERE eprs_dska = p_id_producto
+           AND eprs_sede = p_sede
            ;
+        --
+        c_exist_prod_sede CURSOR FOR
+        SELECT eprs_existencia
+          FROM in_teprs
+         WHERE eprs_dska = p_id_producto
+           AND eprs_sede = p_sede
+           ;
+        --
+        v_existencia_sede           bigint:=0;
+        --
+        v_total_sede                bigint:=0;
         --
         v_ext_pr_sede   bigint := 0;
         v_natuMovi      varchar(2) := '';
@@ -182,14 +193,20 @@ CREATE OR REPLACE FUNCTION IN_FINSERTA_PROD_KARDEX (
             --
             IF upper(v_natMov) = 'E' then
                 --
-                v_mvto_cant_total := NEW.KAPR_CANT_MVTO * (-1);
+                v_mvto_cant_total := p_numProd * (-1);
                 --
             END IF;
             --
+            OPEN c_exist_prod_sede;
+            FETCH c_exist_prod_sede into v_existencia_sede;
+            CLOSE c_exist_prod_sede;
+            --
+            v_total_sede := v_existencia_sede +  v_mvto_cant_total;
+            --
             UPDATE IN_TEPRS
-               SET eprs_existencia = eprs_existencia + v_mvto_cant_total
+               SET eprs_existencia = v_total_sede
              WHERE eprs_eprs = v_ext_pr_sede
-               AND eprs_dska = NEW.KAPR_DSKA
+               AND eprs_dska = p_numProd
              ;
         END IF;
         --
