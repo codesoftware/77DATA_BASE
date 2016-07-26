@@ -141,6 +141,23 @@ CREATE OR REPLACE FUNCTION FA_VAL_CON_FACTU (
     --
     v_codigo_subcuenta          varchar(500):= '';
     --
+    c_subcu_tarj CURSOR FOR
+    SELECT count(1)
+      FROM em_tpara
+     WHERE para_clave = 'PAGOTARJETA'
+       AND  para_valor is not null
+     ;
+    --
+    v_valida_tarj           bigint := 0;
+    --
+    c_exist_sbcu_tj CURSOR FOR
+    SELECT COUNT(*)
+      FROM co_tauco
+     WHERE auco_codi = (SELECT trim(para_valor) valor
+                          FROM em_tpara
+                         WHERE para_clave = 'PAGOTARJETA')
+    ;
+    --
     BEGIN
     --
     --Valido si la sede puede facturar
@@ -225,6 +242,28 @@ CREATE OR REPLACE FUNCTION FA_VAL_CON_FACTU (
     IF v_val_cuentaCobrar <> 1 THEN
         --
         RAISE EXCEPTION 'Error cuenta de cuentas por cobrar 138020 no se encuentra parametrizada por favor comunicarse con el administrador del sistema ';
+        --
+    END IF;
+    --
+    OPEN c_subcu_tarj;
+    FETCH c_subcu_tarj INTO v_valida_tarj;
+    CLOSE c_subcu_tarj;
+    --
+    IF v_valida_tarj = 0 THEN
+        --
+        RAISE EXCEPTION 'Error no existe cuenta parametrizada para los pagos con tarjeta de credito ';
+        --
+    END IF;
+    --
+    v_valida_tarj := 0;
+    --
+    OPEN c_exist_sbcu_tj;
+    FETCH c_exist_sbcu_tj INTO v_valida_tarj;
+    CLOSE c_exist_sbcu_tj;
+    --
+    IF v_valida_tarj = 0 THEN
+        --
+        RAISE EXCEPTION 'Error la subcuenta que tiene parametrizada para pagos con tarjeta no se encuentra creada en los auxiliares contables del PUC ';
         --
     END IF;
     --

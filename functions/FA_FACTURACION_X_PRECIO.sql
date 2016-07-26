@@ -7,8 +7,8 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
                                 p_idTrans               BIGINT,
                                 p_sede                  BIGINT, 
                                 p_tipoPago              VARCHAR,
-                                p_idVaucher             BIGINT,
-                                p_valrTarjeta           BIGINT,
+                                p_idVaucher             VARCHAR,
+                                p_valrTarjeta           NUMERIC,
                                 p_idPedido              BIGINT,
                                 p_retefuente            VARCHAR,
                                 p_rsfa                  bigint default -1
@@ -183,6 +183,18 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
     v_aux_peso          NUMERIC(1000,6) := 50.0000000000;
     --
     v_valida            varchar(4000) := '';
+    --
+    v_pago_mixto        numeric(1000,10):= 0;
+    --
+    v_sbcu_tarj         varchar(12) := '';
+    --
+    c_subcu_tarj CURSOR FOR
+    SELECT trim(para_valor) valor
+      FROM em_tpara
+     WHERE para_clave = 'PAGOTARJETA'
+     ;
+    --
+    v_auxcont           bigint := 0;
     --
     BEGIN
     --
@@ -379,15 +391,47 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
         --
     END IF;
     --
-    INSERT INTO co_ttem_mvco(
+    IF upper(p_tipoPago) = 'T' THEN
+        --
+        OPEN c_subcu_tarj;
+        FETCH c_subcu_tarj INTO v_sbcu_tarj;
+        CLOSE c_subcu_tarj;
+        --
+        INSERT INTO co_ttem_mvco(
+            tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
+                     VALUES (v_idTrans_con, v_sbcu_tarj , v_vlr_fin_tot, 'D');
+        --
+    ELSIF upper(p_tipoPago) = 'M' THEN
+        --
+        --Pago en efectivo
+        --
+        v_pago_mixto := v_vlr_fin_tot - p_valrTarjeta;
+        --
+        INSERT INTO co_ttem_mvco(
+            tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
+                     VALUES (v_idTrans_con, v_sbcu_caja_cod , v_pago_mixto, 'D');
+        --
+        OPEN c_subcu_tarj;
+        FETCH c_subcu_tarj INTO v_sbcu_tarj;
+        CLOSE c_subcu_tarj;
+        --
+        INSERT INTO co_ttem_mvco(
+            tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
+                     VALUES (v_idTrans_con, v_sbcu_tarj , p_valrTarjeta, 'D');
+        --
+    ELSE
+        --
+        INSERT INTO co_ttem_mvco(
             tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
                      VALUES (v_idTrans_con, v_sbcu_caja_cod , v_vlr_fin_tot, 'D');
+        --
+    END IF;
     --
     UPDATE fa_tfact
-    SET fact_vlr_efectivo = v_vlr_total_fact_co,
-    fact_ajpeso = v_ajuste_peso
-    WHERE fact_fact = v_fact_fact
-    ;
+       SET fact_vlr_efectivo = v_vlr_total_fact_co,
+           fact_ajpeso = v_ajuste_peso
+     WHERE fact_fact = v_fact_fact
+     ;
     --
     --
     OPEN c_sum_debitos(v_idTrans_con);
@@ -407,16 +451,20 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
             FETCH c_sbcu_sbcu INTO v_sbcu_sbcu;
             CLOSE c_sbcu_sbcu;
             --
+            --raise exception 'Aqui 112';
+            v_auxcont := CO_BUSCA_AUXILIAR_X_TIDO(v_sbcu_sbcu,'faven');
+            
+            --
             INSERT INTO co_tmvco(mvco_trans, 
                                  mvco_sbcu, mvco_naturaleza, 
                                  mvco_tido, mvco_valor, 
                                  mvco_lladetalle, mvco_id_llave, 
-                                 mvco_tercero, mvco_tipo)
+                                 mvco_tercero, mvco_tipo,mvco_auco)
                 VALUES ( v_idTrans_con, 
                          v_sbcu_sbcu , movi.tem_mvco_naturaleza, 
                          2, cast(movi.tem_mvco_valor as NUMERIC),
                          'fact', v_fact_fact,
-                         p_clien, p_clien );
+                         p_clien, p_clien, v_auxcont );
             
         END LOOP;
         --
