@@ -83,6 +83,7 @@
 \i /77DATA_BASE/tables/im_tdgas.sql;
 \i /77DATA_BASE/tables/fa_tfacom_tmp.sql;
 \i /77DATA_BASE/tables/fa_tfcprd_tmp.sql;
+\i /77DATA_BASE/tables/ad_tsoci.sql;
 
 --
 --Alters
@@ -123,6 +124,7 @@
 \i /77DATA_BASE/checks/fa_tsoli_chks.sql;
 \i /77DATA_BASE/checks/fa_tdpgr_chks.sql;
 \i /77DATA_BASE/checks/im_timpo_chks.sql;
+\i /77DATA_BASE/checks/ad_tsoci_chks.sql;
 --
 -- Uniques Constrains
 --
@@ -223,6 +225,7 @@
 \i /77DATA_BASE/comments/im_tgast_com.sql;
 \i /77DATA_BASE/comments/co_tauco_com.sql;
 \i /77DATA_BASE/comments/im_tprim_com.sql;
+\i /77DATA_BASE/comments/ad_tsoci_com.sql;
 --
 -- Llaves foraneas
 --
@@ -276,6 +279,7 @@
 \i /77DATA_BASE/foreignKey/fk_im_tgast.sql;
 \i /77DATA_BASE/foreignKey/fk_co_tauco.sql;
 \i /77DATA_BASE/foreignKey/fk_im_tdgas.sql;
+\i /77DATA_BASE/foreignKey/fk_ad_tsoci.sql;
 --
 --Vistas
 --
