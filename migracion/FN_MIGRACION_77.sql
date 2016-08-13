@@ -14,7 +14,8 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
 	c_cons_fact_migr CURSOR FOR
 	SELECT factMIG_fact,factMIG_tius,factMIG_fec_ini,factMIG_clien,factMIG_vlr_total,factMIG_vlr_iva,factMIG_sede,factMIG_retefun,factMIG_vlrrtfu,factMIG_ajpeso
 	  FROM fa_tfacmig 
-	 WHERE factMIG_fact = 100
+	 WHERE factMIG_fact = 1701
+	 order by factMIG_fact
 	 ;
 	--
 	--cursor con el cual obtengo los datos de los productos
