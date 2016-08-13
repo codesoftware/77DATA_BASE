@@ -83,6 +83,7 @@
 \i /77DATA_BASE/tables/im_tdgas.sql;
 \i /77DATA_BASE/tables/fa_tfacom_tmp.sql;
 \i /77DATA_BASE/tables/fa_tfcprd_tmp.sql;
+\i /77DATA_BASE/tables/em_tapor.sql;
 
 --
 --Alters
@@ -223,6 +224,7 @@
 \i /77DATA_BASE/comments/im_tgast_com.sql;
 \i /77DATA_BASE/comments/co_tauco_com.sql;
 \i /77DATA_BASE/comments/im_tprim_com.sql;
+\i /77DATA_BASE/comments/em_tapor_com.sql;
 --
 -- Llaves foraneas
 --
