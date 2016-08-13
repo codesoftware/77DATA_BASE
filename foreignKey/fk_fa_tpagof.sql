@@ -10,6 +10,7 @@ REFERENCES fa_tfacom(facom_facom)
 --
 ALTER TABLE fa_tpagof
 ADD FOREIGN KEY (pagof_auco)
+REFERENCES co_tauco(auco_auco)
 ;
 --
 --Llave con la cual relaciono el usuario
