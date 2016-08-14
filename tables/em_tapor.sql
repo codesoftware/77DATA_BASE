@@ -11,5 +11,6 @@ CREATE TABLE em_tapor(
     apor_soci               bigint                              NOT NULL        ,
     apor_tran_mvco          bigint                                              ,
     apor_estado             varchar(10)                         NOT NULL        ,
+    apor_sede               bigint                              NOT NULL        ,
 PRIMARY KEY (apor_apor)
 );
