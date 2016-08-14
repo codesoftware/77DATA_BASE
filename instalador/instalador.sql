@@ -85,6 +85,7 @@
 \i /77DATA_BASE/tables/fa_tfcprd_tmp.sql;
 \i /77DATA_BASE/tables/em_tapor.sql;
 \i /77DATA_BASE/tables/ad_tsoci.sql;
+\i /77DATA_BASE/tables/in_tprap.sql;
 
 --
 --Alters
@@ -226,11 +227,8 @@
 \i /77DATA_BASE/comments/im_tgast_com.sql;
 \i /77DATA_BASE/comments/co_tauco_com.sql;
 \i /77DATA_BASE/comments/im_tprim_com.sql;
-<<<<<<< HEAD
 \i /77DATA_BASE/comments/em_tapor_com.sql;
-=======
 \i /77DATA_BASE/comments/ad_tsoci_com.sql;
->>>>>>> origin/master
 --
 -- Llaves foraneas
 --
@@ -285,6 +283,8 @@
 \i /77DATA_BASE/foreignKey/fk_co_tauco.sql;
 \i /77DATA_BASE/foreignKey/fk_im_tdgas.sql;
 \i /77DATA_BASE/foreignKey/fk_ad_tsoci.sql;
+\i /77DATA_BASE/foreignKey/fk_em_tapor.sql;
+\i /77DATA_BASE/foreignKey/fk_in_tprap.sql;
 --
 --Vistas
 --
