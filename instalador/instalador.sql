@@ -86,7 +86,7 @@
 \i /77DATA_BASE/tables/em_tapor.sql;
 \i /77DATA_BASE/tables/ad_tsoci.sql;
 \i /77DATA_BASE/tables/in_tprap.sql;
-
+\i /77DATA_BASE/tables/fa_tpagof.sql;
 --
 --Alters
 --
@@ -127,6 +127,7 @@
 \i /77DATA_BASE/checks/fa_tdpgr_chks.sql;
 \i /77DATA_BASE/checks/im_timpo_chks.sql;
 \i /77DATA_BASE/checks/ad_tsoci_chks.sql;
+\i /77DATA_BASE/checks/fa_tpago_chks.sql;
 --
 -- Uniques Constrains
 --
@@ -229,6 +230,7 @@
 \i /77DATA_BASE/comments/im_tprim_com.sql;
 \i /77DATA_BASE/comments/em_tapor_com.sql;
 \i /77DATA_BASE/comments/ad_tsoci_com.sql;
+\i /77DATA_BASE/comments/fa_tpagof_com.sql;
 --
 -- Llaves foraneas
 --
@@ -285,6 +287,7 @@
 \i /77DATA_BASE/foreignKey/fk_ad_tsoci.sql;
 \i /77DATA_BASE/foreignKey/fk_em_tapor.sql;
 \i /77DATA_BASE/foreignKey/fk_in_tprap.sql;
+\i /77DATA_BASE/foreignKey/fk_fa_tpagof.sql;
 --
 --Vistas
 --
@@ -378,8 +381,7 @@
 \i /77DATA_BASE/functions/IM_FEJECUTAIMPORTACION.sql;
 \i /77DATA_BASE/functions/IN_INSERTA_PROD_IMPORTACION.sql;
 \i /77DATA_BASE/functions/CO_BUSCA_AUXILIAR_X_TIDO.sql;
-
-
+\i /77DATA_BASE/functions/IN_INSERTA_PROD_APORTE.sql;
 --
 -- Triggers
 --
