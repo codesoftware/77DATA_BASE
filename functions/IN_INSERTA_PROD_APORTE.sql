@@ -20,6 +20,7 @@ CREATE OR REPLACE FUNCTION IN_INSERTA_PROD_APORTE(
     --
     BEGIN
     --
+    --
     IF p_cantidad <= 0 THEN
         --
         raise exception 'La cantidad no puede ser inferior ni igual a cero ';
@@ -44,10 +45,10 @@ CREATE OR REPLACE FUNCTION IN_INSERTA_PROD_APORTE(
     --
     INSERT INTO in_tprap(
             prap_apor, prap_dska, prap_cant, prap_costo)
-        VALUES (, ?, ?, ?, ?);
+        VALUES (p_apor, v_dska_dska, p_cantidad, p_costo);
     --
     RETURN 'Ok';
-    
+    --
     EXCEPTION WHEN OTHERS THEN
          RETURN 'Error IN_INSERTA_PROD_APORTE ' ||sqlerrm ;
     END;
