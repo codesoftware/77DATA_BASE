@@ -157,6 +157,7 @@
 \i /77DATA_BASE/uniques/FA_TPGRM_UNIQUES.sql;
 \i /77DATA_BASE/uniques/IM_TPRIM_UNIQUES.sql;
 \i /77DATA_BASE/uniques/CO_TAUCO_UNIQUES.sql;
+\i /77DATA_BASE/uniques/IN_TPRAP_UNIQUES.sql;
 --
 -- Comentarios de las tablas
 --
