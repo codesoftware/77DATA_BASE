@@ -1,0 +1,1 @@
+----Alter del comentario de la solicitud--alter table fa_tsoli add  soli_comeen varchar(2000);
