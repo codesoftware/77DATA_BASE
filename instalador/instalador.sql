@@ -383,6 +383,7 @@
 \i /77DATA_BASE/functions/IN_INSERTA_PROD_IMPORTACION.sql;
 \i /77DATA_BASE/functions/CO_BUSCA_AUXILIAR_X_TIDO.sql;
 \i /77DATA_BASE/functions/IN_INSERTA_PROD_APORTE.sql;
+\i /77DATA_BASE/functions/IN_GENERA_PROCESO_APORTE.sql;
 --
 -- Triggers
 --

@@ -3,9 +3,9 @@
 --
 CREATE OR REPLACE FUNCTION IN_INSERTA_PROD_APORTE(   
                                             p_apor                  BIGINT,
-                                            p_dska_cod_ext          BIGINT,
+                                            p_dska_cod_ext          varchar,
                                             p_cantidad              BIGINT,
-                                            p_costo                 BIGINT,
+                                            p_costo                 numeric,
                                             p_tius_tius             BIGINT
                                             ) RETURNS VARCHAR AS $$
     DECLARE
