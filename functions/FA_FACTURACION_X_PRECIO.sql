@@ -464,7 +464,7 @@ CREATE OR REPLACE FUNCTION FA_FACTURACION_X_PRECIO (
                          v_sbcu_sbcu , movi.tem_mvco_naturaleza, 
                          2, cast(movi.tem_mvco_valor as NUMERIC),
                          'fact', v_fact_fact,
-                         p_clien, p_clien, v_auxcont );
+                         p_clien, 1, v_auxcont );
             
         END LOOP;
         --

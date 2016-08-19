@@ -21,6 +21,11 @@ INSERT INTO co_ttido(
             tido_tido,tido_estado, tido_nombre, tido_descripcion)
     VALUES (3,'A', 'CORRING','CORRECCION DE INGRESO DE PRODUCTO');
 --
+INSERT INTO co_ttido(
+            tido_tido,tido_estado, tido_nombre, tido_descripcion)
+    VALUES (4,'A', 'APORTE','APORTE DE SOCIO');
+    
+--
 --Cuentas fijas para poder crear una factura de compra
 --
 INSERT INTO co_tsbft(

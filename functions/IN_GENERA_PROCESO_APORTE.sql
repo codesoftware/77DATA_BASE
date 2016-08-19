@@ -56,7 +56,7 @@ CREATE OR REPLACE FUNCTION IN_GENERA_PROCESO_APORTE(
     --Funcion con la cual obtengo los productos del aporte
     --
     c_prod_aporte cursor for
-    SELECT prap_dska, prap_cant, prap_costo, apor_sede, prap_prap
+    SELECT prap_dska, prap_cant, prap_costo, apor_sede, prap_prap, apor_soci
       FROM in_tprap, em_tapor
      WHERE prap_apor = p_apor
      and apor_apor = prap_apor
@@ -113,6 +113,20 @@ CREATE OR REPLACE FUNCTION IN_GENERA_PROCESO_APORTE(
            SELECT regexp_split_to_table(vc_expresion, '-') kapr_kapr
            offset 1) as tabla
      ;
+    --
+    v_apor_soci         bigint :=0;
+    --
+    --Cursor con el cual valido si la subcuenta es igual a la subcuenta
+    --
+    c_valida_auco_sbcu CURSOR(vc_sbcu_sbcu   bigint) FOR
+    SELECT COUNT(*)
+      FROM co_tauco
+     WHERE auco_sbcu = vc_sbcu_sbcu
+       AND auco_auco = p_auco
+       ;
+    --
+    v_valida_subcu_auco         bigint := 0;
+    --
     BEGIN
     --
     --Validacion de la informacion
@@ -150,6 +164,8 @@ CREATE OR REPLACE FUNCTION IN_GENERA_PROCESO_APORTE(
     CLOSE c_sec_tem_mvco;
     --
     FOR prod IN c_prod_aporte LOOP
+        --
+        v_apor_soci := prod.apor_soci;
         --
         v_rta_insrt_kar := IN_FINSERTA_PROD_KARDEX(prod.prap_dska,
                                                    v_mvin_mvin,
@@ -234,7 +250,20 @@ CREATE OR REPLACE FUNCTION IN_GENERA_PROCESO_APORTE(
             FETCH c_sbcu_sbcu INTO v_sbcu_sbcu;
             CLOSE c_sbcu_sbcu;
             --
-            v_auxcont := CO_BUSCA_AUXILIAR_X_TIDO(v_sbcu_sbcu,'faven');
+            OPEN c_valida_auco_sbcu(v_sbcu_sbcu);
+            FETCH c_valida_auco_sbcu INTO v_valida_subcu_auco;
+            CLOSE c_valida_auco_sbcu;
+            --
+            IF v_valida_subcu_auco = 0 THEN
+                --
+                v_auxcont := CO_BUSCA_AUXILIAR_X_TIDO(v_sbcu_sbcu,'apor');
+                --
+            ELSE
+                --
+                v_auxcont := CO_BUSCA_AUXILIAR_X_TIDO(v_sbcu_sbcu,'apor',cast(p_auco as varchar) );
+                --
+            END IF;
+            --
             --
             IF movi.tem_mvco_naturaleza = 'C' THEN
                 --
@@ -248,10 +277,10 @@ CREATE OR REPLACE FUNCTION IN_GENERA_PROCESO_APORTE(
                                  mvco_lladetalle, mvco_id_llave, 
                                  mvco_tercero, mvco_tipo,mvco_auco)
                 VALUES ( v_idTrans_con, 
-                         v_sbcu_sbcu , movi.tem_mvco_naturaleza, 
-                         2, cast(movi.tem_mvco_valor as NUMERIC),
-                         'fact', v_fact_fact,
-                         p_clien, p_clien, v_auxcont );
+                         v_sbcu_sbcu, movi.tem_mvco_naturaleza, 
+                         4, cast(movi.tem_mvco_valor as NUMERIC),
+                         'apor', p_apor,
+                         v_apor_soci, 4, v_auxcont );
             
         END LOOP;
         --

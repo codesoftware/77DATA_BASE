@@ -109,6 +109,38 @@ CREATE OR REPLACE function CO_BUSCA_AUXILIAR_X_TIDO(
         --
     END IF;
     --
+    IF p_tipoDoc = 'apor' THEN 
+        --
+        IF p_param_ad <> 'N/A' THEN
+            --
+            return cast(p_param_ad as bigint);
+            --
+        END IF;
+        --
+        OPEN c_cod_sbcu;
+        FETCH c_cod_sbcu INTO v_cod_subcuenta, v_nom_subcuenta;
+        CLOSE c_cod_sbcu;
+        --
+        IF v_cod_subcuenta is null THEN
+            --
+            raise exception 'La subcuenta referenciada no existe ';
+            --
+        END IF;
+        --
+        OPEN c_auco_auco(v_cod_subcuenta||'01');
+        FETCH c_auco_auco INTO v_auco_auco;
+        CLOSE c_auco_auco;
+        --
+        IF  v_auco_auco is null THEN
+            --
+            v_accion := 'INSERTO';
+            --
+        ELSE
+            return v_auco_auco;
+        END IF;
+        --
+    END IF;
+    --
     IF v_accion = 'INSERTO' THEN    
         --
         v_auco_auco := nextval('co_tauco_auco_auco_seq'::regclass);
