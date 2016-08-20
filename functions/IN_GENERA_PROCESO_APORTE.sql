@@ -77,13 +77,14 @@ CREATE OR REPLACE FUNCTION IN_GENERA_PROCESO_APORTE(
     v_rta_insrt_kar           VARCHAR(500) := '';
     --
     c_sbcu_prod    CURSOR (vc_dska bigint ) IS
-    SELECT cate_sbcu 
-      FROM in_tcate,in_tdska
+    SELECT sbcu_codigo
+      FROM in_tcate,in_tdska, co_tsbcu
      WHERE dska_cate = cate_cate
         and dska_dska = vc_dska
+        and cate_sbcu = sbcu_sbcu
     ;
     --
-    v_sbcu_prod            bigint :=0;
+    v_sbcu_prod            varchar :=0;
     --
     --
     --Cursor el cual sirve para obtener el id temporal de transaccion para la tabla temporal
@@ -249,6 +250,12 @@ CREATE OR REPLACE FUNCTION IN_GENERA_PROCESO_APORTE(
             OPEN c_sbcu_sbcu(movi.tem_mvco_sbcu);
             FETCH c_sbcu_sbcu INTO v_sbcu_sbcu;
             CLOSE c_sbcu_sbcu;
+            --
+            IF v_sbcu_sbcu is null THEN
+                --
+                raise exception 'La subcuenta con el codigo % no tiene referencia en la tabla de subcuentas ', movi.tem_mvco_sbcu;
+                --
+            END IF;
             --
             OPEN c_valida_auco_sbcu(v_sbcu_sbcu);
             FETCH c_valida_auco_sbcu INTO v_valida_subcu_auco;

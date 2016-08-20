@@ -123,7 +123,7 @@ CREATE OR REPLACE function CO_BUSCA_AUXILIAR_X_TIDO(
         --
         IF v_cod_subcuenta is null THEN
             --
-            raise exception 'La subcuenta referenciada no existe ';
+            raise exception 'La subcuenta referenciada no existe con el id: %',p_sbcu;
             --
         END IF;
         --
