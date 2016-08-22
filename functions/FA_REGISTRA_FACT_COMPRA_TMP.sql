@@ -20,11 +20,13 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA_TMP(
     --Cursor que consulta el valor parametrizado del valor ajuste al peso
     --
     c_consulta_ajuste CURSOR IS
-    select CAST(PARA_VALOR AS NUMERIC)
+    SELECT CASE 
+            WHEN para_valor = '' then -1
+            ELSE CAST(coalesce(PARA_VALOR,'-1') AS NUMERIC)
+           END
     FROM EM_TPARA 
-    WHERE PARA_CLAVE = 'VALORAJUSTEPESO';
-    
-    
+    WHERE PARA_CLAVE = 'VALORAJUSTEPESO'
+    ;
     --
     --Cursor que consulta los datos de la factura de compra temporal
     --
@@ -45,21 +47,38 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA_TMP(
     v_val_proc              varchar(1000):= '';
     --
     BEGIN 
+    --
     --llama la funcion que actualiza los parametros
     v_funcion := FA_CALCULA_PAGOS_FAC_COMPRA(p_idfac_tmp);
-    
+    --
+    IF  UPPER(v_funcion) <> 'OK' THEN 
+        --
+        RAISE EXCEPTION 'Error al calcular los pagos % ' ,v_funcion;
+        --
+    END IF;
+    --
     OPEN c_consulta_ajuste;
     FETCH c_consulta_ajuste INTO v_parajus;
     CLOSE c_consulta_ajuste;
-    
+    --
+    IF v_parajus is null THEN
+        --
+        RAISE EXCEPTION 'Por favor parametrice el valor del ajuste al peso para poder realizar la factura';
+        --
+    ELSIF v_parajus = -1 THEN
+        --
+        RAISE EXCEPTION 'Por favor revice el valor de ajuste al peso ya que es nulo o el valor no es valido '; 
+        --
+    END IF;
+    --
     OPEN c_validasubxpagar;
     FETCH c_validasubxpagar INTO v_cdsbc;
     CLOSE c_validasubxpagar;
     
     OPEN c_traedatos_fact;
     FETCH c_traedatos_fact INTO v_valajus,v_cbretedf,v_valorf,v_plazo;
-    CLOSE c_traedatos_fact;    
-    
+    CLOSE c_traedatos_fact;        
+    --
     IF v_cdsbc = 0 THEN
         RAISE EXCEPTION 'Error: no existe la subcuenta de cuentas por pagar  233501';
     END IF;
@@ -88,7 +107,7 @@ CREATE OR REPLACE FUNCTION FA_REGISTRA_FACT_COMPRA_TMP(
                 RAISE EXCEPTION 'El valor del ajuste al peso supera el valor parametrizado %',(v_parajus*-1);
             END IF;
         END IF;
-
+        
         IF v_valajus BETWEEN (v_parajus*-1) AND v_parajus OR v_valajus=0.0  THEN 
             
             IF v_valajus <> 0 then

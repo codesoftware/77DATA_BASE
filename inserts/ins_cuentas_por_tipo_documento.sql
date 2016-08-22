@@ -19,12 +19,7 @@ INSERT INTO co_ttido(
 --
 INSERT INTO co_ttido(
             tido_tido,tido_estado, tido_nombre, tido_descripcion)
-    VALUES (3,'A', 'CORRING','CORRECCION DE INGRESO DE PRODUCTO');
---
-INSERT INTO co_ttido(
-            tido_tido,tido_estado, tido_nombre, tido_descripcion)
-    VALUES (4,'A', 'APORTE','APORTE DE SOCIO');
-    
+    VALUES (3,'A', 'CORRING','CORRECCION DE INGRESO DE PRODUCTO');    
 --
 --Cuentas fijas para poder crear una factura de compra
 --
@@ -40,10 +35,14 @@ INSERT INTO co_ttido(
             tido_tido,tido_estado, tido_nombre, tido_descripcion)
     VALUES (4,'A', 'NOTACRED','NOTA CREDITO');
 --
---NOTA CREDITO
+--IMPORTACION
 --
 INSERT INTO co_ttido(
             tido_tido,tido_estado, tido_nombre, tido_descripcion)
     VALUES (5,'A', 'IMPORTA','Importacion');
-
-
+--
+--APORTE SOCIO
+--
+INSERT INTO co_ttido(
+            tido_tido,tido_estado, tido_nombre, tido_descripcion)
+    VALUES (6,'A', 'APORTE','APORTE DE SOCIO');

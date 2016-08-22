@@ -285,7 +285,7 @@ CREATE OR REPLACE FUNCTION IN_GENERA_PROCESO_APORTE(
                                  mvco_tercero, mvco_tipo,mvco_auco)
                 VALUES ( v_idTrans_con, 
                          v_sbcu_sbcu, movi.tem_mvco_naturaleza, 
-                         4, cast(movi.tem_mvco_valor as NUMERIC),
+                         6, cast(movi.tem_mvco_valor as NUMERIC),
                          'apor', p_apor,
                          v_apor_soci, 4, v_auxcont );
             
