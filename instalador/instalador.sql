@@ -87,6 +87,7 @@
 \i /77DATA_BASE/tables/ad_tsoci.sql;
 \i /77DATA_BASE/tables/in_tprap.sql;
 \i /77DATA_BASE/tables/fa_tpagof.sql;
+\i /77DATA_BASE/tables/in_tpropar.sql;
 --
 --Alters
 --
@@ -232,6 +233,7 @@
 \i /77DATA_BASE/comments/em_tapor_com.sql;
 \i /77DATA_BASE/comments/ad_tsoci_com.sql;
 \i /77DATA_BASE/comments/fa_tpagof_com.sql;
+\i /77DATA_BASE/comments/in_tpropar_com.sql;
 --
 -- Llaves foraneas
 --
@@ -289,6 +291,7 @@
 \i /77DATA_BASE/foreignKey/fk_em_tapor.sql;
 \i /77DATA_BASE/foreignKey/fk_in_tprap.sql;
 \i /77DATA_BASE/foreignKey/fk_fa_tpagof.sql;
+\i /77DATA_BASE/foreignKey/fk_in_tpropar.sql;
 --
 --Vistas
 --
