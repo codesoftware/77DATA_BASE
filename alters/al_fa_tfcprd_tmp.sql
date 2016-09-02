@@ -1,0 +1,1 @@
+alter table in_tp add  soli_comeen varchar(2000);
