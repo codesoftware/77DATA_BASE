@@ -34,7 +34,9 @@ DECLARE
             tmprefe_descrip,tmprefe_categor,tmprefe_subcate,
             tmprefe_tipo,tmprefe_existencia,
             tmprefe_costo, tmprefe_codbarr
-    FROM in_tmprefe;
+    FROM in_tmprefe
+   WHERE not exists (select 1 from in_tdska where dska_cod_ext = tmprefe_codexte)
+	;
 
   --
   --Cursor que consulta el id de la categoria
