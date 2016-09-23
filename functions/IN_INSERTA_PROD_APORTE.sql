@@ -56,7 +56,7 @@ CREATE OR REPLACE FUNCTION IN_INSERTA_PROD_APORTE(
             --
             RAISE EXCEPTION 'El producto referenciado con el codigo externo % no se encuentra en el sistema',p_dska_cod_ext; 
             --
-        END IF        
+        END IF;
         --
     END IF;
     --
