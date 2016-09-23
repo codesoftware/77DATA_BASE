@@ -18,6 +18,15 @@ CREATE OR REPLACE FUNCTION IN_INSERTA_PROD_APORTE(
     --
     v_dska_dska         bigint :=0;
     --
+    --Validacion adicional por si el producto no lo encuentra
+    --
+    c_val_prod_ad CURSOR FOR
+    select dska_dska 
+      from in_tdska, in_tmarca
+     where dska_marca = marca_marca
+        and upper(marca_nombre) ||'-'|| upper(dska_cod_ext) = UPPER(p_dska_cod_ext)
+        ;
+    --
     BEGIN
     --
     --
@@ -39,7 +48,15 @@ CREATE OR REPLACE FUNCTION IN_INSERTA_PROD_APORTE(
     --
     IF v_dska_dska is null THEN
         --
-        raise exception 'El producto referenciado con el codigo externo % no se encuentra en el sistema',p_dska_cod_ext; 
+        OPEN c_val_prod_ad;
+        FETCH c_val_prod_ad INTO v_dska_dska;
+        CLOSE c_val_prod_ad;
+        --
+        IF v_dska_dska is null THEN
+            --
+            RAISE EXCEPTION 'El producto referenciado con el codigo externo % no se encuentra en el sistema',p_dska_cod_ext; 
+            --
+        END IF        
         --
     END IF;
     --
