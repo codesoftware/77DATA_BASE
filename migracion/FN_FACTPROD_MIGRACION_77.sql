@@ -1,4 +1,3 @@
-create extension pldbgapi;
 --
 -- Funcion encargada de realizar toda la facturacion del sistema
 --
@@ -119,10 +118,10 @@ CREATE OR REPLACE FUNCTION FN_FACTPROD_MIGRACION_77(
     OPEN c_exit_x_sede;
     FETCH c_exit_x_sede INTO v_existencias;
     CLOSE c_exit_x_sede;
-
     --
     --verifica las existencias en la sede
     IF v_existencias < p_cantidad OR v_existencias IS NULL THEN
+        RAISE EXCEPTION 'cantidad %,% 11111 dska: % p_fact: %',p_cantidad,v_existencias,p_dska, p_fact;
 
         OPEN c_exist_total;
         FETCH c_exist_total INTO v_exis_total;
