@@ -24,7 +24,7 @@ CREATE OR REPLACE FUNCTION IN_INSERTA_PROD_APORTE(
     select dska_dska 
       from in_tdska, in_tmarca
      where dska_marca = marca_marca
-        and upper(marca_nombre) ||'-'|| upper(dska_cod_ext) = UPPER(p_dska_cod_ext)
+       and upper(dska_cod_ext) = upper(marca_nombre) ||'-'|| UPPER(p_dska_cod_ext)
         ;
     --
     BEGIN

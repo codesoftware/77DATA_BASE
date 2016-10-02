@@ -6,8 +6,6 @@
 --2. Aportes 31050101 Aportes socio dependiendo del contador
 --
 \i /77DATA_BASE/migracion/tablas_migracion.sql;
-
-\i /77DATA_BASE/migracion/FN_MIGRACION_DATOS.sql;
 --
 alter table co_tmvco drop constraint MVCO_LLAVE_CHK;
 --
@@ -31,14 +29,4 @@ DROP TRIGGER f_ins_kapr ON in_tkapr;
 --
 \i /77DATA_BASE/triggers/in_tkapr_before_insert_or_update.sql;
 --
-drop table in_tprap;
---
-drop table em_tapor;
---
-\i /77DATA_BASE/tables/in_tprap.sql;
---
-\i /77DATA_BASE/tables/in_tprap.sql;
---
-\i /77DATA_BASE/triggers/in_tkapr_before_insert_or_update.sql;
---
-\i /77DATA_BASE/functions/in_genera_proceso_aporte.sql;
+

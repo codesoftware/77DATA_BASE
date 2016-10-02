@@ -24,7 +24,7 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_DATOS()
                 fact_vlr_abonos numeric(1000,10))
                 ;
 	--
-	v_rta  	VARCHAR(4000) := '';
+	v_rta  	int := 0;
 	--
 	c_dtpr_dblink CURSOR FOR	
 	SELECT productos.*
@@ -32,13 +32,14 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_DATOS()
        			dtpr_vlr_pr_tot, dtpr_vlr_uni_prod, dtpr_vlr_iva_tot, dtpr_vlr_iva_uni, 
        			dtpr_vlr_venta_tot, dtpr_vlr_venta_uni, dtpr_vlr_total, dtpr_desc, 
        			dtpr_con_desc, dtpr_valor_desc, dtpr_estado, dtpr_kapr, dtpr_dev_kapr, 
-       			dtpr_utilidad
-       			FROM fa_tdtpr;')
+       			dtpr_utilidad, dska_cod_ext
+       			FROM fa_tdtpr, in_tdska
+       			where dtpr_dska = dska_dska;')
     as productos(dtpr_dtpr bigint, dtpr_dska bigint,dtpr_fact bigint, dtpr_fecha timestamp, dtpr_num_prod bigint,dtpr_cant bigint,
       dtpr_vlr_pr_tot numeric(50,6),dtpr_vlr_uni_prod numeric(50,6), dtpr_vlr_iva_tot numeric(50,6),dtpr_vlr_iva_uni numeric(50,6),
       dtpr_vlr_venta_tot numeric(50,6),dtpr_vlr_venta_uni numeric(50,6),dtpr_vlr_total numeric(50,6),dtpr_desc varchar(1),
       dtpr_con_desc varchar(1),dtpr_valor_desc numeric(50,6),dtpr_estado varchar(1),dtpr_kapr integer,dtpr_dev_kapr integer,
-      dtpr_utilidad numeric(50,6))
+      dtpr_utilidad numeric(50,6),dska_cod_ext varchar(1000))
     ;
     --
     --Con el id del producto que se va ha migrar obtengo el codigo externo
@@ -55,13 +56,16 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_DATOS()
     c_prod_migracion CURSOR FOR
     SELECT *
     FROM fa_tdtprMIG
+    order by dtprmig_fact
     ;
     --
     c_valida_prod CURSOR(vc_dska_cod  varchar) FOR
-    SELECT dska_dska
+    SELECT dska_dska,dska_cod_ext
       FROM in_tdska
      WHERE trim(upper(dska_cod_ext)) = trim(upper(vc_dska_cod))
      ;
+    --
+    v_dska_cod_destino 				varchar(1000) := '';
     --
     --Validacion adicional por si el producto no lo encuentra
     --
@@ -74,6 +78,7 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_DATOS()
     --
     --
     v_dska_destino   bigint;
+    v_num_regis 	 bigint :=0;
     --
 	BEGIN
 	--
@@ -110,12 +115,14 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_DATOS()
 									dtprMIG_num_prod, 		dtprMIG_cant, 			dtprMIG_vlr_pr_tot, 	dtprMIG_vlr_uni_prod, 
 									dtprMIG_vlr_iva_tot, 	dtprMIG_vlr_iva_uni, 	dtprMIG_vlr_venta_tot, 	dtprMIG_vlr_venta_uni,
 									dtprMIG_vlr_total, 		dtprMIG_desc, 			dtprMIG_con_desc, 		dtprMIG_valor_desc, 
-									dtprMIG_estado, 		dtprMIG_kapr, 			dtprMIG_dev_kapr, 		dtprMIG_utilidad) 
+									dtprMIG_estado, 		dtprMIG_kapr, 			dtprMIG_dev_kapr, 		dtprMIG_utilidad,
+									dtprMIG_cod_ext) 
 					     VALUES (	item.dtpr_dtpr, 		item.dtpr_dska, 		item.dtpr_fact, 		item.dtpr_fecha, 
 									item.dtpr_num_prod, 	item.dtpr_cant, 		item.dtpr_vlr_pr_tot, 	item.dtpr_vlr_uni_prod, 
 									item.dtpr_vlr_iva_tot, 	item.dtpr_vlr_iva_uni, 	item.dtpr_vlr_venta_tot,item.dtpr_vlr_venta_uni,
 									item.dtpr_vlr_total, 	item.dtpr_desc, 		item.dtpr_con_desc, 	item.dtpr_valor_desc, 
-									item.dtpr_estado, 		item.dtpr_kapr, 		item.dtpr_dev_kapr, 	item.dtpr_utilidad);
+									item.dtpr_estado, 		item.dtpr_kapr, 		item.dtpr_dev_kapr, 	item.dtpr_utilidad,
+									item.dska_cod_ext);
 		--
 	END LOOP;
 	--
@@ -125,13 +132,33 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_DATOS()
 		FETCH c_dska_cod_ext INTO v_dska_cod;
 		CLOSE c_dska_cod_ext;
 		--
+		--raise exception 'Codigo 9777 % ', v_dska_cod;
+		--
 		OPEN c_valida_prod(v_dska_cod);
-		FETCH c_valida_prod INTO v_dska_destino;
+		FETCH c_valida_prod INTO v_dska_destino, v_dska_cod_destino;
 		CLOSE c_valida_prod;
+		--
+		v_num_regis := v_num_regis + 1;
+		--
+		IF v_dska_cod <> v_dska_cod_destino THEN
+			--
+			RAISE EXCEPTION 'Los codigos de los productos no conciden codigo origen: % codigo destino % ',v_dska_cod, v_dska_cod_destino;
+			--
+		END IF;
+		--
+		IF v_dska_destino <> item.dtprMIG_dska then
+			--
+			update fa_tdtprMIG
+			   set dtprMIG_dska = v_dska_destino
+			 where dtprMIG_dtpr = item.dtprMIG_dtpr
+			   and dtprMIG_fact = item.dtprMIG_fact
+			   ;
+			--
+		end if;
 		--
 		IF v_dska_destino is null THEN
 			--
-			--raise exception 'Codigo 9777 %', v_dska_cod;
+			--raise exception 'Codigo 9777 v_dska_cod: % item.dtprMIG_fact % ' , v_dska_cod, item.dtprMIG_fact;
 			--
 			OPEN c_val_prod_ad(v_dska_cod);
 			FETCH c_val_prod_ad INTO v_dska_destino;
@@ -149,11 +176,13 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_DATOS()
 			   and dtprMIG_fact = item.dtprMIG_fact
 			   ;
 			--
+			v_rta := v_rta +1;
+			--
 		END IF;
 		--
 	END LOOP;
 	--
-	RETURN 'Ok ' || v_rta;
+	RETURN 'Ok-' || v_rta || ' numero de registros validados por el codigo: ' || v_num_regis;
 	--
 	EXCEPTION 
 		WHEN OTHERS THEN

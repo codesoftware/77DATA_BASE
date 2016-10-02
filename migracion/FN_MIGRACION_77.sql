@@ -13,7 +13,8 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
 	--
 	c_cons_fact_migr CURSOR FOR
 	SELECT factMIG_fact,factMIG_tius,factMIG_fec_ini,factMIG_clien,factMIG_vlr_total,factMIG_vlr_iva,factMIG_sede,factMIG_retefun,factMIG_vlrrtfu,factMIG_ajpeso
-	  FROM fa_tfacmig 
+	  FROM fa_tfacmig
+	  where factMIG_fact < 10
 	 order by factMIG_fact
 	 ;
 	--
@@ -241,9 +242,12 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
 				--
 			 ELSE
 			    --
-			    RAISE EXCEPTION 'Las sumas de las cuentas al facturar no coinciden por favor contactese con el administrador Debitos %, Creditos %',v_sum_deb,v_sum_cre;
+			    --RAISE EXCEPTION 'Las sumas de las cuentas al facturar no coinciden por favor contactese con el administrador Debitos %, Creditos %, factura %',v_sum_deb,v_sum_cre,fact.factMIG_fact;
 				--
+				RETURN 'Las sumas de aaalas cuentas al facturar no coinciden por favor contactese con el administrador Debitos %, Creditos %, factura %--'||v_sum_deb||'--- '||v_sum_cre||'--'||fact.factMIG_fact;
 		    END IF;   
+			--
+			DELETE FROM co_ttem_mvco where tem_mvco_trans=v_idTrans_con;
 			--
 			v_valida := FA_ASIGNA_RESOLUCION_FACTURA(cast(fact.factMIG_fact as BIGINT),-1);
 			--
@@ -257,6 +261,10 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
 		ELSE
 			RAISE EXCEPTION 'Error productos %',v_rta_fact_prod;
 		END IF;
+		--
+		DELETE FROM fa_tfacmig WHERE factMIG_fact = fact.factMIG_fact;
+		--
+		DELETE FROM fa_tdtprMIG WHERE DTPRMIG_FACT = fact.factMIG_fact;
 		--
 	END LOOP;
     --
