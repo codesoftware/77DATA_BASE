@@ -163,6 +163,12 @@ INSERT INTO co_tsbcu(
         sbcu_cuen,sbcu_clas,sbcu_grup,sbcu_estado,sbcu_nombre,sbcu_codigo,sbcu_descripcion,sbcu_naturaleza)
     values(125,2,12,'A','CUENTAS POR PAGAR','01','CUENTAS POR PAGAR','C');
     --
+    INSERT INTO co_tsbcu(
+            sbcu_cuen, sbcu_clas, sbcu_grup, sbcu_estado, sbcu_nombre, 
+            sbcu_codigo, sbcu_descripcion, sbcu_naturaleza)
+    VALUES (189, 3, 19, 'A',  'APORTE SOCIO', 
+            '01', 'APORTE SOCIO', 'D');
+    --
 --PARAMETRIZACIONES DE IVA DE VENTA Y COMPRA DE PRODUCTOS
 --
 INSERT INTO em_tpara(para_clave, para_valor)

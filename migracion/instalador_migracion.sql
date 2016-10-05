@@ -35,10 +35,22 @@ drop table in_tprap;
 --
 drop table em_tapor;
 --
+\i /77DATA_BASE/tables/em_tapor.sql;
+--
 \i /77DATA_BASE/tables/in_tprap.sql;
 --
 \i /77DATA_BASE/tables/in_tprap.sql;
 --
 \i /77DATA_BASE/triggers/in_tkapr_before_insert_or_update.sql;
 --
-\i /77DATA_BASE/functions/in_genera_proceso_aporte.sql;
+\i /77DATA_BASE/functions/IN_GENERA_PROCESO_APORTE.sql;
+--
+INSERT INTO co_tsbcu(
+            sbcu_cuen, sbcu_clas, sbcu_grup, sbcu_estado, sbcu_nombre, 
+            sbcu_codigo, sbcu_descripcion, sbcu_naturaleza)
+    VALUES (189, 3, 19, 'A',  'APORTE SOCIO', 
+            '01', 'APORTE SOCIO', 'D');
+--
+INSERT INTO co_tauco ( auco_sbcu, auco_nomb, auco_codi, auco_descr) 
+VALUES (33, 'APORTE SOCIO', '1', 'APORTE SOCIO');
+--
