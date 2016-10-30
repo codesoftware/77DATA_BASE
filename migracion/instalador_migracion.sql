@@ -43,6 +43,8 @@ drop table em_tapor;
 --
 \i /77DATA_BASE/functions/IN_GENERA_PROCESO_APORTE.sql;
 --
+\i /77DATA_BASE/migracion/FN_FACTPROD_MIGRACION_77.sql;
+--
 INSERT INTO co_tsbcu(
             sbcu_cuen, sbcu_clas, sbcu_grup, sbcu_estado, sbcu_nombre, 
             sbcu_codigo, sbcu_descripcion, sbcu_naturaleza)
@@ -52,3 +54,8 @@ INSERT INTO co_tsbcu(
 INSERT INTO co_tauco ( auco_sbcu, auco_nomb, auco_codi, auco_descr) 
 VALUES (32, 'APORTE SOCIO', '1', 'APORTE SOCIO');
 --
+INSERT INTO co_tsbcu(
+            sbcu_cuen, sbcu_clas, sbcu_grup, sbcu_estado, sbcu_nombre, 
+            sbcu_codigo, sbcu_descripcion, sbcu_naturaleza)
+    VALUES (36, 1, 3, 'A',  '"POR COBRAR A TERCEROS"', 
+            '20', '"POR COBRAR A TERCEROS"', 'D');

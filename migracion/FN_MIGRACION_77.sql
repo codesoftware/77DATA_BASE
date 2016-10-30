@@ -1,3 +1,6 @@
+--
+--Funcion con la cual realizo la migracion como prerequisito deben haber sido migrados los datos del origen
+--
 CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
 								RETURNS VARCHAR  AS $$
 	DECLARE	
@@ -114,12 +117,12 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
 		--
 		--Insertar facturas
 		--
-		INSERT INTO FA_TFACT(fact_fact		   , fact_tius	    		, fact_fec_ini		   , 
+		INSERT INTO FA_TFACT(fact_fact		   , fact_tius	    		, fact_fec_ini, 
 							fact_clien		   , fact_vlr_total		   	, fact_vlr_iva,
-							fact_sede		   , fact_retefun 			, fact_vlrrtfu)
+							fact_sede		   , fact_retefun 			, fact_vlrrtfu, 		fact_cons)
 				 VALUES (	fact.factMIG_fact  , fact.factMIG_tius      ,  fact.factMIG_fec_ini, 
 							fact.factMIG_clien , fact.factMIG_vlr_total , fact.factMIG_vlr_iva,
-							fact.factMIG_sede  ,fact.factMIG_retefun       ,fact.factMIG_vlrrtfu	 )
+							fact.factMIG_sede  ,fact.factMIG_retefun     ,fact.factMIG_vlrrtfu, fact.factMIG_cons)
 						;
 		--
 		v_valida_basica := FA_VAL_CON_FACTU(fact.factMIG_sede);	
@@ -249,7 +252,9 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
 			--
 			DELETE FROM co_ttem_mvco where tem_mvco_trans=v_idTrans_con;
 			--
-			v_valida := FA_ASIGNA_RESOLUCION_FACTURA(cast(fact.factMIG_fact as BIGINT),-1);
+			--Se comenta para que la factura quede exactamente igual que al de la migracion
+			--v_valida := FA_ASIGNA_RESOLUCION_FACTURA(cast(fact.factMIG_fact as BIGINT),-1);
+			--
 			--
 			IF upper(v_valida) <> 'OK' THEN
 				--

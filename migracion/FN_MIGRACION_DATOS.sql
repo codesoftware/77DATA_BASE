@@ -1,10 +1,13 @@
+--
+--Funcion con la cual se migra la informacion de las facturas de la base de datos 9777 a donde se corra esta funcion
+--
 CREATE OR REPLACE FUNCTION FN_MIGRACION_DATOS()
 								RETURNS VARCHAR  AS $$
 	DECLARE	
 	--
 	c_fact_dblink CURSOR FOR
 	SELECT facturacion.*
-    FROM dblink('dbname=Sigemco977', 'SELECT fact_fact, fact_tius, fact_fec_ini, 
+    FROM dblink('dbname=Sigemco9777', 'SELECT fact_fact, fact_tius, fact_fec_ini, 
        fact_fec_cierre, fact_clien, fact_vlr_total, fact_vlr_iva, 
        fact_tipo_pago, fact_id_voucher,fact_cometarios, fact_estado, 
        fact_naturaleza, fact_devolucion, fact_original, fact_vlr_dcto, 
@@ -28,7 +31,7 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_DATOS()
 	--
 	c_dtpr_dblink CURSOR FOR	
 	SELECT productos.*
-      FROM dblink('dbname=Sigemco977', 'SELECT dtpr_dtpr, dtpr_dska, dtpr_fact, dtpr_fecha, dtpr_num_prod, dtpr_cant, 
+      FROM dblink('dbname=Sigemco9777', 'SELECT dtpr_dtpr, dtpr_dska, dtpr_fact, dtpr_fecha, dtpr_num_prod, dtpr_cant, 
        			dtpr_vlr_pr_tot, dtpr_vlr_uni_prod, dtpr_vlr_iva_tot, dtpr_vlr_iva_uni, 
        			dtpr_vlr_venta_tot, dtpr_vlr_venta_uni, dtpr_vlr_total, dtpr_desc, 
        			dtpr_con_desc, dtpr_valor_desc, dtpr_estado, dtpr_kapr, dtpr_dev_kapr, 
@@ -46,7 +49,7 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_DATOS()
     --
     c_dska_cod_ext CURSOR(vc_dska_dska bigint) FOR
     SELECT prod.* 
-      FROM  dblink('dbname=Sigemco977', 'select dska_cod_ext, dska_dska from in_tdska')
+      FROM  dblink('dbname=Sigemco9777', 'select dska_cod_ext, dska_dska from in_tdska')
             as prod(dska_cod_ext varchar, dska_dska bigint)
      WHERE dska_dska = vc_dska_dska
     ;
