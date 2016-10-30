@@ -15,9 +15,11 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
 	--Cursor con el cual obtengo los datos de la factura de migracion
 	--
 	c_cons_fact_migr CURSOR FOR
-	SELECT factMIG_fact,factMIG_tius,factMIG_fec_ini,factMIG_clien,factMIG_vlr_total,factMIG_vlr_iva,factMIG_sede,factMIG_retefun,factMIG_vlrrtfu,factMIG_ajpeso
+	SELECT factMIG_fact,		factMIG_tius,	factMIG_fec_ini,factMIG_clien,
+		   factMIG_vlr_total,	factMIG_vlr_iva,factMIG_sede,	factMIG_retefun,
+		   factMIG_vlrrtfu,		factMIG_ajpeso, factmig_cons,	factmig_rsfa
 	  FROM fa_tfacmig
-	  where factMIG_fact < 10
+	  where factMIG_fact < 20
 	 order by factMIG_fact
 	 ;
 	--
@@ -113,16 +115,18 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
 	--
 	BEGIN
 	--
+	--RAISE EXCEPTION '11';
+	--
 	FOR fact IN c_cons_fact_migr LOOP
 		--
 		--Insertar facturas
 		--
 		INSERT INTO FA_TFACT(fact_fact		   , fact_tius	    		, fact_fec_ini, 
 							fact_clien		   , fact_vlr_total		   	, fact_vlr_iva,
-							fact_sede		   , fact_retefun 			, fact_vlrrtfu, 		fact_cons)
+							fact_sede		   , fact_retefun 			, fact_vlrrtfu, 		fact_cons, 		fact_rsfa)
 				 VALUES (	fact.factMIG_fact  , fact.factMIG_tius      ,  fact.factMIG_fec_ini, 
 							fact.factMIG_clien , fact.factMIG_vlr_total , fact.factMIG_vlr_iva,
-							fact.factMIG_sede  ,fact.factMIG_retefun     ,fact.factMIG_vlrrtfu, fact.factMIG_cons)
+							fact.factMIG_sede  ,fact.factMIG_retefun     ,fact.factMIG_vlrrtfu, fact.factMIG_cons, fact.factmig_rsfa)
 						;
 		--
 		v_valida_basica := FA_VAL_CON_FACTU(fact.factMIG_sede);	
@@ -255,6 +259,8 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
 			--Se comenta para que la factura quede exactamente igual que al de la migracion
 			--v_valida := FA_ASIGNA_RESOLUCION_FACTURA(cast(fact.factMIG_fact as BIGINT),-1);
 			--
+			--
+			v_valida := 'Ok'; -- Se quema con ok ya que el dato se esta trayendo de la base de datos origen
 			--
 			IF upper(v_valida) <> 'OK' THEN
 				--
