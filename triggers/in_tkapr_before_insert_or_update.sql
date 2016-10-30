@@ -104,6 +104,7 @@ CREATE OR REPLACE FUNCTION f_ins_kapr_negativos() RETURNS trigger AS $f_ins_kapr
     END;
 $f_ins_kapr_negativos$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS f_ins_kapr ON in_tkapr;
 
 CREATE TRIGGER f_ins_kapr
     AFTER INSERT OR UPDATE ON in_tkapr

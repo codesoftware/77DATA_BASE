@@ -11,7 +11,7 @@
 --
 alter table co_tmvco drop constraint MVCO_LLAVE_CHK;
 --
-\i  C:/77DATA_BASE/checks/co_tmvco_chks.sql
+\i  /77DATA_BASE/checks/co_tmvco_chks.sql
 --
 insert into IN_TMVIN (MVIN_DESCR, MVIN_NATU, MVIN_USIM, MVIN_VENTA, MVIN_INICIAL,MVIN_REVFACT, MVIN_CORRIGE_ING,MVIN_CODIGO)
 values('Ingreso Aportes','I','N','N','N','N','N','INAP')
@@ -39,8 +39,6 @@ drop table em_tapor;
 --
 \i /77DATA_BASE/tables/in_tprap.sql;
 --
-\i /77DATA_BASE/tables/in_tprap.sql;
---
 \i /77DATA_BASE/triggers/in_tkapr_before_insert_or_update.sql;
 --
 \i /77DATA_BASE/functions/IN_GENERA_PROCESO_APORTE.sql;
@@ -52,5 +50,5 @@ INSERT INTO co_tsbcu(
             '01', 'APORTE SOCIO', 'D');
 --
 INSERT INTO co_tauco ( auco_sbcu, auco_nomb, auco_codi, auco_descr) 
-VALUES (33, 'APORTE SOCIO', '1', 'APORTE SOCIO');
+VALUES (32, 'APORTE SOCIO', '1', 'APORTE SOCIO');
 --
