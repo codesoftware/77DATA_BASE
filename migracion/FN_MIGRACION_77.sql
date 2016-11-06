@@ -19,16 +19,19 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
 		   factMIG_vlr_total,	factMIG_vlr_iva,factMIG_sede,	factMIG_retefun,
 		   factMIG_vlrrtfu,		factMIG_ajpeso, factmig_cons,	factmig_rsfa
 	  FROM fa_tfacmig
-	  where factMIG_fact < 20
+	  where factMIG_fact = 79
 	 order by factMIG_fact
 	 ;
 	--
 	--cursor con el cual obtengo los datos de los productos
 	--
 	c_cons_prod_migt CURSOR (v_fact_fact BIGINT)  IS
-	SELECT dtprMIG_dska,dtprMIG_cant,dtprMIG_vlr_uni_prod,dtprMIG_vlr_iva_uni,dtprMIG_vlr_venta_tot,dtprMIG_vlr_iva_tot,dtprMIG_vlr_total,dtprMIG_utilidad	
+	SELECT 	dtprMIG_dska,			dtprMIG_cant,		dtprMIG_vlr_uni_prod,	dtprMIG_vlr_iva_uni,
+			dtprMIG_vlr_venta_tot,	dtprMIG_vlr_iva_tot,dtprMIG_vlr_total,		dtprMIG_utilidad,
+			dtprmig_vlr_venta_uni	
 	  FROM fa_tdtprMIG 
 	 WHERE dtprMIG_fact = v_fact_fact
+	 ORDER BY dtprmig_dtpr
 	 ;
 	--
     --Cursor con el cual obtenemos el valor total del iva de la factura
@@ -157,7 +160,7 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
 									prod.dtprMIG_vlr_uni_prod+prod.dtprMIG_vlr_iva_uni,
 									prod.dtprMIG_vlr_iva_tot,
 									prod.dtprMIG_vlr_iva_uni,
-									prod.dtprMIG_vlr_total,
+									prod.dtprmig_vlr_venta_uni,
 									prod.dtprMIG_vlr_total,
 									prod.dtprMIG_utilidad	
 									);
@@ -166,7 +169,7 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
 		--
 		IF v_rta_fact_prod = 'OK' THEN
 			--
-			v_total_total := (fact.factMIG_vlr_total+fact.factMIG_vlr_iva-fact.factMIG_vlrrtfu-fact.factMIG_ajpeso);
+			v_total_total := ((fact.factMIG_vlr_total+fact.factMIG_vlr_iva+fact.factMIG_ajpeso)-(fact.factMIG_vlrrtfu));
 			--
 			INSERT INTO co_ttem_mvco(
 								tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
@@ -251,7 +254,8 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
 			    --
 			    --RAISE EXCEPTION 'Las sumas de las cuentas al facturar no coinciden por favor contactese con el administrador Debitos %, Creditos %, factura %',v_sum_deb,v_sum_cre,fact.factMIG_fact;
 				--
-				RETURN 'Las sumas de aaalas cuentas al facturar no coinciden por favor contactese con el administrador Debitos %, Creditos %, factura %--'||v_sum_deb||'--- '||v_sum_cre||'--'||fact.factMIG_fact;
+				RETURN 'Las sumas de las cuentas al facturar no coinciden por favor contactese con el administrador Debitos %, Creditos %, factura %--'||v_sum_deb||'--- '||v_sum_cre||'--'||fact.factMIG_fact;
+				--
 		    END IF;   
 			--
 			DELETE FROM co_ttem_mvco where tem_mvco_trans=v_idTrans_con;

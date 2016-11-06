@@ -13,7 +13,7 @@ CREATE OR REPLACE FUNCTION FN_FACTPROD_MIGRACION_77(
                                                 v_vlr_iva_uni   NUMERIC(1000,10),
                                                 v_vlr_uni_fact   NUMERIC(1000,10),
                                                 v_vlr_tot_fact_iva  NUMERIC(1000,10),
-                                                v_utilidad_prod     NUMERIC(1000,10)
+                                                p_utilidad_prod     NUMERIC(1000,10)
 
                                             ) RETURNS VARCHAR  AS $$
 	DECLARE
@@ -32,7 +32,8 @@ CREATE OR REPLACE FUNCTION FN_FACTPROD_MIGRACION_77(
     v_vlr_prom_pond         NUMERIC(1000,10)   := 0;
     v_vlr_prom_pond_tot     NUMERIC(1000,10) := 0;
     v_sbcu_cod_prod         varchar(100) := '';
-
+    --
+    v_utilidad_prod         NUMERIC(1000,10):=0;
     --
     --Cursor con el cual obtengo las existencias de la sede
     --
@@ -114,27 +115,28 @@ CREATE OR REPLACE FUNCTION FN_FACTPROD_MIGRACION_77(
 
 	
 	BEGIN
-	
+	--
     OPEN c_exit_x_sede;
     FETCH c_exit_x_sede INTO v_existencias;
     CLOSE c_exit_x_sede;
     --
     --verifica las existencias en la sede
+    --
     IF v_existencias < p_cantidad OR v_existencias IS NULL THEN
         RAISE EXCEPTION 'cantidad %,% 11111 dska: % p_fact: %',p_cantidad,v_existencias,p_dska, p_fact;
-
+        --
         OPEN c_exist_total;
         FETCH c_exist_total INTO v_exis_total;
         CLOSE c_exist_total;
-
-         IF v_exis_total > p_cantidad THEN
-
+        --
+        IF v_exis_total > p_cantidad THEN
+            --
             v_valida_ex := IN_VALIDA_EXISTENCIAS(p_dska); 
-
+            --
             OPEN c_exist_total;
             FETCH c_exist_total INTO v_exis_total;
             CLOSE c_exist_total;
-
+            --
             IF v_exis_total > p_cantidad THEN
                 --
                 RAISE EXCEPTION 'En la sede en la cual esta facturando no hay las cantidades suficientes pero en el resto de la empresa si hay suficientes para satisfacer la compra, cantidad total de productos con codigo: 1-% , cantidades totales: % ',p_dska, v_exis_total;
@@ -144,11 +146,13 @@ CREATE OR REPLACE FUNCTION FN_FACTPROD_MIGRACION_77(
                 RAISE EXCEPTION 'No existe la cantidad de productos suficientes del producto con el codigo 1-% Las cantidades en toda la empresa actualmente son: % ', p_dska,v_exis_total;
                 --
             END IF;
-            ELSE
+            --
+        ELSE
             --
             RAISE EXCEPTION 'No existe la cantidad de productos suficientes del producto con el codigo 1-% Las cantidades en toda la empresa actualmente son: % ', p_dska,v_exis_total;
-
-         END IF;    
+            --
+        END IF;    
+        --
     END IF;
     --
     --Calculo la base del iva con el iva parametrizado previamente
@@ -156,13 +160,13 @@ CREATE OR REPLACE FUNCTION FN_FACTPROD_MIGRACION_77(
     OPEN c_iva_precio;
     FETCH c_iva_precio INTO v_iva_precio;
     CLOSE c_iva_precio;
-
+    --
     OPEN c_prom_pond_prod(p_dska);
     FETCH c_prom_pond_prod INTO v_vlr_prom_pond;
     CLOSE c_prom_pond_prod;
     --
     p_precio := (v_auxiliar * p_precio) / (v_auxiliar + v_iva_precio);
-
+    --
     OPEN c_valida_movi_fact;
     FETCH c_valida_movi_fact INTO v_val_mvin_fact;
     CLOSE c_valida_movi_fact;
@@ -176,7 +180,7 @@ CREATE OR REPLACE FUNCTION FN_FACTPROD_MIGRACION_77(
         OPEN c_mvin_venta;
         FETCH c_mvin_venta INTO v_mvin_mvin;
         CLOSE c_mvin_venta;
-
+        --
     END IF;
     --
     --Realizamos la salida del inventario del producto 
@@ -188,7 +192,7 @@ CREATE OR REPLACE FUNCTION FN_FACTPROD_MIGRACION_77(
                                                0,
                                                p_sede                                                   
                                                );
-
+    --
     IF upper(v_rta_insrt_kar) NOT LIKE '%OK%' THEN
         --
         RAISE EXCEPTION 'Error al hacer la salida de inventario. % ', v_rta_insrt_kar ;
@@ -200,38 +204,38 @@ CREATE OR REPLACE FUNCTION FN_FACTPROD_MIGRACION_77(
         CLOSE c_kapr_kapr;
         --
     END IF;
-        OPEN c_dtpr_dtpr;
-        FETCH c_dtpr_dtpr INTO v_dtpr_dtpr;
-        CLOSE c_dtpr_dtpr;
-
-
-       INSERT INTO fa_tdtpr(
-            dtpr_dtpr, dtpr_dska, dtpr_fact, 
-            dtpr_num_prod, dtpr_cant, dtpr_vlr_pr_tot, 
-            dtpr_vlr_uni_prod, dtpr_vlr_iva_tot, dtpr_vlr_iva_uni, 
-            dtpr_vlr_venta_tot, dtpr_vlr_venta_uni, dtpr_vlr_total, 
-            dtpr_desc, dtpr_kapr,dtpr_valor_desc,dtpr_utilidad,dtpr_con_desc)
-        VALUES (
-            v_dtpr_dtpr, p_dska, p_fact, 
-            0, p_cantidad, p_precio*p_cantidad, 
-            p_precio, v_vlr_iva_tot, v_vlr_iva_uni, 
-            v_vlr_tot_fact_iva, v_vlr_uni_fact, v_vlr_tot_fact_iva,
-            'N', v_kapr_kapr,0,v_utilidad_prod, 'N');
-
-    OPEN c_cod_sbcu(p_dska);
-    FETCH c_cod_sbcu INTO v_sbcu_cod_prod;
-    CLOSE c_cod_sbcu;
-
-     --
+    --
+    OPEN c_dtpr_dtpr;
+    FETCH c_dtpr_dtpr INTO v_dtpr_dtpr;
+    CLOSE c_dtpr_dtpr;
+    --
     --Calculo el promedio ponderado total de todos los productos
     --
     v_vlr_prom_pond_tot := v_vlr_prom_pond * p_cantidad;   
-    
-	
-     --
+    --
+    --Calculo la utilidad de la venta
+    --
+    v_utilidad_prod := (p_precio*p_cantidad) - v_vlr_prom_pond_tot;
+    --
+    INSERT INTO fa_tdtpr(
+        dtpr_dtpr, dtpr_dska, dtpr_fact, 
+        dtpr_num_prod, dtpr_cant, dtpr_vlr_pr_tot, 
+        dtpr_vlr_uni_prod, dtpr_vlr_iva_tot, dtpr_vlr_iva_uni, 
+        dtpr_vlr_venta_tot, dtpr_vlr_venta_uni, dtpr_vlr_total, 
+        dtpr_desc, dtpr_kapr,dtpr_valor_desc,dtpr_utilidad,dtpr_con_desc)
+    VALUES (
+        v_dtpr_dtpr, p_dska, p_fact, 
+        0, p_cantidad, p_precio*p_cantidad, 
+        p_precio, v_vlr_iva_tot, v_vlr_iva_uni, 
+        v_vlr_tot_fact_iva, v_vlr_uni_fact, v_vlr_tot_fact_iva,
+        'N', v_kapr_kapr,0,v_utilidad_prod, 'N');
+    --
+    OPEN c_cod_sbcu(p_dska);
+    FETCH c_cod_sbcu INTO v_sbcu_cod_prod;
+    CLOSE c_cod_sbcu;
+    --
     --Insercion para que se contabilice la salida del producto
     --
-
     INSERT INTO co_ttem_mvco(
             tem_mvco_trans, tem_mvco_sbcu, tem_mvco_valor, tem_mvco_naturaleza)
     VALUES (p_idmvco, v_sbcu_cod_prod , v_vlr_prom_pond_tot , 'C');
