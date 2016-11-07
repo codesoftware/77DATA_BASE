@@ -17,9 +17,9 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
 	c_cons_fact_migr CURSOR FOR
 	SELECT factMIG_fact,		factMIG_tius,	factMIG_fec_ini,factMIG_clien,
 		   factMIG_vlr_total,	factMIG_vlr_iva,factMIG_sede,	factMIG_retefun,
-		   factMIG_vlrrtfu,		factMIG_ajpeso, factmig_cons,	factmig_rsfa
+		   factMIG_vlrrtfu,		factMIG_ajpeso, factmig_cons,	factmig_rsfa,factMIG_clien_cedula
 	  FROM fa_tfacmig
-	  where factMIG_fact = 79
+	  --where factMIG_fact = 79
 	 order by factMIG_fact
 	 ;
 	--
@@ -116,20 +116,85 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
     v_sbcu_sbcu             BIGINT := 0;
 	v_valida_basica         varchar(4000)   := '';
 	--
+	v_id_facturacion 		bigint := 0;
+	--
+	v_id_cliente			bigint 	:= 0; 
+	--
+	c_valida_clien CURSOR (vc_clien_cedula varchar) IS
+	SELECT clien_clien
+	  FROM us_tclien
+	 WHERE clien_cedula = vc_clien_cedula
+	   ;
+	--
+	v_conteo_val_clien	bigint :=0;
+	--
+	v_auxcont           bigint := 0;
+	--
+	c_datos_clien	CURSOR (vc_clien_cedula varchar) IS
+	SELECT cliente.*
+	  FROM dblink('dbname=Sigemco9777', 'SELECT clien_nombres, clien_apellidos,clien_telefono, clien_correo,clien_direccion,clien_dveri
+										   from us_tclien
+									      where clien_cedula = '''||vc_clien_cedula||''' ' )AS
+		cliente(clien_nombres varchar(500), clien_apellidos varchar(500),clien_telefono varchar(500), clien_correo varchar(500),clien_direccion varchar(500) ,clien_dveri bigint)
+		;
+	--
+	v_clien_nombres	    	varchar(500) := '';
+	v_clien_apellidos	    varchar(500) := '';		
+	v_clien_telefono	    varchar(500) := '';		
+	v_clien_correo	    	varchar(500) := '';		
+	v_clien_direccion	    varchar(500) := '';		
+	v_clien_dveri			bigint 	 	 := 0;
+	--
+	c_id_cliente CURSOR IS
+	SELECT coalesce(max(clien_clien),0) +1
+	  FROM us_tclien
+	;
+	--
 	BEGIN
 	--
 	--RAISE EXCEPTION '11';
 	--
 	FOR fact IN c_cons_fact_migr LOOP
 		--
+		v_id_facturacion := fact.factMIG_fact;
+		--
+		--Valido la cedula del cliente
+		--
+		OPEN c_valida_clien(fact.factMIG_clien_cedula);
+		FETCH c_valida_clien into v_conteo_val_clien;
+		CLOSE c_valida_clien;
+		--
+		IF v_conteo_val_clien is null THEN
+			--
+			OPEN c_id_cliente;
+			FETCH c_id_cliente into v_conteo_val_clien;
+			CLOSE c_id_cliente;
+			--
+			OPEN c_datos_clien(fact.factMIG_clien_cedula);
+			FETCH c_datos_clien INTO v_clien_nombres,v_clien_apellidos,v_clien_telefono,v_clien_correo,v_clien_direccion,v_clien_dveri;
+			CLOSE c_datos_clien;
+			--
+			INSERT INTO us_tclien(
+            				clien_clien 	, clien_cedula 		, clien_nombres	, 
+            				clien_apellidos	, clien_telefono	, clien_correo	, 
+            				clien_direccion	, clien_dveri)
+					VALUES (v_conteo_val_clien, fact.factMIG_clien_cedula, v_clien_nombres,
+							v_clien_apellidos, v_clien_telefono	, v_clien_correo,
+							v_clien_direccion, v_clien_dveri);
+			--
+		END IF;
+		--
+		--
 		--Insertar facturas
 		--
-		INSERT INTO FA_TFACT(fact_fact		   , fact_tius	    		, fact_fec_ini, 
-							fact_clien		   , fact_vlr_total		   	, fact_vlr_iva,
-							fact_sede		   , fact_retefun 			, fact_vlrrtfu, 		fact_cons, 		fact_rsfa)
-				 VALUES (	fact.factMIG_fact  , fact.factMIG_tius      ,  fact.factMIG_fec_ini, 
-							fact.factMIG_clien , fact.factMIG_vlr_total , fact.factMIG_vlr_iva,
-							fact.factMIG_sede  ,fact.factMIG_retefun     ,fact.factMIG_vlrrtfu, fact.factMIG_cons, fact.factmig_rsfa)
+		INSERT INTO FA_TFACT(fact_fact		   	, fact_tius	    		, fact_fec_ini, 
+							fact_clien		   	, fact_vlr_total		, fact_vlr_iva,
+							fact_sede		   	, fact_retefun 			, fact_vlrrtfu, 		
+							fact_cons   		, fact_rsfa)
+				 VALUES (	fact.factMIG_fact  	, fact.factMIG_tius     , fact.factMIG_fec_ini, 
+							v_conteo_val_clien 	, fact.factMIG_vlr_total, fact.factMIG_vlr_iva,
+							fact.factMIG_sede  	, fact.factMIG_retefun 	, fact.factMIG_vlrrtfu, 
+							fact.factmig_cons 	, fact.factmig_rsfa)
 						;
 		--
 		v_valida_basica := FA_VAL_CON_FACTU(fact.factMIG_sede);	
@@ -237,22 +302,20 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
 			        FETCH c_sbcu_sbcu INTO v_sbcu_sbcu;
 			        CLOSE c_sbcu_sbcu;
 					--
-					INSERT INTO co_tmvco(mvco_trans, 
-									 mvco_sbcu, mvco_naturaleza, 
-									 mvco_tido, mvco_valor, 
-									 mvco_lladetalle, mvco_id_llave, 
-									 mvco_tercero, mvco_tipo)
-					VALUES ( v_idTrans_con, 
-							 v_sbcu_sbcu , movi.tem_mvco_naturaleza, 
-							 2, cast(movi.tem_mvco_valor as NUMERIC),
-							 'fact', fact.factMIG_fact,
-							 fact.factMIG_clien, fact.factMIG_clien );							 		
+					v_auxcont := CO_BUSCA_AUXILIAR_X_TIDO(v_sbcu_sbcu,'faven');
+					--
+					INSERT INTO co_tmvco(mvco_trans, 		mvco_sbcu, 								mvco_naturaleza, 
+									 	 mvco_tido,  		mvco_valor,								mvco_lladetalle, 
+									 	 mvco_id_llave, 	mvco_tercero, 							mvco_tipo,
+									 	 mvco_auco)
+								VALUES ( v_idTrans_con, 	v_sbcu_sbcu , 							movi.tem_mvco_naturaleza, 
+							 			 2, 				cast(movi.tem_mvco_valor as NUMERIC),  	'fact', 
+							 			 fact.factMIG_fact,	v_conteo_val_clien, 				    1,
+							 			 v_auxcont); 		
 					--
 		    	END LOOP;
 				--
 			 ELSE
-			    --
-			    --RAISE EXCEPTION 'Las sumas de las cuentas al facturar no coinciden por favor contactese con el administrador Debitos %, Creditos %, factura %',v_sum_deb,v_sum_cre,fact.factMIG_fact;
 				--
 				RETURN 'Las sumas de las cuentas al facturar no coinciden por favor contactese con el administrador Debitos %, Creditos %, factura %--'||v_sum_deb||'--- '||v_sum_cre||'--'||fact.factMIG_fact;
 				--
@@ -288,7 +351,7 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_77()
 	EXCEPTION 
 		WHEN OTHERS THEN
 		--
-			 RETURN 'Error FN_MIGRACION_77 '|| sqlerrm;
+			 RETURN 'Error FN_MIGRACION_77 este es el de la factura a migrar: '||v_id_facturacion || ' ' || sqlerrm;
 		--
 	END;
 $$ LANGUAGE 'plpgsql';

@@ -123,7 +123,7 @@ CREATE OR REPLACE FUNCTION FN_FACTPROD_MIGRACION_77(
     --verifica las existencias en la sede
     --
     IF v_existencias < p_cantidad OR v_existencias IS NULL THEN
-        RAISE EXCEPTION 'cantidad %,% 11111 dska: % p_fact: %',p_cantidad,v_existencias,p_dska, p_fact;
+        --RAISE EXCEPTION 'cantidad %,% 11111 dska: % p_fact: %',p_cantidad,v_existencias,p_dska, p_fact;
         --
         OPEN c_exist_total;
         FETCH c_exist_total INTO v_exis_total;

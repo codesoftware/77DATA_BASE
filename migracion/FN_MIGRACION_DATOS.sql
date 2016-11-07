@@ -8,17 +8,19 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_DATOS()
 	c_fact_dblink CURSOR FOR
 	SELECT facturacion.*
     FROM dblink('dbname=Sigemco9777', 'SELECT fact_fact, fact_tius, fact_fec_ini, 
-       fact_fec_cierre, fact_clien, fact_vlr_total, fact_vlr_iva, 
+       fact_fec_cierre, fact_clien, clien_cedula ,fact_vlr_total, fact_vlr_iva, 
        fact_tipo_pago, fact_id_voucher,fact_cometarios, fact_estado, 
        fact_naturaleza, fact_devolucion, fact_original, fact_vlr_dcto, 
        fact_vlr_efectivo, fact_vlr_tarjeta, fact_cierre, fact_sede, 
        fact_pedi,fact_fechaex, fact_retefun, fact_vlrrtfu, 
        fact_ajpeso, fact_cons, fact_rsfa, fact_vlr_acobrar, 
        fact_vlr_abonos
-		  FROM fa_tfact order by fact_fact;
+		  FROM fa_tfact, us_tclien
+		  where fact_clien = clien_clien
+		   order by fact_fact;
 		')
                 AS facturacion(fact_fact bigint, fact_tius bigint,fact_fec_ini date, 
-                fact_fec_cierre date,fact_clien bigint, fact_vlr_total numeric(1000,10),  fact_vlr_iva numeric(1000,10),
+                fact_fec_cierre date,fact_clien bigint,clien_cedula varchar(500),fact_vlr_total numeric(1000,10),  fact_vlr_iva numeric(1000,10),
                 fact_tipo_pago varchar(1),fact_id_voucher varchar(200),fact_cometarios varchar(1), fact_estado varchar(1),
                 fact_naturaleza varchar(2), fact_devolucion varchar(1),  fact_original bigint,  fact_vlr_dcto numeric(1000,10), 
                 fact_vlr_efectivo numeric(1000,10),fact_vlr_tarjeta numeric(1000,10),fact_cierre bigint,fact_sede bigint,
@@ -93,20 +95,20 @@ CREATE OR REPLACE FUNCTION FN_MIGRACION_DATOS()
 	--
 	FOR item in c_fact_dblink LOOP
 		--
-		INSERT INTO FA_TFACMIG (factMIG_fact, 		factMIG_tius, 		factMIG_fec_ini, 	factMIG_fec_cierre, 
-								factMIG_clien, 		factMIG_vlr_total, 	factMIG_vlr_iva, 	factMIG_tipo_pago, 
-								factMIG_id_voucher, factMIG_cometarios, factMIG_estado,		factMIG_naturaleza, 
-								factMIG_devolucion, factMIG_original,  	factMIG_vlr_dcto, 	factMIG_vlr_efectivo, 
-								factMIG_vlr_tarjeta,factMIG_cierre, 	factMIG_sede,		factMIG_pedi, 
-								factMIG_fechaex, 	factMIG_retefun, 	factMIG_vlrrtfu, 	factMIG_ajpeso, 
-								factMIG_cons,	  	factMIG_rsfa, 		factMIG_vlr_acobrar,factMIG_vlr_abonos) 
-						VALUES (item.fact_fact, 	item.fact_tius,  	item.fact_fec_ini,  item.fact_fec_cierre,
-								item.fact_clien,    item.fact_vlr_total,item.fact_vlr_iva,  item.fact_tipo_pago,
-								item.fact_id_voucher,item.fact_cometarios,item.fact_estado, item.fact_naturaleza,
-								item.fact_devolucion,item.fact_original,item.fact_vlr_dcto, item.fact_vlr_efectivo,
-								item.fact_vlr_tarjeta,item.fact_cierre ,item.fact_sede 	  , item.fact_pedi,
-								item.fact_fechaex   ,item.fact_retefun ,item.fact_vlrrtfu , item.fact_ajpeso,
-								item.fact_cons      ,item.fact_rsfa    ,item.fact_vlr_acobrar,item.fact_vlr_abonos );
+		INSERT INTO FA_TFACMIG (factMIG_fact, 		factMIG_tius, 				factMIG_fec_ini, 		factMIG_fec_cierre, 
+								factMIG_clien, 		factMIG_clien_cedula,		factMIG_vlr_total, 		factMIG_vlr_iva, 	factMIG_tipo_pago, 
+								factMIG_id_voucher, factMIG_cometarios, 		factMIG_estado,			factMIG_naturaleza, 
+								factMIG_devolucion, factMIG_original,  			factMIG_vlr_dcto, 		factMIG_vlr_efectivo, 
+								factMIG_vlr_tarjeta,factMIG_cierre, 			factMIG_sede,			factMIG_pedi, 
+								factMIG_fechaex, 	factMIG_retefun, 			factMIG_vlrrtfu, 		factMIG_ajpeso, 
+								factMIG_cons,	  	factMIG_rsfa, 				factMIG_vlr_acobrar,	factMIG_vlr_abonos) 
+						VALUES (item.fact_fact, 	item.fact_tius,  			item.fact_fec_ini,  	item.fact_fec_cierre,
+								item.fact_clien,    item.clien_cedula,	    	item.fact_vlr_total,	item.fact_vlr_iva,  item.fact_tipo_pago,
+								item.fact_id_voucher,item.fact_cometarios,		item.fact_estado, 		item.fact_naturaleza,
+								item.fact_devolucion,item.fact_original,		item.fact_vlr_dcto, 	item.fact_vlr_efectivo,
+								item.fact_vlr_tarjeta,item.fact_cierre ,		item.fact_sede 	  , 	item.fact_pedi,
+								item.fact_fechaex   ,item.fact_retefun ,		item.fact_vlrrtfu , 	item.fact_ajpeso,
+								item.fact_cons      ,item.fact_rsfa    ,		item.fact_vlr_acobrar,	item.fact_vlr_abonos );
 		--
 	END LOOP;
 	--

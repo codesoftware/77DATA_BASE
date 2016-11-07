@@ -8,6 +8,7 @@ CREATE TABLE FA_TFACMIG(
   factMIG_fec_ini date NOT NULL, -- Fecha en la cual se creo la factura.
   factMIG_fec_cierre date, -- Fecha en la cual se cerro la facturasactura
   factMIG_clien bigint NOT NULL, -- Cleinte del cual es la factura
+  factMIG_clien_cedula varchar(500) not null,
   factMIG_vlr_total numeric(1000,10) NOT NULL, -- Valor total de la factura
   factMIG_vlr_iva numeric(1000,10) NOT NULL, -- Iva el cual cobra toda la factura
   factMIG_tipo_pago character varying(1) NOT NULL DEFAULT 'E'::character varying, -- Tipo de pago Efectivo (E), Tarjeta (T) y Mixto (M) mixto indica que pago una parte en tarjeta y otra parte en efectivo
